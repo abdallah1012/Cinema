@@ -1,2 +1,2 @@
 # Cinema
-EECE437 cinema/lecture management system/app
+EECE 437 cinema/lecture management system/app 
