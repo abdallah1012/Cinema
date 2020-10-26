@@ -1,0 +1,16 @@
+/*
+
+Current database design:
+
+Table Movies [ID*, MovieName, ProfessorName, CourseName]
+Table MoviesURL [ID*, URL]
+Table students [ID, (Credentials)]
+Table professors [ID, (Credentials)]
+Table history [StudentName, MovieID*, Date]
+
+Note: number of '*' indicate the related keys between tables
+*/
+
+
+
+
