@@ -14,14 +14,21 @@ string toRecommendation(String studentName)
 	*/
 }
 
-void addToHistory(string StudentName, string MovieName, string ProfessorName, string CourseName, string Date, String Duration)
+String toStatistics (String studentName)
 {
 	/*
-	1. send SQL query to Movies table and get its ID
-	2. send SQL UPDATE to history table with attributes (studentName, MovieID, Date, Duration) where we update the
+	1. retrieve necessary data from the history table
+	*/
+}
+
+void addToHistory(string StudentName, string ID, string Date, String Duration)
+{
+	/*
+	
+	1. send SQL UPDATE to history table with attributes (studentName, MovieID, Date, Duration) where we update the
 		MovieID column to add the ID of the movie they watched. (ie. if they already watched movies with 
 		IDs 10 and 21 then it would be (10, 21) then adding movie 34 it becomes (10, 21, 34))
-	3. Similarly for the date and duration, since each movie was watched at a date
+	2. Similarly for the date and duration, since each movie was watched at a date
 	
 	WARNING: add SQL query to history first to check if student watched this before. If true
 			 then update duration if the older one was shorter and update Date.
@@ -31,15 +38,15 @@ void addToHistory(string StudentName, string MovieName, string ProfessorName, st
 	*/	
 }
 
-string loadMovie(string studentName, string MovieName, string ProfessorName, string CourseName)
+string loadMovie(string studentName, string ID)
 {
 	/*
 	
 	To load the movie we need to uniquely identify it, therefore when a student requests a movie, we should query
 	based on the course, professor and the movie name.
 	
-	1. Send SQL query with WHERE clause as 
-	"where MovieName = " + MovieName + ", ProfessorName = " + ProfessorName + ", CourseName = " + CourseName";
+	1. Send SQL query with ID as where clause
+	
 	2. Select clause has only URL column
 	
 	Note: If this returns more than 1 URL then we have a database conflict or logic error in registerMovie
@@ -53,15 +60,15 @@ string loadMovie(string studentName, string MovieName, string ProfessorName, str
 
 bool registerMovie(string MovieName, string CourseName, string ProfessorName)
 {
-	//MEGANOTE: Consider concatenating MovieName + CourseName + ProfessorName with a seperator
-	//Less need to pass several parameters each time we load or search for a movie
 	
 	/*
 	
 	1. Send SQL query to see if the movie name is taken by that professor (if yes then return false)
 	2. Use Youtube API to add movie to youtube
 	3. Get the URL of the movie
-	4. Send SQL insert statement to database with: (URL, MovieName, CourseName, ProfessorName)
+	4. Send SQL insert statement to database tables Movies and MoviesURL
+		with: (MovieName, CourseName, ProfessorName) & (URL) 
+	[Note: ID is created by default when adding to database if we assign it as increasing unique key]
 	
 	Note: to avoid piling all movies in one table, we can make a seperate table that contains (ID, URL)
 	whose UNIQUE KEY (ID) is that of table with (MovieName, CourseName, ProfessorName)
