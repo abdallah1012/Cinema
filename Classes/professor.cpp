@@ -12,113 +12,61 @@ Professor::Professor(String fn,String ln,date db, vector<String> pc)
 }
 
 
-String Professor::SignIn(String fn,String ln,date db, vector<String> pc, String password)
+void Professor::CreateCourse(args[])
 {
-    //function call to a function in Usermanagement that performs an SQL Query with targets password==password for user entry corresponding to this->id
-    UserManagement * um= new UserManagement();
-    if(um.ProfSignIn())
-    {
-        Professor * prof= new Professor(String fn,String ln,date db, vector<String> pc);
-        return "Succesfully Logged In";
-    }
-    else{
-        return "ID or Password is incorrect";
-    }
-    delete um;
+    //send call to Movie Management System to save course info passed in args[]
 }
 
-void Professor::CreateCourse(S:all course constructor parameters)
+void Professor::DeleteCourse(course_id)
 {
-    CourseManagement * cm= new CourseManagement();//or we can use usermanagement doesnt matter
-    Course * C= new Course(S);
-    if(cm.AddCourse(C)) //AddCourse returns a boolean if the addition succeeded
-    {
-        professor_courses.push_back(C);
-    }
-    
-    delete cm;
+    //if(course.creator==this)
+    // send call to Movie management system to delete course
 }
 
-void Professor::DeleteCourse(S:all course constructor parameters)
+void Professor::AdmitStudentToCourse(student_id,course_id);
 {
-    CourseManagement * cm= new CourseManagement();//or we can use usermanagement doesnt matter
-    Course * C= new Course(S);
-    if(cm.DeleteCourse(C)) //DeleteCourse returns a boolean if the course was found and deleted
-    {
-        int i;
-        for(i=0;i<professor_courses.size();i++)
-        {
-            if(professor_courses[i]==C)
-                break;
-        }
-        professor_courses.remove(i);
-    }
-    
-    delete cm;
+	//send call to Movie management system to save student data in course
 }
 
-void Professor::AdmitStudent(student user unique ID, course C);
+void Professor::RemoveStudent(student_id,course_id);
 {
-    CourseManagement * cm = new CourseManagement();
-    
-    cm.AddStudent(student-id, C);
-    
-    delete dm;
+    // send call to Movie Management System to remove student from course
 }
 
-void Professor::RemoveStudent(student user unique ID, course C);
+void Professor::UploadMovie(args[])
 {
-    CourseManagement * cm = new CourseManagement();
-    
-    cm.RemoveStudent(student-id, C);
-    
-    delete cm;
-    
+    //Movie m(args[]);
+    //send call to Movie management system to commit movie to database
 }
 
-void Professor::UploadMovie(S:all movie constructor parameters)
+void Professor::DeleteMovie(movie_id)
 {
-    Movie * m= new Movie(S); //movie needs its course as an attribute
-    MovieManagment * mm= new MovieManagment();
-    return mm.AddMovie(M);
-    delete mm;
-    delete m;
+   // send call to Movie management system to delete movie
 }
 
-void Professor::DeleteMovie(movie-id)
+
+void Professor::AcceptInterjection()
 {
-    MovieManagment * mm= new MovieManagment();
-    return mm.RemoveMovie(movie-id); //suffiecient to identify a movie
-    delete mm;
+	//listening on message passing interface for interjections
+   	// send call to retrieve movie
+	//edit movie instance
+	//send call to commit edit movie
+}
+void Professor::RejectInterjection()
+{
+	//listening on message passing buffer for interjections
+   	// delete interjection from message passing buffer
+}
+void Professor::AccessMovieStatistics(string movie_id)
+{
+    StaticticsEngine ss();
+    return ss.GetMovieStats(movie_id); //suffiecient to identify a movie
 }
 
-void Professor::AddInterjection(String uploader,String interjection_name,String interjection_content, Movie M, time t)
+void Professor::AccessCourseStatistics(string movie_id)
 {
-    //might be changed to creating interjection as a standalone stake holder and class
-    MovieManagment * mm= new MovieManagment();
-    mm.AddInterjection(String uploader,String interjection_name,String interjection_content, Movie M, time t); //or mm.AddInterjection(interjection n=new interjection(...)); delete n;
-    delete mm;
-}
+    StaticticsEngine ss();
+    return ss.GetCourseStats(movie_id); //suffiecient to identify a movie
 
-void Professor::AcceptInterjection(?)
-{
-    CourseManagement * cm = new CourseManagement();
-    
-    cm.FetchUnacceptedInterjections();;//to be added after deciding if interjections will be a class or not
-    delete cm;
-}
-
-DependsonReturn Professor::AccessMovieStatistics(Movie M)
-{
-    StaticticsEngine * ss= new StaticticsEngine();
-    return ss.GetMovieStats(movie-id); //suffiecient to identify a movie
-    delete mm;
-}
-
-DependsonReturn Professor::AccessCourseStatistics(Movie M)
-{
-    StaticticsEngine * ss= new StaticticsEngine();
-    return ss.GetCourseStats(movie-id); //suffiecient to identify a movie
-    delete mm;
 }
 

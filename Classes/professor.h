@@ -15,20 +15,19 @@ private:
     
     void DeleteCourse(course C);
     
-    void AdmitStudent(student user unique ID, course C);
+    void AdmitStudent(student_id,course_id);
     
-    void RemoveStudent(student user unique ID, course C);
+    void RemoveStudent(student_id,course_id);
 
-    void UploadMovie(all movie constructor parameters);
+    void UploadMovie(args[]);
         
-    void DeleteMovie(movie unique ID);
-    
-    void AddInterjection(String uploader,String interjection_name,String interjection_content, Movie M, time t);
+    void DeleteMovie(movie_id);
     
     void AcceptInterjection();
+    void RejectInterjection();
+
+    void AccessMovieStatistics(movie_id);
     
-    Dependsonreturn AccessMovieStatistics(Movie M);
-    
-    Dependsonreturn AccessCourseStatistics(Course C);
+    void AccessCourseStatistics(course_id);
 
 };

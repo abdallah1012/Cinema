@@ -12,10 +12,10 @@ public:
 	string course_name;
 	string syllabus;
 	string description;
-       	vector<string> prerequisites;
+    vector<string> prerequisites;
 	Professor creator;
+	Course(string name, string syll,string des, vector<string>prereq, Professor creator);
 private: 
 	int course_ID;
-
 
 };
