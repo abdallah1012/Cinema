@@ -15,7 +15,8 @@ public:
     vector<string> prerequisites;
 	Professor creator;
 	Course(string name, string syll,string des, vector<string>prereq, Professor creator);
-private: 
-	int course_ID;
+	void loadCourseInfo();
+	void uploadMovieUnderCourse();
+	void deleteMovieUnderCourse();
 
 };
