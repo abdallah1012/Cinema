@@ -13,8 +13,6 @@ public:
 	void create_id();
 	void register_course(course_id);
 	void add_interjection(movie_id,time);
-	void add_comment(movie_id);
-	void watch_movie(movie_id);
 	void recommended();
 };
 
