@@ -1,6 +1,7 @@
 HEADERS += \
     Course.h \
     CourseManagementSystem.h \
+    MainMenu.h \
     Movie.h \
     MovieManagementSystem.h \
     PostProduction.h \
@@ -15,6 +16,7 @@ HEADERS += \
 SOURCES += \
     Course.cpp \
     CourseManagementSystem.cpp \
+    MainMenu.cpp \
     Movie.cpp \
     MovieManagementSystem.cpp \
     PostProduction.cpp \
@@ -28,3 +30,4 @@ SOURCES += \
     main.cpp
 
 QT += widgets
+

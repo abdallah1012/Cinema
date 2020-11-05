@@ -22,9 +22,15 @@ WelcomeWindow::WelcomeWindow(QWidget *parent) : QWidget(parent)
 
 }
 void WelcomeWindow::SignInButton(){
-    User::SignIn(username_entry->text().toStdString(),
-                 password_entry->text().toStdString());
-
+    string username = username_entry->text().toStdString();
+    string password = password_entry->text().toStdString();
+    string sign_in_attempt = User::SignIn(username,password);
+    if (sign_in_attempt.substr(0,8)=="success "){
+        main_menu = new MainMenu(MainMenu::STUDENT,username);
+        delete this;
+    }
+    else
+        qDebug()<<"Sign in failed!";
 }
 
 WelcomeWindow::~WelcomeWindow(){
