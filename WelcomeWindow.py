@@ -6,8 +6,9 @@ Created on Wed Nov 11 10:24:46 2020
 """
 
 from PyQt5.QtWidgets import QPushButton,QLineEdit,QGridLayout,QWidget,QLabel
-from User import User,UserPrivilege
-from MainWindow import MainWindow
+from User import User
+
+
 class WelcomeWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -29,7 +30,7 @@ class WelcomeWindow(QWidget):
         self.grid.addWidget(self.sign_in_button)
         self.grid.addWidget(self.error_message)
     
-        self.setLayout(self.grid);
+        self.setLayout(self.grid)
         self.sign_in_button.clicked.connect(lambda: self.ClickSignInButton())
         
         self.main_window = QWidget()
@@ -38,14 +39,11 @@ class WelcomeWindow(QWidget):
         username = self.username_entry.text()
         password = self.password_entry.text()
         result = User.AttemptSignIn(username,password)
-        if "success student" in result:
-            self. main_window = MainWindow(UserPrivilege.STUDENT)
+        if result == "success":
             self.close()
-        elif "success professor" in result:
-            self. main_window = MainWindow(UserPrivilege.STUDENT)
-            self.close()
+            del self
         else:
-            self.error_message.setText(result)
+            self.error_message.setText(result[0])
             
             
 

@@ -5,5 +5,12 @@ Created on Wed Nov 11 13:20:16 2020
 @author: ojaro
 """
 from User import User
+
 class Professor(User):
-    pass
+    def __init__(self,ID:int):
+        super().__init__()
+        
+    def UploadMovie(self):
+        pass
+    def CreateCourse(self):
+        pass

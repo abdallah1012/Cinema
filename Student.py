@@ -8,4 +8,5 @@ from User import User
 
 
 class Student(User):
-    pass
+    def __init__(self,ID:int):
+        super().__init__()
