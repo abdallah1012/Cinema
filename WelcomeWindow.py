@@ -6,7 +6,7 @@ Created on Wed Nov 11 10:24:46 2020
 """
 
 from PyQt5.QtWidgets import QPushButton,QLineEdit,QGridLayout,QWidget,QLabel
-from User import User
+from WelcomeController import WelcomeController
 
 
 class WelcomeWindow(QWidget):
@@ -34,11 +34,12 @@ class WelcomeWindow(QWidget):
         self.sign_in_button.clicked.connect(lambda: self.ClickSignInButton())
         
         self.main_window = QWidget()
+        self.controller = WelcomeController()
     
     def ClickSignInButton(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
-        result = User.AttemptSignIn(username,password)
+        result = self.controller.AttemptSignIn(username,password)
         if result == "success":
             self.close()
             del self

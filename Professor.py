@@ -12,5 +12,7 @@ class Professor(User):
         
     def UploadMovie(self):
         pass
-    def CreateCourse(self):
+    def CreateCourse(name:str,description:str,prerequisites:list):
         pass
+    def LoadDashboardInfo(self):
+        print("Prof views dashboard")
