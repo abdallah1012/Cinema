@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 11 10:24:46 2020
+Created on Sat Nov 14 12:10:37 2020
 
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QPushButton,QLineEdit,QGridLayout,QWidget,QLabel
-from WelcomeController import WelcomeController
+from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel
+from PyQt5.QtCore import pyqtSignal
+from SignInController import SignInController
 
+class SignInLayout(QGridLayout):
+    success_signal = pyqtSignal()
 
-class WelcomeWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.sign_in_button = QPushButton("Sign In", self) 
+        
+        self.sign_in_button = QPushButton("Sign In") 
         self.sign_in_button.setGeometry(100, 100, 120, 40) 
       
         self.username_entry = QLineEdit()
@@ -24,32 +27,20 @@ class WelcomeWindow(QWidget):
         
         self.error_message = QLabel("")
                  
-        self.grid = QGridLayout()
-        self.grid.addWidget(self.username_entry)
-        self.grid.addWidget(self.password_entry)
-        self.grid.addWidget(self.sign_in_button)
-        self.grid.addWidget(self.error_message)
+        self.addWidget(self.username_entry)
+        self.addWidget(self.password_entry)
+        self.addWidget(self.sign_in_button)
+        self.addWidget(self.error_message)
     
-        self.setLayout(self.grid)
         self.sign_in_button.clicked.connect(lambda: self.ClickSignInButton())
-        
-        self.main_window = QWidget()
-        self.controller = WelcomeController()
-    
+        self.controller = SignInController()
+
     def ClickSignInButton(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
         result = self.controller.AttemptSignIn(username,password)
         if result == "success":
-            self.close()
-            del self
+            self.success_signal.emit()
         else:
-            self.error_message.setText(result[0])
+            self.error_message.setText(result)
             
-            
-
-
-            
-        
-        
-    

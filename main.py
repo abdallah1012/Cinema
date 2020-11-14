@@ -8,13 +8,13 @@ Created on Wed Nov 11 10:35:13 2020
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from WelcomeWindow import WelcomeWindow
+from WelcomeWidget import WelcomeWidget
 
 
 def run():
    app = QApplication(sys.argv)
-   welcome_window = WelcomeWindow()
-   welcome_window.show()
+   welcome_widget = WelcomeWidget()
+   welcome_widget.show()
    sys.exit(app.exec_())
 	
 if __name__ == '__main__':
