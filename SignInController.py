@@ -7,7 +7,8 @@ Created on Wed Nov 11 12:54:51 2020
 from MainWidget import MainWidget
 from Student import Student 
 from Professor import Professor
-    
+from RegisterLayout import RegisterLayout
+
 class SignInController:
     def __init__(self):
         pass
@@ -21,7 +22,13 @@ class SignInController:
             user = Student(0)
             main_window = MainWidget(user)
             return ("success")
+        
+    def ToRegister(self):
+            
+            register_window = RegisterLayout()
+            return ("success")
     
         
-        
+    def CheckUser(self, username, password):
+        pass
     

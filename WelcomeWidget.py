@@ -5,9 +5,9 @@ Created on Wed Nov 11 10:24:46 2020
 @author: ojaro
 """
 
-from SignInLayout import SignInLayout
-from PyQt5.QtWidgets import QWidget
 
+from PyQt5.QtWidgets import QWidget
+from SignInLayout import SignInLayout
 
 class WelcomeWidget(QWidget):
     def __init__(self):

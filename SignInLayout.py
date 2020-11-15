@@ -9,13 +9,17 @@ from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel
 from PyQt5.QtCore import pyqtSignal
 from SignInController import SignInController
 
+
 class SignInLayout(QGridLayout):
     success_signal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
         
+        self.register_button = QPushButton("Register")
         self.sign_in_button = QPushButton("Sign In") 
+        
+        self.register_button.setGeometry(100, 100, 120, 40) 
         self.sign_in_button.setGeometry(100, 100, 120, 40) 
       
         self.username_entry = QLineEdit()
@@ -30,9 +34,12 @@ class SignInLayout(QGridLayout):
         self.addWidget(self.username_entry)
         self.addWidget(self.password_entry)
         self.addWidget(self.sign_in_button)
+        self.addWidget(self.register_button)
         self.addWidget(self.error_message)
     
+        
         self.sign_in_button.clicked.connect(lambda: self.ClickSignInButton())
+        self.register_button.clicked.connect(lambda: self.ClickRegisterButton())
         self.controller = SignInController()
 
     def ClickSignInButton(self):
@@ -44,3 +51,12 @@ class SignInLayout(QGridLayout):
         else:
             self.error_message.setText(result)
             
+    def ClickRegisterButton(self):
+       state = self.controller.ToRegister()
+       if(state == "success"):
+           self.success_signal.emit()
+           
+        
+        
+        
+        
