@@ -8,11 +8,5 @@ from User import User
 
 class Professor(User):
     def __init__(self,ID:int):
-        super().__init__()
-        
-    def UploadMovie(self):
-        pass
-    def CreateCourse(name:str,description:str,prerequisites:list):
-        pass
-    def LoadDashboardInfo(self):
-        print("Prof views dashboard")
+        super().__init__(ID)
+        self.id = ID

@@ -34,7 +34,7 @@ class SignInLayout(QGridLayout):
         self.addWidget(self.username_entry)
         self.addWidget(self.password_entry)
         self.addWidget(self.sign_in_button)
-        self.addWidget(self.register_button)
+        # self.addWidget(self.register_button)
         self.addWidget(self.error_message)
     
         
@@ -45,11 +45,11 @@ class SignInLayout(QGridLayout):
     def ClickSignInButton(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
-        result = self.controller.AttemptSignIn(username,password)
-        if result == "success":
+        controller_result = self.controller.AttemptSignIn(username,password)
+        if controller_result == "success":
             self.success_signal.emit()
         else:
-            self.error_message.setText(result)
+            self.error_message.setText(controller_result)
             
     def ClickRegisterButton(self):
        state = self.controller.ToRegister()

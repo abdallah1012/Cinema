@@ -12,7 +12,8 @@ import UserManagement
 
 class SignInController:
     def __init__(self):
-        self.Manager = UserManagement.UserManagement()
+        self.Manager = UserManagement.UserManagement() #lazy init
+        
     def AttemptSignIn(self,username: str, password: str)->str:
         #this is for dev reasons
         if(username == "aa" and password == "aa"):
@@ -22,12 +23,8 @@ class SignInController:
         if (username=="" or password==""):
             return ("Error empty field(s)")
         else:
-            #send request to UMS and receieve response
-            #expecting user id
-            #send request to MMS to receive recommendations
-            
-            result, entity = self.Manager.CheckForUserPass(username, password)
-            if(result == 1):
+            model_result, entity = self.Manager.CheckForUserPass(username, password)
+            if(model_result == 1):
                 if(entity == 'student'):
                     user = Student(0)
                 elif(entity == 'professor'):
@@ -39,11 +36,7 @@ class SignInController:
                 return ("Username or Password Incorrect")
         
     def ToRegister(self):
-            
             register_window = RegisterLayout()
             return ("success")
     
-        
-    def CheckUser(self, username, password):
-        pass
     

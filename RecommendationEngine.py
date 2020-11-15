@@ -4,21 +4,18 @@ Created on Wed Nov 11 16:20:06 2020
 
 @author: ojaro
 """
-from User import User
-
 
 class RecommendationEngine:
     
-    def __init__(self,user:User):
-        self.user_ = user
+    def __init__(self):
         pass
     
     def WhatsHot(self):
         pass
     #TODO:  Send query to MMS to retrieve list of "hottest" movies.
-    #       Criteria can be highest number of views and highest ratings
+    #       Criteria can be highest number of views and highest ratings (TBD)
     
-    def LoadRecommendations(self):
+    def LoadRecommendations(self,ID: int):
         pass
     #TODO:  Send query to MMS to retrieve list of "Recommended" movies for currently signed in user
     

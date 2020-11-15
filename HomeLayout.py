@@ -7,15 +7,21 @@ Created on Sat Nov 14 11:43:35 2020
 
 from PyQt5.QtWidgets import QGridLayout,QLabel,QWidget
 from RecommendationEngine import RecommendationEngine
+from User import User
 
 class HomeLayout(QWidget):
-    def __init__(self):
+    def __init__(self,user:User):
+        self.user = user
         super().__init__()
-        self.temp_label = QLabel("Home tab clicked")
         self.__home_grid = QGridLayout()
-        self.__home_grid.addWidget(self.temp_label)
+        self.recommended_for_you = QLabel("Recommended for you")
+        self.whats_hot = QLabel("What's hot")
+        
+        self.__home_grid.addWidget(self.recommended_for_you, 2, 0)
+        self.__home_grid.addWidget(self.whats_hot, 2, 0)
+
         self.setLayout(self.__home_grid)
         
-        # r_engine = RecommendationEngine(self.user_)
-        # r_engine.WhatsHot()
-        # r_engine.LoadRecommendations()
+        self.r_engine = RecommendationEngine()
+        self.r_engine.WhatsHot()
+        self.r_engine.LoadRecommendations(self.user.id)
