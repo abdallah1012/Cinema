@@ -8,20 +8,31 @@ from MainWidget import MainWidget
 from Student import Student 
 from Professor import Professor
 from RegisterLayout import RegisterLayout
+import UserManagement
 
 class SignInController:
     def __init__(self):
-        pass
+        self.Manager = UserManagement.UserManagement()
     def AttemptSignIn(self,username: str, password: str)->str:
+        #this is for dev reasons
+        if(username == "aa" and password == "aa"):
+            user = Student(0)
+            main_window = MainWidget(user)
+            return "success"
         if (username=="" or password==""):
             return ("Error empty field(s)")
         else:
             #send request to UMS and receieve response
             #expecting user id
             #send request to MMS to receive recommendations
-            user = Student(0)
-            main_window = MainWidget(user)
-            return ("success")
+            
+            result = self.Manager.CheckForUserPass(username, password)
+            if(result == 1):
+                user = Student(0)
+                main_window = MainWidget(user)
+                return "success"
+            else:
+                return ("Username or Password Incorrect")
         
     def ToRegister(self):
             

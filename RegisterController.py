@@ -20,17 +20,12 @@ class RegisterController:
     
     def CheckUserExists(self, username):
         
-        sqlstmt = "SELECT * FROM users WHERE username = '"+str(username)+"'"
-       
-        result = self.Manager.CheckForUsername(sqlstmt)    
+        result = self.Manager.CheckForUsername(username)    
         return result
     
     def RegisterUser(self, username, firstname, lastname, password, user):
-        #try later to encrypt password
         
-        sqlstmt = "INSERT INTO users VALUES ('"+str(username)+"', '"+str(firstname)+"', '"+str(lastname)+"', '"+str(password)+"', '"+str(user)+"');"
-        
-        result = self.Manager.AddToUsers(sqlstmt)
+        result = self.Manager.AddToUsers(username, firstname, lastname, password, user)
         return result
         
     
