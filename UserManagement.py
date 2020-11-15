@@ -23,12 +23,13 @@ class UserManagement():
             return 0
     
     def CheckForUserPass(self, username, password):
-        sqlstmt = "SELECT * FROM users WHERE username = '"+str(username)+"' AND password = '"+str(password)+"'"
+        sqlstmt = "SELECT entity FROM users WHERE username = '"+str(username)+"' AND password = '"+str(password)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
         if(len(df) > 0):
-            return 1
+            return 1 , df[0][0]
         else:
-            return 0
+            return 0 , ''
         
     
     def AddToUsers(self, username, firstname, lastname, password, user):

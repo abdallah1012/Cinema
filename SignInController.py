@@ -26,9 +26,13 @@ class SignInController:
             #expecting user id
             #send request to MMS to receive recommendations
             
-            result = self.Manager.CheckForUserPass(username, password)
+            result, entity = self.Manager.CheckForUserPass(username, password)
             if(result == 1):
-                user = Student(0)
+                if(entity == 'student'):
+                    user = Student(0)
+                elif(entity == 'professor'):
+                    user = Professor(0)
+                    
                 main_window = MainWidget(user)
                 return "success"
             else:
