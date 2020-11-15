@@ -15,13 +15,21 @@ class UserManagement():
         self.database_connection = create_engine('mysql+mysqlconnector://root@localhost/cinemadb?'.format('root', '', 'localhost', 'cinemadb'))
         
     def CheckForUsername(self, sqlstmt):
-        pass
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        if(len(df) > 0):
+            return 1
+        else:
+            return 0
     
     def CheckForUserPass(self, sqlstmt):
         pass
     
     def AddToUsers(self, sqlstmt):
-        pass
+        try:
+            self.database_connection.execute(sqlstmt)
+            return 1
+        except:
+            return 0
     
     
     
