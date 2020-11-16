@@ -7,7 +7,7 @@ Created on Wed Nov 11 12:54:51 2020
 from MainWidget import MainWidget
 from Student import Student 
 from Professor import Professor
-from RegisterLayout import RegisterLayout
+# from RegisterLayout import RegisterLayout
 import UserManagement
 
 class SignInController:
@@ -35,8 +35,8 @@ class SignInController:
             else:
                 return ("Username or Password Incorrect")
         
-    def ToRegister(self):
-            register_window = RegisterLayout()
-            return ("success")
+    # def ToRegister(self):
+    #         register_window = RegisterLayout()
+    #         return ("success")
     
     

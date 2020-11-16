@@ -51,10 +51,10 @@ class SignInLayout(QGridLayout):
         else:
             self.error_message.setText(controller_result)
             
-    def ClickRegisterButton(self):
-       state = self.controller.ToRegister()
-       if(state == "success"):
-           self.success_signal.emit()
+    # def ClickRegisterButton(self):
+    #    state = self.controller.ToRegister()
+    #    if(state == "success"):
+    #        self.success_signal.emit()
            
         
         

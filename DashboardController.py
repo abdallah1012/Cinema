@@ -14,11 +14,12 @@ class DashboardController:
         self.user = user
         self.course_manager = CourseManagement()
         self.courses = [] #enrolled courses for student, owned courses for professor
+        
+        
         self.movies_in_progress = []
+        
         self. statistics = None #statistics about movies and courses (only for professor)
         #TODO: load unfinished movies watched by user from MovieManagement
         #TODO: load courses for user from CourseManagement
         #TODO: load statitiscs if professor is signed in
-        
-        
         
