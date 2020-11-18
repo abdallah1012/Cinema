@@ -11,7 +11,7 @@ from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
 from ProfileLayout import ProfileLayout
 from CourseLayout import CourseLayout
-
+from NewCourseLayout import NewCourseLayout
 class MainWidget(QWidget):
     
     def __init__(self, user:User):
@@ -27,9 +27,7 @@ class MainWidget(QWidget):
         
         self.profile_button = QPushButton("Profile")
         self.profile_button.clicked.connect(lambda:self.LoadProfileLayout())
-        
-        # self.load_course.connect(lambda: self.LoadCourseLayout())
-        
+                
         
         self.grid = QGridLayout()
         self.grid.addWidget(self.dashboard_button)
@@ -40,7 +38,7 @@ class MainWidget(QWidget):
         self.dashboard_layout = None
         self.profile_layout = None
         self.course_layout = None
-        # self.search_layout = None
+        self.new_course_layout = None
         
         self.stack = QStackedLayout()
         
@@ -62,6 +60,7 @@ class MainWidget(QWidget):
         if self.dashboard_layout == None:
             self.dashboard_layout = DashboardLayout(self.user)
             self.dashboard_layout.load_course_request.connect(self.LoadCourseLayout)
+            self.dashboard_layout.new_course_request.connect(self.LoadNewCourseLayout)
             self.stack.addWidget(self.dashboard_layout)
         self.stack.setCurrentWidget(self.dashboard_layout)
         
@@ -80,12 +79,17 @@ class MainWidget(QWidget):
             
         self.course_layout = CourseLayout(course_id)
         self.stack.addWidget(self.course_layout)
-        self.stack.setCurrentWidget(self.course_layout)
-
-
-        # print(course_id)
-        
-       
+        self.stack.setCurrentWidget(self.course_layout)  
+    
+    def LoadNewCourseLayout(self,user_id):
+        self.setWindowTitle("New Course")
+        if self.new_course_layout!=None:
+            self.stack.removeWidget(self.new_course_layout)
+            del self.add_course_layout
+            
+        self.new_course_layout = NewCourseLayout(user_id)
+        self.stack.addWidget(self.new_course_layout)
+        self.stack.setCurrentWidget(self.new_course_layout)  
         
         
         

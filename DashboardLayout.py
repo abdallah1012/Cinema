@@ -11,11 +11,16 @@ from PyQt5.QtCore import pyqtSignal
 
 class DashboardLayout(QWidget):
     load_course_request = pyqtSignal(str)
+    new_course_request = pyqtSignal(str)
     def __init__(self,user:User):
         super().__init__()
         self.__dashboard_grid = QGridLayout()
         self.user = user
         self.exampleCourse = QPushButton("Example course")
+        self.add_course = QPushButton("Add Course") #enroll for student, create for professor
+        self.add_course.clicked.connect(lambda:self.new_course_request.emit(str(user.id)))
+        self.__dashboard_grid.addWidget(self.add_course)
+        
         self.courses = [self.exampleCourse] #courses will typically be clickable labels
 
         self.controller = DashboardController(self.user)
