@@ -12,11 +12,12 @@
    background-color: rgb(5, 34, 114); /* Green */
   
   color: white;
-  padding: 15px 32px;
+  border-radius: 2px;
+  
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: 18px;
   
   cursor: pointer;
 

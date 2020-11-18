@@ -5,7 +5,7 @@ Created on Wed Nov 11 13:02:46 2020
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout
+from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame
 from User import User
 from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
@@ -40,11 +40,10 @@ class MainWidget(QWidget):
         self.upperLayout.addWidget(self.home_button)
         self.upperLayout.addWidget(self.profile_button)
         
-        
-        
-        
-        self.upperLayout.setSpacing(0)
-        
+        self.upperExternal = QFrame()
+        self.upperExternal.setStyleSheet(".QFrame{background-color: white; border: 2px solid black; border-radius: 10px;}");
+    
+        self.upperExternal.setLayout(self.upperLayout)
         
        
        
@@ -56,7 +55,7 @@ class MainWidget(QWidget):
         
         self.stack = QStackedLayout()
         
-        self.grid.addLayout(self.upperLayout,1,1)
+        self.grid.addWidget(self.upperExternal,1,1)
         self.grid.addLayout(self.stack,2,1)
         
         self.setLayout(self.grid)
