@@ -5,7 +5,7 @@ Created on Wed Nov 11 13:02:46 2020
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout
+from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout
 from User import User
 from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
@@ -18,7 +18,7 @@ class MainWidget(QWidget):
         super().__init__()
         self.setMinimumSize(500,500)
         self.user = user
-        
+        self.setStyleSheet(open('main.css').read())
         self.dashboard_button = QPushButton("Dashboard")
         self.dashboard_button.clicked.connect(lambda:self.LoadDashboardLayout())
         
@@ -30,10 +30,24 @@ class MainWidget(QWidget):
                 
         
         self.grid = QGridLayout()
-        self.grid.addWidget(self.dashboard_button)
-        self.grid.addWidget(self.home_button)
-        self.grid.addWidget(self.profile_button)
+#        self.grid.addWidget(self.dashboard_button)
+#        self.grid.addWidget(self.home_button)
+#        self.grid.addWidget(self.profile_button)
     
+        self.upperLayout = QHBoxLayout()
+        
+        self.upperLayout.addWidget(self.dashboard_button)
+        self.upperLayout.addWidget(self.home_button)
+        self.upperLayout.addWidget(self.profile_button)
+        
+        
+        
+        
+        self.upperLayout.setSpacing(0)
+        
+        
+       
+       
         self.home_layout = None
         self.dashboard_layout = None
         self.profile_layout = None
@@ -42,7 +56,8 @@ class MainWidget(QWidget):
         
         self.stack = QStackedLayout()
         
-        self.grid.addLayout(self.stack,4,1)
+        self.grid.addLayout(self.upperLayout,1,1)
+        self.grid.addLayout(self.stack,2,1)
         
         self.setLayout(self.grid)
         self.LoadHomeLayout()

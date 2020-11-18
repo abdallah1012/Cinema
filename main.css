@@ -1,0 +1,34 @@
+
+
+.QPushButton{
+   
+   
+   float: left;
+   
+   outline: none;
+  
+   
+   transition: 0.3s;
+   background-color: rgb(5, 34, 114); /* Green */
+  
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  
+  cursor: pointer;
+
+    
+	border-left = 100%;
+	border-right = 100%;
+	border-top = 100%;
+	border-bottom = 100%;
+ }
+.QPushButton:hover {
+	background-color: #4169e1;
+}
+	
+
+        
