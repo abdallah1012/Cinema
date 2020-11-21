@@ -16,3 +16,5 @@ class HomeController:
         
     def loadMovieWidget(self):
         self.movie_widget = MovieWidget()
+        self.movie_widget.show()
+        self.movie_widget.resize(640,480)
