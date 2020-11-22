@@ -142,8 +142,7 @@ class MovieLayout(QWidget):
         
 
     def setVolume(self, Volume):
-        #Set the volume
-        
+        #Set the volume 
         self.mediaplayer.audio_set_volume(Volume)
 
     def setPosition(self, position):        
