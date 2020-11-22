@@ -3,7 +3,7 @@ import os.path
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QSlider, QHBoxLayout, QPushButton, \
-    QVBoxLayout, QAction, QFileDialog, QApplication
+    QVBoxLayout, QAction, QFileDialog, QApplication, QMessageBox
 import vlc
 import pafy 
 import threading 
@@ -75,6 +75,8 @@ class MovieLayout(QWidget):
         self.timer.setInterval(500)
         self.timer.timeout.connect(self.updateUI)   
         
+        
+        
         self.loaded = False
         self.video = pafy.new(self.url) 
         
@@ -93,7 +95,9 @@ class MovieLayout(QWidget):
             
         # self.OpenFile()
 
+    
    
+    
  
 
     def PlayPause(self):

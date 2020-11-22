@@ -5,7 +5,7 @@ Created on Wed Nov 11 13:02:46 2020
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame, QMainWindow
+from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame, QMainWindow, QAction, QMessageBox
 from User import User
 from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
@@ -66,7 +66,25 @@ class MainWidget(QMainWindow):
         self.mainWidget.setLayout(self.grid)
         self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
+        
+        exit = QAction("&Exit", self)
+        exit.triggered.connect(self.closeEvent)
+        
+        
         self.show()
+    
+    def closeEvent(self, event):
+        self.silence()
+        close = QMessageBox()
+        close.setText("You sure?")
+        close.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        close = close.exec()
+        
+        if close == QMessageBox.Yes:
+            
+            event.accept()
+        else:
+            event.ignore()
     
     def LoadHomeLayout(self):
         self.setWindowTitle("Home")
@@ -84,6 +102,7 @@ class MainWidget(QMainWindow):
             self.dashboard_layout.new_course_request.connect(self.LoadNewCourseLayout)
             self.stack.addWidget(self.dashboard_layout)
         self.stack.setCurrentWidget(self.dashboard_layout)
+        self.silence()
         
     def LoadProfileLayout(self):
         self.setWindowTitle("Profile")
@@ -91,6 +110,7 @@ class MainWidget(QMainWindow):
             self.profile_layout = ProfileLayout(self.user)
             self.stack.addWidget(self.profile_layout)
         self.stack.setCurrentWidget(self.profile_layout)
+        self.silence()
 
     def LoadCourseLayout(self,course_id):
         self.setWindowTitle("Course")
@@ -122,6 +142,7 @@ class MainWidget(QMainWindow):
         self.stack.addWidget(self.movie_layout)
         self.stack.setCurrentWidget(self.movie_layout)  
         
-        
+    def silence(self):
+        self.movie_layout.Stop()
         
         
