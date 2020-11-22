@@ -5,17 +5,23 @@ Created on Wed Nov 11 13:02:46 2020
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame
+from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame, QMainWindow, QAction, QMessageBox
 from User import User
 from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
 from ProfileLayout import ProfileLayout
 from CourseLayout import CourseLayout
 from NewCourseLayout import NewCourseLayout
-class MainWidget(QWidget):
+from MovieLayout import MovieLayout
+
+
+class MainWidget(QMainWindow):
     
     def __init__(self, user:User):
         super().__init__()
+        
+        self.mainWidget = QWidget()
+        
         self.setMinimumSize(500,500)
         self.user = user
         self.setStyleSheet(open('main.css').read())
@@ -30,9 +36,7 @@ class MainWidget(QWidget):
                 
         
         self.grid = QGridLayout()
-#        self.grid.addWidget(self.dashboard_button)
-#        self.grid.addWidget(self.home_button)
-#        self.grid.addWidget(self.profile_button)
+
     
         self.upperLayout = QHBoxLayout()
         
@@ -52,20 +56,41 @@ class MainWidget(QWidget):
         self.profile_layout = None
         self.course_layout = None
         self.new_course_layout = None
+        self.movie_layout = None
         
         self.stack = QStackedLayout()
         
         self.grid.addWidget(self.upperExternal,1,1)
         self.grid.addLayout(self.stack,2,1)
         
-        self.setLayout(self.grid)
+        self.mainWidget.setLayout(self.grid)
+        self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
+        
+        exit = QAction("&Exit", self)
+        exit.triggered.connect(self.closeEvent)
+        
+        
         self.show()
+    
+    def closeEvent(self, event):
+        self.silence()
+        close = QMessageBox()
+        close.setText("You sure?")
+        close.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        close = close.exec()
+        
+        if close == QMessageBox.Yes:
+            
+            event.accept()
+        else:
+            event.ignore()
     
     def LoadHomeLayout(self):
         self.setWindowTitle("Home")
         if self.home_layout == None:
             self.home_layout = HomeLayout(self.user)
+            self.home_layout._WatchMovie_.connect(lambda:self.LoadMovieLayout())
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
         
@@ -77,6 +102,7 @@ class MainWidget(QWidget):
             self.dashboard_layout.new_course_request.connect(self.LoadNewCourseLayout)
             self.stack.addWidget(self.dashboard_layout)
         self.stack.setCurrentWidget(self.dashboard_layout)
+        self.silence()
         
     def LoadProfileLayout(self):
         self.setWindowTitle("Profile")
@@ -84,6 +110,7 @@ class MainWidget(QWidget):
             self.profile_layout = ProfileLayout(self.user)
             self.stack.addWidget(self.profile_layout)
         self.stack.setCurrentWidget(self.profile_layout)
+        self.silence()
 
     def LoadCourseLayout(self,course_id):
         self.setWindowTitle("Course")
@@ -105,7 +132,17 @@ class MainWidget(QWidget):
         self.stack.addWidget(self.new_course_layout)
         self.stack.setCurrentWidget(self.new_course_layout)  
         
+    def LoadMovieLayout(self):
+        self.setWindowTitle("Movie")
+        if self.movie_layout!=None:
+            self.stack.removeWidget(self.movie_layout)
+            del self.movie_layout
+            
+        self.movie_layout = MovieLayout()
+        self.stack.addWidget(self.movie_layout)
+        self.stack.setCurrentWidget(self.movie_layout)  
         
-        
+    def silence(self):
+        self.movie_layout.Stop()
         
         
