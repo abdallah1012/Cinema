@@ -12,6 +12,9 @@ from DashboardLayout import DashboardLayout
 from ProfileLayout import ProfileLayout
 from CourseLayout import CourseLayout
 from NewCourseLayout import NewCourseLayout
+from MovieLayout import MovieLayout
+
+
 class MainWidget(QMainWindow):
     
     def __init__(self, user:User):
@@ -53,6 +56,7 @@ class MainWidget(QMainWindow):
         self.profile_layout = None
         self.course_layout = None
         self.new_course_layout = None
+        self.movie_layout = None
         
         self.stack = QStackedLayout()
         
@@ -68,6 +72,7 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Home")
         if self.home_layout == None:
             self.home_layout = HomeLayout(self.user)
+            self.home_layout._WatchMovie_.connect(lambda:self.LoadMovieLayout())
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
         
@@ -107,6 +112,15 @@ class MainWidget(QMainWindow):
         self.stack.addWidget(self.new_course_layout)
         self.stack.setCurrentWidget(self.new_course_layout)  
         
+    def LoadMovieLayout(self):
+        self.setWindowTitle("Movie")
+        if self.movie_layout!=None:
+            self.stack.removeWidget(self.movie_layout)
+            del self.movie_layout
+            
+        self.movie_layout = MovieLayout()
+        self.stack.addWidget(self.movie_layout)
+        self.stack.setCurrentWidget(self.movie_layout)  
         
         
         

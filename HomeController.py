@@ -7,7 +7,7 @@ Created on Wed Nov 18 09:46:53 2020
 
 from RecommendationEngine import RecommendationEngine
 from User import User
-from MovieWidget import MovieWidget
+from MovieLayout import MovieLayout
 import threading
 
 class HomeController:
