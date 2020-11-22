@@ -158,5 +158,4 @@ class MovieLayout(QWidget):
         # setting the slider to the desired position     
         self.positionslider.setValue(self.mediaplayer.get_position() * 1000)
 
-        
 

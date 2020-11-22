@@ -145,4 +145,5 @@ class MainWidget(QMainWindow):
     def silence(self):
         self.movie_layout.Stop()
         
+
         
