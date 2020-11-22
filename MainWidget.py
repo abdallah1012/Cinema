@@ -5,17 +5,20 @@ Created on Wed Nov 11 13:02:46 2020
 @author: ojaro
 """
 
-from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame
+from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame, QMainWindow
 from User import User
 from HomeLayout import HomeLayout
 from DashboardLayout import DashboardLayout
 from ProfileLayout import ProfileLayout
 from CourseLayout import CourseLayout
 from NewCourseLayout import NewCourseLayout
-class MainWidget(QWidget):
+class MainWidget(QMainWindow):
     
     def __init__(self, user:User):
         super().__init__()
+        
+        self.mainWidget = QWidget()
+        
         self.setMinimumSize(500,500)
         self.user = user
         self.setStyleSheet(open('main.css').read())
@@ -30,9 +33,7 @@ class MainWidget(QWidget):
                 
         
         self.grid = QGridLayout()
-#        self.grid.addWidget(self.dashboard_button)
-#        self.grid.addWidget(self.home_button)
-#        self.grid.addWidget(self.profile_button)
+
     
         self.upperLayout = QHBoxLayout()
         
@@ -58,7 +59,8 @@ class MainWidget(QWidget):
         self.grid.addWidget(self.upperExternal,1,1)
         self.grid.addLayout(self.stack,2,1)
         
-        self.setLayout(self.grid)
+        self.mainWidget.setLayout(self.grid)
+        self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
         self.show()
     
