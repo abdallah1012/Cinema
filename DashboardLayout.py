@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton
 from User import User
 from DashboardController import DashboardController
 from PyQt5.QtCore import pyqtSignal
+import CourseManagement
+
 
 class DashboardLayout(QWidget):
     load_course_request = pyqtSignal(str)
@@ -35,6 +37,7 @@ class DashboardLayout(QWidget):
                 course.clicked.connect(lambda:self.load_course_request.emit(course.text()))
         
         
-         
+    def AddCourse(self):
+        pass
         
             

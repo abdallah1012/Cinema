@@ -14,7 +14,7 @@ class MovieLayout(QWidget):
     def __init__(self):
         super().__init__()
         
-        self.url = "https://youtu.be/oHg5SJYRHA0"
+        self.url = "https://youtu.be/nFpXBpMVuxs"
         self.setWindowTitle("Movie Player")
 
         # creating a basic vlc instance

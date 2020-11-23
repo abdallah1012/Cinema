@@ -9,7 +9,7 @@ import datetime
 from Google import Create_Service
 from googleapiclient.http import MediaFileUpload
 
-CLIENT_SECRET_FILE = 'client_secret_589972382284-1nk5vf28kvfim87ofu55jri5lcfsikmk.apps.googleusercontent.com.json'
+CLIENT_SECRET_FILE = 'client_secret.json'
 API_NAME = 'youtube'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
@@ -21,19 +21,19 @@ upload_date_time = datetime.datetime(2019, 12, 25, 12, 30, 0).isoformat() + '.00
 request_body = {
     'snippet': {
         'categoryI': 19,
-        'title': 'Upload Testing 2',
+        'title': 'Testing HOw api works',
         'description': 'Larger upload',
-        'tags': ['Travel', 'video test', 'Travel Tips']
+        'tags': ['development']
     },
     'status': {
-        'privacyStatus': 'private',
-        'publishAt': upload_date_time,
+        'privacyStatus': 'unlisted',
+#        'publishAt': upload_date_time,
         'selfDeclaredMadeForKids': False, 
     },
     'notifySubscribers': False
 }
 
-mediaFile = MediaFileUpload('test.mp4')
+mediaFile = MediaFileUpload('test23.mp4')
 
 response_upload = service.videos().insert(
     part='snippet,status',
@@ -41,8 +41,9 @@ response_upload = service.videos().insert(
     media_body=mediaFile
 ).execute()
 
+#response_upload.getId()
 
-service.thumbnails().set(
-    videoId=response_upload.get('id'),
-    media_body=MediaFileUpload('thumbnail.jpg')
-).execute()
+#service.thumbnails().set(
+#    videoId=response_upload.get('id'),
+#    media_body=MediaFileUpload('thumbnail.jpg')
+#).execute()
