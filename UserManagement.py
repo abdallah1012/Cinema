@@ -23,23 +23,24 @@ class UserManagement():
             return 0
     
     def CheckForUserPass(self, username, password):
-        sqlstmt = "SELECT entity FROM users WHERE username = '"+str(username)+"' AND password = '"+str(password)+"'"
+        sqlstmt = "SELECT entity, userID FROM users WHERE username = '"+str(username)+"' AND password = '"+str(password)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
         if(len(df) > 0):
-            return 1 , df[0][0]
+            return 1 , df[0][0], str(df[0][1])
         else:
-            return 0 , ''
+            return 0 , '', ''
         
     
     def AddToUsers(self, username, firstname, lastname, password, user):
-        
+        #Students have odd userIDs while professors have them even
         #try later to encrypt password
-        sqlstmt = "INSERT INTO users VALUES ('"+str(username)+"', '"+str(firstname)+"', '"+str(lastname)+"', '"+str(password)+"', '"+str(user)+"');"
+        sqlstmt = "INSERT INTO users(username, firstname, lastname, password, entity) VALUES ('"+str(username)+"', '"+str(firstname)+"', '"+str(lastname)+"', '"+str(password)+"', '"+str(user)+"');"
         try:
             self.database_connection.execute(sqlstmt)
             return 1
         except:
+            print("Failed")
             return 0
     
     

@@ -20,7 +20,7 @@ class DashboardLayout(QWidget):
         self.user = user
         self.exampleCourse = QPushButton("Example course")
         self.add_course = QPushButton("Add Course") #enroll for student, create for professor
-        self.add_course.clicked.connect(lambda:self.new_course_request.emit(str(user.id)))
+        self.add_course.clicked.connect(lambda:self.Add(str(self.user.id)))
         self.__dashboard_grid.addWidget(self.add_course)
         
         self.courses = [self.exampleCourse] #courses will typically be clickable labels

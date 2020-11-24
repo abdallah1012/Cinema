@@ -7,7 +7,7 @@ Created on Wed Nov 11 12:54:51 2020
 from MainWidget import MainWidget
 from Student import Student 
 from Professor import Professor
-# from RegisterLayout import RegisterLayout
+from RegisterLayout import RegisterLayout
 import UserManagement
 
 class SignInController:
@@ -23,20 +23,20 @@ class SignInController:
         if (username=="" or password==""):
             return ("Error empty field(s)")
         else:
-            model_result, entity = self.Manager.CheckForUserPass(username, password)
+            model_result, entity, userID = self.Manager.CheckForUserPass(username, password)
             if(model_result == 1):
                 if(entity == 'student'):
-                    user = Student(0)
+                    user = Student(userID)
                 elif(entity == 'professor'):
-                    user = Professor(0)
+                    user = Professor(userID)
                     
                 main_window = MainWidget(user)
                 return "success"
             else:
                 return ("Username or Password Incorrect")
         
-    # def ToRegister(self):
-    #         register_window = RegisterLayout()
-    #         return ("success")
+    def ToRegister(self):
+             register_window = RegisterLayout()
+             return ("success")
     
     
