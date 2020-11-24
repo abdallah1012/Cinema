@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 24, 2020 at 06:42 PM
+-- Generation Time: Nov 24, 2020 at 09:15 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -48,6 +48,33 @@ INSERT INTO `courses` (`courseID`, `courseName`, `professorID`, `syllabus`) VALU
 (3, 'aa', 0, 'aa'),
 (4, 'asd', 0, 'asd'),
 (5, 'new', 0, 'new');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movies`
+--
+
+DROP TABLE IF EXISTS `movies`;
+CREATE TABLE IF NOT EXISTS `movies` (
+  `movieID` int(10) NOT NULL AUTO_INCREMENT,
+  `moviename` varchar(10) NOT NULL,
+  `moviecourseID` int(10) NOT NULL,
+  `professorID` int(10) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `url` varchar(100) NOT NULL,
+  PRIMARY KEY (`movieID`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `movies`
+--
+
+INSERT INTO `movies` (`movieID`, `moviename`, `moviecourseID`, `professorID`, `description`, `url`) VALUES
+(1, 'potatoes', 3, 3, 'healthy', ''),
+(2, 'asd', 1, 1, 'asd', ''),
+(3, 'aa', 1, 0, 'aa', ''),
+(4, 'test', 1, 0, 'test', 'https://youtu.be/BxkmfJfOlLI');
 
 -- --------------------------------------------------------
 

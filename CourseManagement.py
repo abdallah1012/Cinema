@@ -13,7 +13,16 @@ class CourseManagement:
         #change localhost to IP address and root to username of database
         #This was tested using wampserver
         self.database_connection = create_engine('mysql+mysqlconnector://root@localhost/cinemadb?'.format('root', '', 'localhost', 'cinemadb'))
+    
+    def getCourses(self, userID):
+        sqlstmt = "SELECT courseName, courseID FROM courses WHERE professorID = '"+str(userID)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
         
+        if(len(df) > 0):
+            return df
+        else:
+            return 0     
     
     def CheckForCourseUser(self, coursename, user):
         sqlstmt = "SELECT courseID FROM courses WHERE coursename = '"+str(coursename)+"' AND professorID = '"+str(user)+"'"
