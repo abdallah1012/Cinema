@@ -56,7 +56,7 @@ class DashboardController:
             return 0 #Database error
         
         try:
-            videoid = uploadToYoutube(url)
+            videoid = uploadToYoutube(url, moviename, description, thumbnail)
         except:
             return 3 #youtube error
         
@@ -68,4 +68,13 @@ class DashboardController:
                     print("failed to add course")
                     return 0 #database error
         else:
+            #TODO: ADD code here that removes the youtube video from youtube since the database failed to insert it
             return 2 #course already exists with user
+        
+        
+        
+        
+        
+        
+        
+        

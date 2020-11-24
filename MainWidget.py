@@ -188,7 +188,7 @@ class MainWidget(QMainWindow):
         self.dashboard_layout.movieProperties.append(self.movieInput.thumbLabel.text())
         self.dashboard_layout.addMovieName.setText("Movie/Course Name: " + self.dashboard_layout.name)
         self.dashboard_layout.addMovieDesc.setText("Description: " + self.movieInput.le2.text())
-        self.dashboard_layout.addMoviePath.setText("Movie Path: " + self.movieInput.movieLabel.text())
+        self.dashboard_layout.addMoviePath.setText("Movie/thumb Path: " + self.movieInput.movieLabel.text() + "\n" + self.movieInput.thumbLabel.text() )
         self.movieInput.close()
         self.movieInput.deleteLater()
         self.dashboard_layout.Submit = QPushButton("Submit")
