@@ -13,7 +13,7 @@ from ProfileLayout import ProfileLayout
 from CourseLayout import CourseLayout
 from NewCourseLayout import NewCourseLayout
 from MovieLayout import MovieLayout
-
+from CourseInputDialog import CourseInputDialog
 
 class MainWidget(QMainWindow):
     
@@ -49,7 +49,7 @@ class MainWidget(QMainWindow):
     
         self.upperExternal.setLayout(self.upperLayout)
         
-       
+        
        
         self.home_layout = None
         self.dashboard_layout = None
@@ -67,6 +67,7 @@ class MainWidget(QMainWindow):
         self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
         
+        
         exit = QAction("&Exit", self)
         exit.triggered.connect(self.closeEvent)
         
@@ -74,18 +75,20 @@ class MainWidget(QMainWindow):
         self.show()
     
     def closeEvent(self, event):
+        
         self.silence()
         close = QMessageBox()
         close.setText("You sure?")
         close.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         close = close.exec()
         
-        if close == QMessageBox.Yes:
-            
+        if close == QMessageBox.Yes:        
             event.accept()
         else:
             event.ignore()
     
+    
+    #HomeLayoout
     def LoadHomeLayout(self):
         self.setWindowTitle("Home")
         if self.home_layout == None:
@@ -93,44 +96,6 @@ class MainWidget(QMainWindow):
             self.home_layout._WatchMovie_.connect(lambda:self.LoadMovieLayout())
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
-        
-    def LoadDashboardLayout(self):
-        self.setWindowTitle("Dashboard")
-        if self.dashboard_layout == None:
-            self.dashboard_layout = DashboardLayout(self.user)
-            self.dashboard_layout.load_course_request.connect(self.LoadCourseLayout)
-            self.dashboard_layout.new_course_request.connect(self.LoadNewCourseLayout)
-            self.stack.addWidget(self.dashboard_layout)
-        self.stack.setCurrentWidget(self.dashboard_layout)
-        self.silence()
-        
-    def LoadProfileLayout(self):
-        self.setWindowTitle("Profile")
-        if self.profile_layout == None:
-            self.profile_layout = ProfileLayout(self.user)
-            self.stack.addWidget(self.profile_layout)
-        self.stack.setCurrentWidget(self.profile_layout)
-        self.silence()
-
-    def LoadCourseLayout(self,course_id):
-        self.setWindowTitle("Course")
-        if self.course_layout!=None:
-            self.stack.removeWidget(self.course_layout)
-            del self.course_layout
-            
-        self.course_layout = CourseLayout(course_id)
-        self.stack.addWidget(self.course_layout)
-        self.stack.setCurrentWidget(self.course_layout)  
-    
-    def LoadNewCourseLayout(self,user_id):
-        self.setWindowTitle("New Course")
-        if self.new_course_layout!=None:
-            self.stack.removeWidget(self.new_course_layout)
-            del self.add_course_layout
-            
-        self.new_course_layout = NewCourseLayout(user_id)
-        self.stack.addWidget(self.new_course_layout)
-        self.stack.setCurrentWidget(self.new_course_layout)  
         
     def LoadMovieLayout(self):
         self.setWindowTitle("Movie")
@@ -140,10 +105,76 @@ class MainWidget(QMainWindow):
             
         self.movie_layout = MovieLayout()
         self.stack.addWidget(self.movie_layout)
-        self.stack.setCurrentWidget(self.movie_layout)  
+        self.stack.setCurrentWidget(self.movie_layout) 
+ 
+    
+    
+    
+
+    #DashBoardLayout       
+    def LoadDashboardLayout(self):
+        self.setWindowTitle("Dashboard")
+        if self.dashboard_layout == None:
+            self.dashboard_layout = DashboardLayout(self.user)
+            self.dashboard_layout.submitcourse_request.connect(self.submitcourse)
+            self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
+            self.stack.addWidget(self.dashboard_layout)
+        self.stack.setCurrentWidget(self.dashboard_layout)
+        self.silence()
         
+    def LoadCourseLayout(self):
+        self.courseInput = CourseInputDialog()
+        self.courseInput.show()
+        self.courseInput.done.clicked.connect(lambda:self.take_input())
+        
+    def take_input(self):
+        self.dashboard_layout.name = self.courseInput.le1.text()
+        self.dashboard_layout.syllabus = self.courseInput.le2.text()
+        self.dashboard_layout.addCoursename.setText("Course Name: " + self.courseInput.le1.text())
+        self.dashboard_layout.addCourseSyllabus.setText("Description: " + self.courseInput.le2.text())
+        self.courseInput.close()
+        self.courseInput.deleteLater()
+        self.dashboard_layout.Submit = QPushButton("Submit")
+        self.dashboard_layout.infoShown.addWidget(self.dashboard_layout.Submit)
+        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitcourse())
+        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitcourse_request.emit())
+        
+
+    def submitcourse(self):
+        result = self.dashboard_layout.result
+        self.dashboard_layout.Submit.hide()
+        self.dashboard_layout.addCourseSyllabus.setText("")
+        if(result == 1):
+            self.dashboard_layout.addCoursename.setText("Course Added Successfully")
+        elif(result == 0):
+            self.dashboard_layout.addCoursename.setText("Database Error")
+        elif(result == 2):
+            self.dashboard_layout.addCoursename.setText("Course Already Added Before")
+        else:
+            self.dashboard_layout.addCoursename.setText("Unknown Error") 
+
+    
+
+
+    #ProfileLayout
+    def LoadProfileLayout(self):
+        self.setWindowTitle("Profile")
+        if self.profile_layout == None:
+            self.profile_layout = ProfileLayout(self.user)
+            self.stack.addWidget(self.profile_layout)
+        self.stack.setCurrentWidget(self.profile_layout)
+        self.silence()
+
+    
+ 
+        
+     
+    
+
+    
     def silence(self):
-        self.movie_layout.Stop()
+        if(self.movie_layout != None):
+            self.movie_layout.Stop()
         
 
         

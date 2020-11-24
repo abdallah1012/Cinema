@@ -16,19 +16,21 @@ class CourseManagement:
         
     
     def CheckForCourseUser(self, coursename, user):
-        sqlstmt = "SELECT entity FROM courses WHERE coursename = '"+str(coursename)+"' AND user = '"+str(user)+"'"
+        sqlstmt = "SELECT courseID FROM courses WHERE coursename = '"+str(coursename)+"' AND professorID = '"+str(user)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
+        print(sqlstmt)
         if(len(df) > 0):
-            return 1 , df[0][0]
+            return 1 
         else:
-            return 0 , ''
+            return 0 
         
     
-    def AddToCourses(self, CourseName, PreRequisites, Sylabbus, user):
+    def AddToCourses(self, CourseName, Sylabbus, user):
         
         #try later to encrypt password
-        sqlstmt = "INSERT INTO courses VALUES ('"+str(CourseName)+"', '"+str(PreRequisites)+"', '"+str(Sylabbus)+"', '"+str(user)+"');"
+        sqlstmt = "INSERT INTO courses (courseName, professorID, syllabus) VALUES ('"+str(CourseName)+"', '"+str(user)+"', '"+str(Sylabbus)+"');"
+        
         try:
             self.database_connection.execute(sqlstmt)
             return 1

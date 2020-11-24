@@ -10,6 +10,7 @@ import pandas as pd
 import WelcomeWidget
 import UserManagement
 
+
 class RegisterController:
     def __init__(self):   
        
