@@ -17,7 +17,7 @@ class DashboardController:
         self.movie_manager = MovieManagement()
        
         
-        courses = self.course_manager.getCourses(self.user)
+        courses = self.course_manager.getCourses(self.user.id)
 
         if(courses != 0):
             self.courses = courses #enrolled courses for student, owned courses for professor
