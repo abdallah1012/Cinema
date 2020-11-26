@@ -9,15 +9,23 @@ from Student import Student
 from Professor import Professor
 from RegisterLayout import RegisterLayout
 import UserManagement
+from CourseManagement import CourseManagement
 
 class SignInController:
     def __init__(self):
         self.Manager = UserManagement.UserManagement() #lazy init
-        
+        self.course_manager = CourseManagement()
     def AttemptSignIn(self,username: str, password: str)->str:
         #this is for dev reasons
         if(username == "aa" and password == "aa"):
-            user = Student(0)
+            courses = []
+            try:
+                courses = self.course_manager.getCourses(0)
+            except:
+                pass
+            
+            user = Professor(0,courses)
+            
             main_window = MainWidget(user)
             return "success"
         if (username=="" or password==""):
@@ -25,11 +33,18 @@ class SignInController:
         else:
             model_result, entity, userID = self.Manager.CheckForUserPass(username, password)
             if(model_result == 1):
+                courses = []
+                try:
+                    courses = self.course_manager.getCourses(userID)
+                except:
+                    return ("Database down, use aa")
+            
                 if(entity == 'student'):
-                    user = Student(userID)
+                    user = Student(userID, courses)
                 elif(entity == 'professor'):
-                    user = Professor(userID)
-                    
+                    user = Professor(userID, courses)
+                
+
                 main_window = MainWidget(user)
                 return "success"
             else:

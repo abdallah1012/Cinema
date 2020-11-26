@@ -15,37 +15,15 @@ class DashboardController:
         self.user = user
         self.course_manager = CourseManagement()
         self.movie_manager = MovieManagement()
-       
-        
-        courses = self.course_manager.getCourses(self.user.id)
 
-        if(courses != 0):
-            self.courses = courses #enrolled courses for student, owned courses for professor
-        else:
-            self.courses = []
-        
+
         self.movies_in_progress = []
         
         self. statistics = None #statistics about movies and courses (only for professor)
         #TODO: load unfinished movies watched by user from MovieManagement
         #TODO: load courses for user from CourseManagement
         #TODO: load statitiscs if professor is signed in
-    def addCourse(self, coursename, description, userID):
-        try:
-            exists = self.course_manager.CheckForCourseUser(coursename, userID)
-        except:
-            return 0 #Database error
-        
-        if(exists == 0):
-           
-                result = self.course_manager.AddToCourses(coursename, description, userID)
-                if(result == 1):
-                    return 1 #sucessfully added course to database
-                else:
-                    print("failed to add course")
-                    return 0 #database error
-        else:
-            return 2 #course already exists with user
+
         
 
 

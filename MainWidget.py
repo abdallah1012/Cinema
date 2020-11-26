@@ -25,7 +25,7 @@ class MainWidget(QMainWindow):
         self.user = user
         self.setStyleSheet(open('main.css').read())
         self.dashboard_button = QPushButton("Dashboard")
-        self.dashboard_button.clicked.connect(lambda:self.LoadDashboardLayout())
+        self.dashboard_button.clicked.connect(lambda success:self.LoadDashboardLayout(success))
         
         self.home_button = QPushButton("Home")
         self.home_button.clicked.connect(lambda:self.LoadHomeLayout())
@@ -48,7 +48,7 @@ class MainWidget(QMainWindow):
     
         self.upperExternal.setLayout(self.upperLayout)
         
-        
+        print(self.user.courses)
        
         self.home_layout = None
         self.dashboard_layout = None
@@ -56,6 +56,7 @@ class MainWidget(QMainWindow):
         self.course_layout = None
         self.new_course_layout = None
         self.movie_layout = None
+        self.addmovie_layout = None
         
         self.stack = QStackedLayout()
         
@@ -111,91 +112,48 @@ class MainWidget(QMainWindow):
     
 
     #DashBoardLayout       
-    def LoadDashboardLayout(self):
+    def LoadDashboardLayout(self, success):
+        if(success == 1):
+            self.dashboard_layout.message.setText("Successfully Submitted Course")
+            self.course_layout = None
+        elif(success == 2):
+            self.dashboard_layout.message.setText("Successfully Submitted Movie")
+            self.addmovie_layout = None
+            
         self.setWindowTitle("Dashboard")
         if self.dashboard_layout == None:
             self.dashboard_layout = DashboardLayout(self.user)
-            self.dashboard_layout.submitcourse_request.connect(self.submitCourse)
             self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
             self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)
-            self.dashboard_layout.submitmovie_request.connect(self.submitMovie)
+
             
             self.stack.addWidget(self.dashboard_layout)
         self.stack.setCurrentWidget(self.dashboard_layout)
         self.silence()
         
     def LoadCourseLayout(self):
-        self.courseInput = CourseInputDialog()
-        self.courseInput.show()
-        self.courseInput.done.clicked.connect(lambda:self.take_input())
+        self.setWindowTitle("Add Course")
+        if self.course_layout == None:
+            self.course_layout = CourseInputDialog(self.user)
+            self.course_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))
+            
+            
+            self.stack.addWidget(self.course_layout)
+        self.stack.setCurrentWidget(self.course_layout)
         
-    def take_input(self):
-        self.dashboard_layout.name = self.courseInput.le1.text()
-        self.dashboard_layout.syllabus = self.courseInput.le2.text()
-        self.dashboard_layout.addCoursename.setText("Course Name: " + self.courseInput.le1.text())
-        self.dashboard_layout.addCourseSyllabus.setText("Description: " + self.courseInput.le2.text())
-        self.courseInput.close()
-        self.courseInput.deleteLater()
-        self.dashboard_layout.Submit = QPushButton("Submit")
-        self.dashboard_layout.infoShown.addWidget(self.dashboard_layout.Submit)
-        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitcourse())
-        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitcourse_request.emit())
-    
-    def submitMovie(self):
-        result = self.dashboard_layout.result
-        self.dashboard_layout.Submit.hide()
-        self.dashboard_layout.addMovieDesc.setText("")
-        self.dashboard_layout.addMoviePath.setText("")
-        if(result == 1):
-            self.dashboard_layout.addMovieName.setText("Course Added Successfully")
-        elif(result == 0):
-            self.dashboard_layout.addMovieName.setText("Database Error")
-        elif(result == 2):
-            self.dashboard_layout.addMovieName.setText("Course Already Added Before")
-        elif(result == 3):
-            self.dashboard_layout.addMovieName.setText("Youtube Error")
-        else:
-            self.dashboard_layout.addMovieName.setText("Unknown Error") 
-
-
-    def submitCourse(self):
-        result = self.dashboard_layout.result
-        self.dashboard_layout.Submit.hide()
-        self.dashboard_layout.addCourseSyllabus.setText("")
-        if(result == 1):
-            self.dashboard_layout.addCoursename.setText("Course Added Successfully")
-        elif(result == 0):
-            self.dashboard_layout.addCoursename.setText("Database Error")
-        elif(result == 2):
-            self.dashboard_layout.addCoursename.setText("Course Already Added Before")
-        elif(result == 3):
-            self.dashboard_layout.addCoursename.setText("Youtube Error")
-        else:
-            self.dashboard_layout.addCoursename.setText("Unknown Error") 
-
-    
     def LoadDashMovieLayout(self):
-        self.movieInput = MovieInputDialog(self.dashboard_layout.controller.courses)
-        self.movieInput.show()
-        self.movieInput.done.clicked.connect(lambda:self.take_input_movie())
+        self.setWindowTitle("Add Movie")
+        if self.addmovie_layout == None:
+            self.addmovie_layout = MovieInputDialog(self.user)
+            self.addmovie_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))
+            self.stack.addWidget(self.addmovie_layout)
+        self.stack.setCurrentWidget(self.addmovie_layout)
     
     
-    def take_input_movie(self):
-        self.dashboard_layout.name = self.movieInput.le.text() + " / " + self.movieInput.le1.text()
-        self.dashboard_layout.syllabus = self.movieInput.le2.text()    
-        self.dashboard_layout.movieProperties = [] #reset it
-        self.dashboard_layout.movieProperties.append(self.movieInput.movieLabel.text())
-        self.dashboard_layout.movieProperties.append(self.movieInput.thumbLabel.text())
-        self.dashboard_layout.addMovieName.setText("Movie/Course Name: " + self.dashboard_layout.name)
-        self.dashboard_layout.addMovieDesc.setText("Description: " + self.movieInput.le2.text())
-        self.dashboard_layout.addMoviePath.setText("Movie/thumb Path: " + self.movieInput.movieLabel.text() + "\n" + self.movieInput.thumbLabel.text() )
-        self.movieInput.close()
-        self.movieInput.deleteLater()
-        self.dashboard_layout.Submit = QPushButton("Submit")
-        self.dashboard_layout.movieInfoShown.addWidget(self.dashboard_layout.Submit)
-        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitmovie())
-        self.dashboard_layout.Submit.clicked.connect(lambda:self.dashboard_layout.submitmovie_request.emit())
 
+ 
+    
+    
     #ProfileLayout
     def LoadProfileLayout(self):
         self.setWindowTitle("Profile")
@@ -205,11 +163,6 @@ class MainWidget(QMainWindow):
         self.stack.setCurrentWidget(self.profile_layout)
         self.silence()
 
-    
- 
-        
-     
-    
 
     
     def silence(self):

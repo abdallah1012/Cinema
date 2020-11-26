@@ -7,7 +7,7 @@ Created on Sun Nov 15 17:58:22 2020
 
 import pandas as pd
 from sqlalchemy import create_engine
-
+import re
 
 class MovieManagement:
     def __init__(self):   
@@ -17,9 +17,12 @@ class MovieManagement:
         self.database_connection = create_engine('mysql+mysqlconnector://root@localhost/cinemadb?'.format('root', '', 'localhost', 'cinemadb'))
         
        
-    def addMovie(self, movieName, courseID, description , userID, url):
-        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"');"      
-        print(sqlstmt)
+    def addMovie(self, movieName, courseID, description , userID, url, thumbnail64):
+        thumbnail64 = re.sub(r"\'", r"\\'", str(thumbnail64))
+        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"', '"+str(thumbnail64)+"');"      
+        
+
+#        print(sqlstmt)
         try:
             self.database_connection.execute(sqlstmt)
             return 1

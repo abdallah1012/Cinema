@@ -26,19 +26,15 @@ class DashboardLayout(QWidget):
         #ADD COURSE GUI
         self.add_course = QPushButton("Add Course") #enroll for student, create for professor
         self.add_course.clicked.connect(lambda:self.new_course_request.emit())
-        self.addCoursename = QLabel("")
-        self.addCourseSyllabus = QLabel("")
+        
   
-        self.infoShown = QVBoxLayout()
-        self.infoShown.addWidget(self.addCoursename)
-        self.infoShown.addWidget(self.addCourseSyllabus)
-           
+        
         self.name = ""
         self.syllabus = ""
         
         self.exampleCourse = QPushButton("Example course")
         self.__dashboard_grid.addWidget(self.add_course,1,1)
-        self.__dashboard_grid.addLayout(self.infoShown,2, 1)
+       
        
         self.movieProperties = [] 
         
@@ -46,29 +42,25 @@ class DashboardLayout(QWidget):
         
         self.add_movie = QPushButton("Add Movie")
         
-        self.movieInfoShown = QVBoxLayout()
-        self.movieInfoShown.addWidget(self.add_movie)
+       
         self.add_movie.clicked.connect(lambda:self.new_movie_request.emit())
-        self.addMovieName = QLabel("")
-        self.addMovieDesc = QLabel("")
-        self.addMoviePath = QLabel("")
-        self.movieInfoShown.addWidget(self.addMovieName)
-        self.movieInfoShown.addWidget(self.addMovieDesc)
-        self.movieInfoShown.addWidget(self.addMoviePath)
         
-        self.__dashboard_grid.addLayout(self.movieInfoShown,3,1)
         
-#        items = ("C", "C++", "Java", "Python")
-#		
-#        item, ok = QInputDialog.getItem(self, "select input dialog", "list of languages", items, 0, False)
+        self.__dashboard_grid.addWidget(self.add_movie,2,1)
+        
+
         
         
         self.courses = [self.exampleCourse] #courses will typically be clickable labels
 
         self.controller = DashboardController(self.user)
-        #TODO: populate courses list from dashbaord controller result and display on GUI
+
         
-        self.__dashboard_grid.addWidget(self.exampleCourse,4,1)
+        self.__dashboard_grid.addWidget(self.exampleCourse,3,1)
+        
+        self.message = QLabel("")
+        self.__dashboard_grid.addWidget(self.message,4,1)
+        
         self.courseInput = None
         self.setLayout(self.__dashboard_grid)
         

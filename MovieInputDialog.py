@@ -9,14 +9,16 @@ from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, Q
 QFormLayout, QInputDialog, QFileDialog
 from PyQt5.QtWidgets import QApplication
 from User import User
-
+from MovieInputController import MovieInputController
+from PyQt5.QtCore import pyqtSignal
 
 class MovieInputDialog(QWidget):
+   loaddashlayout = pyqtSignal(int)
    
-   def __init__(self, courses, parent = None):
+   def __init__(self, user:User, parent = None):
       super(MovieInputDialog, self).__init__(parent)
 
-      self.courses = courses
+      self.user = user
 
       layout = QFormLayout()
       
@@ -26,24 +28,25 @@ class MovieInputDialog(QWidget):
       layout.addRow(self.btn,self.le)
       
       
-      self.btn1 = QLabel("Movie Name")
-#      self.btn1.clicked.connect(self.gettext)
-		
+      self.btn1 = QLabel("Movie Name")	
       self.le1 = QLineEdit()
+      self.le1.setFixedWidth(250)
       layout.addRow(self.btn1,self.le1)
       self.btn2 = QLabel("Description")
-#      self.btn2.clicked.connect(self.getint)
+
 		
       self.moviePath = ""
       self.thumbPath = ""
      
       self.le2 = QLineEdit()
-      self.le2.setFixedWidth(300)
-      self.le2.setFixedHeight(300)
+      self.le2.setFixedWidth(250)
+      self.le2.setFixedHeight(200)
       
       self.done = QPushButton("Done")
+      self.done.clicked.connect(lambda: self.submitMovie())
       
-      
+      self.cancel = QPushButton("Cancel")
+      self.cancel.clicked.connect(lambda: self.goBack())
       
       layout.addRow(self.btn2,self.le2)
       
@@ -57,17 +60,52 @@ class MovieInputDialog(QWidget):
       self.thumbLabel = QLabel("Choose your Thumbnail (Optional)")
       layout.addRow(self.thumbbtn, self.thumbLabel)
       
-      layout.addRow(self.done)
+      self.errorText = QLabel("")
+      
+      
+      layout.addRow(self.cancel, self.done)
+      
+      layout.addRow(self.errorText)
+      
       self.setLayout(layout)
       self.setWindowTitle("Add Movie")
+
+      self.controller = MovieInputController()
       
-      
+   def submitMovie(self):
+        courseName = self.le.text()
+        courseID = ""
+        print(courseName)
+        for i in self.user.courses:       
+            if (str(i[0]) == str(courseName)):
+                courseID = i[1]
+                break
+        #self.movieproperties index 0 is the url path and 1 is the thumbnail path
+        result = self.controller.addMovie(self.le1.text(), courseID,  self.le2.text(), self.user.id, 
+                                               self.movieLabel.text(), self.thumbLabel.text())
+        
+        if(result == 1):
+            self.loaddashlayout.emit(2)
+        elif(result == 0):
+            self.errorText.setText("Database Error")
+        elif(result == 2):
+            self.errorText.setText("Course Already Added Before")
+        elif(result == 3):
+            self.errorText.setText("Can't read Movie or Youtube Error")
+        elif(result == 4):
+            self.errorText.setText("Can't Read thumbnail")
+        else:
+            self.errorText.setText("Unknown Error") 
+        
+   
+   def goBack(self):
+       self.loaddashlayout.emit(0)
       
       
 		
    def getItem(self):
       item = []
-      for i in self.courses:
+      for i in self.user.courses:
           item.append(i[0])
       item, ok = QInputDialog.getItem(self, "Select Course", "List of Courses You Give: ", item, 0, False)
 			
