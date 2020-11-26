@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 24, 2020 at 09:15 PM
+-- Generation Time: Nov 26, 2020 at 07:10 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -36,18 +36,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `professorID` int(10) NOT NULL,
   `syllabus` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`courseID`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `courses`
---
-
-INSERT INTO `courses` (`courseID`, `courseName`, `professorID`, `syllabus`) VALUES
-(1, 'EECE435', 0, 'test'),
-(2, 'Course Name: EECE435', 0, 'Description: asd'),
-(3, 'aa', 0, 'aa'),
-(4, 'asd', 0, 'asd'),
-(5, 'new', 0, 'new');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -63,18 +52,9 @@ CREATE TABLE IF NOT EXISTS `movies` (
   `professorID` int(10) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `url` varchar(100) NOT NULL,
+  `thumbnail` mediumblob,
   PRIMARY KEY (`movieID`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `movies`
---
-
-INSERT INTO `movies` (`movieID`, `moviename`, `moviecourseID`, `professorID`, `description`, `url`) VALUES
-(1, 'potatoes', 3, 3, 'healthy', ''),
-(2, 'asd', 1, 1, 'asd', ''),
-(3, 'aa', 1, 0, 'aa', ''),
-(4, 'test', 1, 0, 'test', 'https://youtu.be/BxkmfJfOlLI');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -91,16 +71,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL,
   `entity` varchar(10) NOT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`userID`, `username`, `firstname`, `lastname`, `password`, `entity`) VALUES
-(1, 'asd', 'asd', 'asd', 'asd', 'asd'),
-(2, 'asd1', 'asd', 'asd', 'asd', 'student'),
-(3, 'asd2', 'asd', 'asd', 'asd', 'student');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
