@@ -32,16 +32,18 @@ class MovieInputController:
         
         try:
             videoid = uploadToYoutube(url, moviename, description, thumbnail)
+#            videoid = 999
         except:
             return 3 #youtube error
         
         if(exists == 0):         
                 result = self.movie_manager.addMovie(moviename, courseID, description, userID, "https://youtu.be/" + videoid['id'], encoded_string)
 #                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "test", encoded_string)
+                print(result)
                 if(result == 1):
                     return 1 #sucessfully added course to database
                 else:
-                    print("failed to add course")
+                    print("failed to add Movie")
                     return 0 #database error
         else:
             #TODO: ADD code here that removes the youtube video from youtube since the database failed to insert it

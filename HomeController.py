@@ -8,7 +8,8 @@ Created on Wed Nov 18 09:46:53 2020
 from RecommendationEngine import RecommendationEngine
 from User import User
 from MovieLayout import MovieLayout
-import threading
+from MovieManagement import MovieManagement
+import base64 
 
 class HomeController:
     def __init__(self,user:User):
@@ -16,6 +17,7 @@ class HomeController:
         self.r_engine = RecommendationEngine()
         self.r_engine.WhatsHot()
         self.r_engine.LoadRecommendations(self.user.id)
+        self.movie_manager = MovieManagement()
         
     def loadMovieWidget(self):
         self.movieLayout = MovieWidget()
@@ -31,3 +33,23 @@ class HomeController:
         self.movie_widget = MovieWidget()
         main.vbox.addWidget(self.movie_widget)
         main.example_movie.hide()
+        
+    def getRecommended(self):
+        byteImages = self.movie_manager.getThumbNails()
+        
+        images = []
+        for i in byteImages:
+            
+            images.append(i[0])
+            
+        return images
+    
+    def getHot(self):
+        byteImages = self.movie_manager.getThumbNails()
+        
+        images = []
+        for i in byteImages:
+            
+            images.append(i[0])
+            
+        return images

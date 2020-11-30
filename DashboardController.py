@@ -25,29 +25,6 @@ class DashboardController:
         #TODO: load statitiscs if professor is signed in
 
         
-
-
-    def addMovie(self, moviename, courseID, description, userID, url, thumbnail):
-        try:      
-            exists = self.movie_manager.CheckForMovieUser(moviename, userID)
-        except:         
-            return 0 #Database error
-        
-        try:
-            videoid = uploadToYoutube(url, moviename, description, thumbnail)
-        except:
-            return 3 #youtube error
-        
-        if(exists == 0):         
-                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "https://youtu.be/" + videoid['id'])
-                if(result == 1):
-                    return 1 #sucessfully added course to database
-                else:
-                    print("failed to add course")
-                    return 0 #database error
-        else:
-            #TODO: ADD code here that removes the youtube video from youtube since the database failed to insert it
-            return 2 #course already exists with user
         
         
         

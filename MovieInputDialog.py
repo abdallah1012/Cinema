@@ -89,7 +89,7 @@ class MovieInputDialog(QWidget):
         elif(result == 0):
             self.errorText.setText("Database Error")
         elif(result == 2):
-            self.errorText.setText("Course Already Added Before")
+            self.errorText.setText("Movie Already Added Before")
         elif(result == 3):
             self.errorText.setText("Can't read Movie or Youtube Error")
         elif(result == 4):

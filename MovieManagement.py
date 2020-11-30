@@ -18,13 +18,11 @@ class MovieManagement:
         
        
     def addMovie(self, movieName, courseID, description , userID, url, thumbnail64):
-        thumbnail64 = re.sub(r"\'", r"\\'", str(thumbnail64))
-        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"', '"+str(thumbnail64)+"');"      
-        
 
-#        print(sqlstmt)
+        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"', %s);"      
+        
         try:
-            self.database_connection.execute(sqlstmt)
+            self.database_connection.execute(sqlstmt, thumbnail64)
             return 1
         except:
             return 0
@@ -40,3 +38,17 @@ class MovieManagement:
             return 1 
         else:
             return 0 
+        
+    def getThumbNails(self):
+        
+        sqlstmt = "SELECT thumbnail FROM movies"
+        
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        
+        
+        if(len(df) == 0):
+            return 0 #no thumbnails found
+        else:
+            return df
+        

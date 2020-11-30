@@ -124,10 +124,9 @@ class MainWidget(QMainWindow):
         if self.dashboard_layout == None:
             self.dashboard_layout = DashboardLayout(self.user)
             self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
-            self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)
-
-            
+            self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)  
             self.stack.addWidget(self.dashboard_layout)
+            
         self.stack.setCurrentWidget(self.dashboard_layout)
         self.silence()
         
@@ -135,10 +134,9 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Add Course")
         if self.course_layout == None:
             self.course_layout = CourseInputDialog(self.user)
-            self.course_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))
-            
-            
+            self.course_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))       
             self.stack.addWidget(self.course_layout)
+            
         self.stack.setCurrentWidget(self.course_layout)
         
     def LoadDashMovieLayout(self):
@@ -147,6 +145,7 @@ class MainWidget(QMainWindow):
             self.addmovie_layout = MovieInputDialog(self.user)
             self.addmovie_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))
             self.stack.addWidget(self.addmovie_layout)
+            
         self.stack.setCurrentWidget(self.addmovie_layout)
     
     
