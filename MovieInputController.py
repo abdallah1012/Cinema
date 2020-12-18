@@ -9,13 +9,18 @@ from MovieManagement import MovieManagement
 from source import uploadToYoutube
 import base64
 
+#controller for the relevant layout to allow communication with other layouts and computation models
 class MovieInputController:
     def __init__(self):
 
  
-        self.movie_manager = MovieManagement()
+        self.movie_manager = MovieManagement() #manager to allow communication with movie management model
         
 
+    #talks to movie manager to add movie to database and to youtube
+    #transforms first thumbnail to base64, then checks if movie is already uploaded by user, then tries uploading to youtube, if sucessfull then it uploads relevant data to database
+    #params: string moviename, int courseID, string description, int userID, string url (path to movie), string thumbnail (path to thumbnail)
+    #returns 0 for database errors, 1 if sucessfull, 2 if movie already exists, 3 if error with youtube api, 4 if movie can't be found
     def addMovie(self, moviename, courseID, description, userID, url, thumbnail):
         
         try:
@@ -47,5 +52,5 @@ class MovieInputController:
                     return 0 #database error
         else:
             #TODO: ADD code here that removes the youtube video from youtube since the database failed to insert it
-            return 2 #course already exists with user
+            return 2 #movie  already exists with user
         

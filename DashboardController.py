@@ -10,6 +10,7 @@ from Course import Course
 from User import User
 from source import uploadToYoutube
 
+#controller for relevant layout to communicate with other layouts and communication models
 class DashboardController:
     def __init__(self,user: User):
         self.user = user

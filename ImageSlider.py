@@ -11,6 +11,7 @@ from PyQt5.QtCore import QTimer
 import math
 import base64
 
+#class that implements a widget capable of showing images with title and sliding them with animations right and left for showcasing
 class ImageSlider(QWidget):
 
     def __init__(self): 
@@ -102,6 +103,8 @@ class ImageSlider(QWidget):
         self.show()
 
 
+    
+    #Takes list of images and adds them to the image container of this class
     def setImages(self, images):
         
         self.list_widget.clear()
@@ -118,18 +121,21 @@ class ImageSlider(QWidget):
                     self.items[i].setIcon(ic)
  
                     
-
+    #movies images to the right to slide left by initiating a timer that moves the images smoothly by pixels
     def goleftSmooth(self):
         self.timer2.start()
         self.pic.setDisabled(True)
         self.pic2.setDisabled(True)
     
+    #movies images to the left to slide right by initiating a timer that moves the images smoothly by pixels
     def gorightSmooth(self):
         self.timer.start()
         self.pic.setDisabled(True)
         self.pic2.setDisabled(True)
 
-    
+    #Function that timer2 uses to movie images right
+    #It works by modifying the timer interval (time needed until this function is called again) 
+    #starts by high time interval to low then to high (slow fast slow)
     def goLeft(self):
         if(self.leftCounter != self.counterSize):
         
@@ -182,7 +188,9 @@ class ImageSlider(QWidget):
             self.pic.setEnabled(True)
             self.pic2.setEnabled(True)
             
-
+            
+    #functions similarly to goLeft but adds scrolls to the right by adding pixels to the scrollbar value rather than subtracting
+    #TODO: integrate goleft and goright into 1 function, no need for 2
     def goRight(self):
         
 #        print(self.timer.interval())

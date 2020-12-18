@@ -11,12 +11,17 @@ from RegisterLayout import RegisterLayout
 import UserManagement
 from CourseManagement import CourseManagement
 
+#Controller responsible for the communication of the relevant layout with other controllers
+#or computation models
 class SignInController:
     def __init__(self):
-        self.Manager = UserManagement.UserManagement() #lazy init
-        self.course_manager = CourseManagement()
+        self.Manager = UserManagement.UserManagement() #manager for communication with the user table
+        self.course_manager = CourseManagement() #manager for communication with the course table
+    
+    #Attempts signing in by checking for username password combo (aa,aa username password is an exception for dev purposes)
+    #params: string username, string password
+    #if successfull it returns "success" for the layout to interpret
     def AttemptSignIn(self,username: str, password: str)->str:
-        #this is for dev reasons
         if(username == "aa" and password == "aa"):
             courses = []
             try:
@@ -50,6 +55,8 @@ class SignInController:
             else:
                 return ("Username or Password Incorrect")
         
+    #responsible for opening the registration layout
+    #returns "success" for the layout to interpret (closes the sign in layout)
     def ToRegister(self):
              register_window = RegisterLayout()
              return ("success")

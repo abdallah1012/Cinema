@@ -12,6 +12,7 @@ from User import User
 from PyQt5.QtCore import pyqtSignal
 from CourseInputController import CourseInputController
 
+#layout used to show user interface to add input for and submit a course to be added to the database
 class CourseInputDialog(QWidget):
    loaddashlayout = pyqtSignal(int)
    
@@ -50,7 +51,8 @@ class CourseInputDialog(QWidget):
       layout.addRow(self.errorText)
       
       self.controller = CourseInputController()
-      
+   
+    #Contacts controller with proper input to add course to database
    def SubmitCourse(self):
        result = self.controller.addCourse(self.le1.text(), self.le2.text(), self.user.id)
        if(result == 1):

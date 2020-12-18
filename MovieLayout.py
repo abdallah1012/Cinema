@@ -9,6 +9,7 @@ import pafy
 import threading 
 import time 
 
+#layout for presenting a movie with all navigation features
 class MovieLayout(QWidget):
 
     def __init__(self):
@@ -99,15 +100,12 @@ class MovieLayout(QWidget):
    
     
  
-
+    #Plays and pauses the movie, same button changes status from play to pause
     def PlayPause(self):
         print("Play Pause")
-        if(self.loaded == False):
-            
+        if(self.loaded == False):     
             self.loaded = True     
-#            self.OpenFile()
 
-                
         if self.mediaplayer.is_playing():
             
             self.mediaplayer.pause()
@@ -120,11 +118,13 @@ class MovieLayout(QWidget):
             self.timer.start()
             self.isPaused = False
 
+    #stops the movie, unloads it, pressing this requires loading the movie again
     def Stop(self):
         self.mediaplayer.stop()
         self.playbutton.setText("Play")
 
-
+    #Opens the movie from youtube and sets it in the appropriate layout item to be showcased
+    #TODO: add and use param (string youtube_url) 
     def OpenFile(self, filename=None):
       
         self.video = pafy.new(self.url) 
@@ -140,11 +140,12 @@ class MovieLayout(QWidget):
                 self.mediaplayer.set_nsobject(int(self.videoframe.winId()))
     
         
-
+    #Changes the volume of the media player
     def setVolume(self, Volume):
         #Set the volume 
         self.mediaplayer.audio_set_volume(Volume)
 
+    #Sets the position of the video slider, responsible for going to different times in the movie
     def setPosition(self, position):        
         # setting the position to where the slider was dragged
         self.mediaplayer.set_position(position / 1000.0)
@@ -153,6 +154,7 @@ class MovieLayout(QWidget):
         # factor, the more precise are the results
         # (1000 should be enough)
 
+    #function used by timer to keep the movie's time slider indicator in the right position
     def updateUI(self):
         # setting the slider to the desired position     
         self.positionslider.setValue(self.mediaplayer.get_position() * 1000)

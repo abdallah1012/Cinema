@@ -10,7 +10,8 @@ from PyQt5.QtCore import pyqtSignal
 from RegisterController import RegisterController
 
 
-
+#This widget is used to give the user a visual interface to add him/herself to the database
+#so that they can sign in later
 class RegisterLayout(QWidget):
     success_signal = pyqtSignal()
     
@@ -61,7 +62,13 @@ class RegisterLayout(QWidget):
         
         self.success_signal.connect(lambda:self.cleanUp())
         
-        
+     
+    #SubmitUser first checks that all fields are filled (including the radio buttons)
+    #then checks if the username is already in the database
+    #then submits the sql statement to the database,
+    #if successful then the error messages states "success" and the user is free to go back
+    #to the sign in layout or add another user, if any of the conditions don't hold
+    #then the relevant error will appear
     def SubmitUser(self):
         user = ""
         if(self.std_rb.isChecked() == True):

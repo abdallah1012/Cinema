@@ -8,6 +8,8 @@ Created on Mon Nov 16 12:21:54 2020
 from PyQt5.QtWidgets import QWidget,QGridLayout,QLabel
 from CourseController import CourseController
 
+#course layout used to show relevant interfaces for user to view courses or add courses
+#currently not being used
 class CourseLayout(QWidget):
     def __init__(self, course_id: int):
         super().__init__()

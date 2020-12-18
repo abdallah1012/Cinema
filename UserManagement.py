@@ -7,6 +7,9 @@ Created on Sun Nov 15 14:23:29 2020
 import pandas as pd
 from sqlalchemy import create_engine
 
+#This class is responsible for communicating with the database, mianly with the users table 
+#the users table at 12/17/2020 3:51PM contains (userID, username, firstname, lastname, password, entity)
+
 class UserManagement():
     def __init__(self):   
        
@@ -14,6 +17,9 @@ class UserManagement():
         #This was tested using wampserver
         self.database_connection = create_engine('mysql+mysqlconnector://root@localhost/cinemadb?'.format('root', '', 'localhost', 'cinemadb'))
         
+    #Use this function to check if the username is available or not
+    #params: string username (the username to be checked if its already used)
+    #returns 1 if username exists and 0 if it doesn't
     def CheckForUsername(self, username):
         sqlstmt = "SELECT * FROM users WHERE username = '"+str(username)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
@@ -22,6 +28,9 @@ class UserManagement():
         else:
             return 0
     
+    #Checks if the username password combo exists
+    #params: string username, string password 
+    #returns (1, entity, userID) if successful in finding, else returns (0, '', '')
     def CheckForUserPass(self, username, password):
         sqlstmt = "SELECT entity, userID FROM users WHERE username = '"+str(username)+"' AND password = '"+str(password)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
@@ -32,6 +41,9 @@ class UserManagement():
             return 0 , '', ''
         
     
+    #Adds row/entry to database table "users"
+    #params: string username, string firstname, string lastname, string password, string user
+    #returns 1 if successfuly executed and 0 if failed (error comes from database in case its down or SQL syntax error or input error)
     def AddToUsers(self, username, firstname, lastname, password, user):
         #Students have odd userIDs while professors have them even
         #try later to encrypt password

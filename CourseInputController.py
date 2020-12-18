@@ -7,10 +7,15 @@ Created on Thu Nov 26 18:57:11 2020
 from User import User
 from CourseManagement import CourseManagement
 
+#controller for relevant layout to communicate with other layouts and computation models
 class CourseInputController:
     def __init__(self):
-        self.course_manager = CourseManagement()
+        self.course_manager = CourseManagement() #manager that allows communication with course table in database
        
+    
+    #adds course to courses table in database
+    #params: string coursename, string description, int userID
+    #returns 0 if a database error occurred and 1 if successfull and 2 if the course was already uploaded by the same user before
     def addCourse(self, coursename, description, userID):
         
         

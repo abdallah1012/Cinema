@@ -11,7 +11,8 @@ from PyQt5.QtCore import pyqtSignal
 from CourseInputDialog import CourseInputDialog
 import re
 
-
+#layout that with course/movie upload and course enrollment and movie browsing interface
+#functionality of this layout depends on the user's entity which is the type of user passed by parameter
 class DashboardLayout(QWidget):  
     submitcourse_request = pyqtSignal()
     new_course_request = pyqtSignal()
@@ -70,12 +71,12 @@ class DashboardLayout(QWidget):
         
         
         
-    
+    #contacts controller to submit course, currently is professor's course upload feature
     def submitcourse(self):
         self.result = self.controller.addCourse(self.name, self.syllabus, self.user.id)
         
 
-    
+    #contacts controller to submit movie under name of of course, currently is for professor's movie upload feature
     def submitmovie(self):
         seg = re.split(" / ", self.name) #seg[0] is the course name, seg[1] is the movie name
         courseID = ""

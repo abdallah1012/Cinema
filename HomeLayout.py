@@ -11,6 +11,7 @@ from HomeController import HomeController
 from PyQt5.QtCore import pyqtSignal
 from ImageSlider import ImageSlider
 
+#Home layout that shows recommended and hot movies
 class HomeLayout(QWidget):
     _WatchMovie_ = pyqtSignal()
     def __init__(self,user:User):
@@ -56,11 +57,12 @@ class HomeLayout(QWidget):
         self.generateHot()
         self.setLayout(self.vbox)
         
-    
+    #generates recommended movies for user (user specific)
     def generateRecommended(self):
         self.images = self.controller.getRecommended()
         self.recommended_display.setImages(self.images)
-        
+    
+    #generates "hot" movies for user (general)
     def generateHot(self):
         self.imageshot = self.controller.getHot()
         self.hot_display.setImages(self.images)

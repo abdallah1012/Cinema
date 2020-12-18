@@ -12,6 +12,8 @@ from User import User
 from MovieInputController import MovieInputController
 from PyQt5.QtCore import pyqtSignal
 
+#layout class for visual interface responsible for showing the user the appropriate items
+#to add a movie to the database and enter his input
 class MovieInputDialog(QWidget):
    loaddashlayout = pyqtSignal(int)
    
@@ -71,7 +73,9 @@ class MovieInputDialog(QWidget):
       self.setWindowTitle("Add Movie")
 
       self.controller = MovieInputController()
-      
+ 
+    #submits movie details to controller to handle adding it to the database and uses output to 
+    #show appropriate error message
    def submitMovie(self):
         courseName = self.le.text()
         courseID = ""
@@ -102,7 +106,8 @@ class MovieInputDialog(QWidget):
        self.loaddashlayout.emit(0)
       
       
-		
+    #gets courses that the professor gives, since movies are under courses
+    #adds movies to class member "item"
    def getItem(self):
       item = []
       for i in self.user.courses:
@@ -112,10 +117,12 @@ class MovieInputDialog(QWidget):
       if ok and item:
          self.le.setText(item)
 
+    #asks user to locate thumbnail they want to use from their device and saves the path
    def getThumb(self):
        self.thumbPath = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image Files (*.gif *.png *.jpg)")
        self.thumbLabel.setText(self.thumbPath[0])
        
+     #asks user to locate movies they want to use from their device and saves the path       
    def getMovie(self):
         self.moviePath = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Video files (*.avi *.mp4 *.flv)")
         self.movieLabel.setText(self.moviePath[0])

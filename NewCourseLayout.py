@@ -5,10 +5,11 @@ Created on Wed Nov 18 13:15:30 2020
 @author: ojaro
 """
 
-
-
 from NewCourseController import NewCourseController
 from PyQt5.QtWidgets import QWidget, QGridLayout,QLabel
+
+#Create Course Layout
+#TODO: NO LONGER IN USE
 class NewCourseLayout(QWidget):
     def __init__(self,user_id:int):
         super().__init__()

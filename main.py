@@ -10,7 +10,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from WelcomeWidget import WelcomeWidget
 
-
+#Initiator
 def run():
     app = QApplication(sys.argv)
     welcome_widget = WelcomeWidget()

@@ -14,6 +14,7 @@ from MovieLayout import MovieLayout
 from CourseInputDialog import CourseInputDialog
 from MovieInputDialog import MovieInputDialog
 
+#Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
     
     def __init__(self, user:User):
@@ -88,7 +89,8 @@ class MainWidget(QMainWindow):
             event.ignore()
     
     
-    #HomeLayoout
+    #HomeLayoout----------------------------------------------------------------------------------
+    #Sets homelayout as default layout
     def LoadHomeLayout(self):
         self.setWindowTitle("Home")
         if self.home_layout == None:
@@ -96,7 +98,8 @@ class MainWidget(QMainWindow):
             self.home_layout._WatchMovie_.connect(lambda:self.LoadMovieLayout())
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
-        
+    
+    #sets movielayout as default layout
     def LoadMovieLayout(self):
         self.setWindowTitle("Movie")
         if self.movie_layout!=None:
@@ -111,7 +114,8 @@ class MainWidget(QMainWindow):
     
     
 
-    #DashBoardLayout       
+    #DashBoardLayout----------------------------------------------------------------------------------
+    #sets dashboard layout as default layout
     def LoadDashboardLayout(self, success):
         if(success == 1):
             self.dashboard_layout.message.setText("Successfully Submitted Course")
@@ -129,7 +133,8 @@ class MainWidget(QMainWindow):
             
         self.stack.setCurrentWidget(self.dashboard_layout)
         self.silence()
-        
+    
+    #sets course layout as default layout (upload courses)
     def LoadCourseLayout(self):
         self.setWindowTitle("Add Course")
         if self.course_layout == None:
@@ -138,7 +143,8 @@ class MainWidget(QMainWindow):
             self.stack.addWidget(self.course_layout)
             
         self.stack.setCurrentWidget(self.course_layout)
-        
+    
+    #sets dash movie layout as default layout (upload movie)
     def LoadDashMovieLayout(self):
         self.setWindowTitle("Add Movie")
         if self.addmovie_layout == None:
@@ -153,7 +159,8 @@ class MainWidget(QMainWindow):
  
     
     
-    #ProfileLayout
+    #ProfileLayout---------------------------------------------------------------------------------------------
+    #sets profile layout as default layout
     def LoadProfileLayout(self):
         self.setWindowTitle("Profile")
         if self.profile_layout == None:
@@ -164,6 +171,8 @@ class MainWidget(QMainWindow):
 
 
     
+    #-----------------------------------------------------------------------------------------------------------
+    #stops movie from running in background (movie cleanup)
     def silence(self):
         if(self.movie_layout != None):
             self.movie_layout.Stop()

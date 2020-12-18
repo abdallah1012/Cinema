@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel
 from PyQt5.QtCore import pyqtSignal
 from SignInController import SignInController
 
-
+#Layout for signing in, first visual interface the user passes by
 class SignInLayout(QGridLayout):
     success_signal = pyqtSignal()
 
@@ -42,6 +42,9 @@ class SignInLayout(QGridLayout):
         self.register_button.clicked.connect(lambda: self.ClickRegisterButton())
         self.controller = SignInController()
 
+    #Calls AttemptSignIn from this layouts controller to check if user exits
+    #if it does then it emits a signal to close this widget and open mainwidget
+    #else it shows an error message
     def ClickSignInButton(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
@@ -50,7 +53,8 @@ class SignInLayout(QGridLayout):
             self.success_signal.emit()
         else:
             self.error_message.setText(controller_result)
-            
+    
+    #Takes user to registration layout to be added to the database      
     def ClickRegisterButton(self):
         state = self.controller.ToRegister()
         if(state == "success"):

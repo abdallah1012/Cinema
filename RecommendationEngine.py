@@ -5,6 +5,8 @@ Created on Wed Nov 11 16:20:06 2020
 @author: ojaro
 """
 
+#Recommendation model used to find which movies should be recommended to the user
+#and what movies are generally good --> "hot"
 class RecommendationEngine:
     
     def __init__(self):
