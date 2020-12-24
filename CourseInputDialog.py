@@ -43,7 +43,19 @@ class CourseInputDialog(QWidget):
       self.cancel.clicked.connect(lambda: self.goBack())
       
       layout.addRow(self.btn2,self.le2)
+      
+      
+      
+      self.facultyIndicator = QLabel("Faculty")
+      self.faculty = QLineEdit()
+      
+      self.typeIndicator = QLabel("Type")
+      self.typeOfCourse = QLineEdit()
+      layout.addRow(self.facultyIndicator,self.faculty)
+      layout.addRow(self.typeIndicator,self.typeOfCourse)
       layout.addRow(self.cancel, self.done)
+      
+      
       self.setLayout(layout)
       self.setWindowTitle("Add Course")
       
@@ -54,7 +66,7 @@ class CourseInputDialog(QWidget):
    
     #Contacts controller with proper input to add course to database
    def SubmitCourse(self):
-       result = self.controller.addCourse(self.le1.text(), self.le2.text(), self.user.id)
+       result = self.controller.addCourse(self.le1.text(), self.le2.text(), self.user.id, self.faculty.text(), self.typeOfCourse.text())
        if(result == 1):
 #            self.errorText.setText("Course Added Successfully")
             self.loaddashlayout.emit(1)

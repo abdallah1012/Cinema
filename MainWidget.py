@@ -95,18 +95,18 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Home")
         if self.home_layout == None:
             self.home_layout = HomeLayout(self.user)
-            self.home_layout._WatchMovie_.connect(lambda:self.LoadMovieLayout())
+            self.home_layout._WatchMovie_.connect(lambda url:self.LoadMovieLayout(url))
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
     
     #sets movielayout as default layout
-    def LoadMovieLayout(self):
+    def LoadMovieLayout(self, url):
         self.setWindowTitle("Movie")
         if self.movie_layout!=None:
             self.stack.removeWidget(self.movie_layout)
             del self.movie_layout
             
-        self.movie_layout = MovieLayout()
+        self.movie_layout = MovieLayout(url)
         self.stack.addWidget(self.movie_layout)
         self.stack.setCurrentWidget(self.movie_layout) 
  

@@ -12,10 +12,10 @@ import time
 #layout for presenting a movie with all navigation features
 class MovieLayout(QWidget):
 
-    def __init__(self):
+    def __init__(self, url):
         super().__init__()
         
-        self.url = "https://youtu.be/oHg5SJYRHA0"
+        self.url = url
         self.setWindowTitle("Movie Player")
 
         # creating a basic vlc instance

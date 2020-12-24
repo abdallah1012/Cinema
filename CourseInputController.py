@@ -16,10 +16,8 @@ class CourseInputController:
     #adds course to courses table in database
     #params: string coursename, string description, int userID
     #returns 0 if a database error occurred and 1 if successfull and 2 if the course was already uploaded by the same user before
-    def addCourse(self, coursename, description, userID):
-        
-        
-        
+    def addCourse(self, coursename, description, userID, faculty, typeofCourse):
+ 
         try:
             exists = self.course_manager.CheckForCourseUser(coursename, userID)
         except:
@@ -27,7 +25,7 @@ class CourseInputController:
         
         if(exists == 0):
            
-                result = self.course_manager.AddToCourses(coursename, description, userID)
+                result = self.course_manager.AddToCourses(coursename, description, userID, faculty, typeofCourse)
                 if(result == 1):
                     return 1 #sucessfully added course to database
                 else:

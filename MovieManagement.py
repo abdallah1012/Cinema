@@ -23,9 +23,9 @@ class MovieManagement:
     #adds movie to database
     #params: string movieName, int courseID, string description, int userID, string url, 64-byte encoded thumbnail64
     #returns 1 if successfull and 0 and if failed
-    def addMovie(self, movieName, courseID, description , userID, url, thumbnail64):
+    def addMovie(self, movieName, courseID, description , userID, url, thumbnail64, tag1, tag2, tag3, style):
 
-        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"', %s);"      
+        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, tag1, tag2, tag3, style, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"','"+str(tag1)+"','"+str(tag2)+"','"+str(tag3)+"','"+str(style)+"', %s);"      
         
         try:
             self.database_connection.execute(sqlstmt, thumbnail64)
@@ -63,4 +63,19 @@ class MovieManagement:
             return 0 #no thumbnails found
         else:
             return df
+        
+    def getThumbNailsURL(self):
+        
+        sqlstmt = "SELECT thumbnail, url FROM movies"
+        
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        
+        
+        if(len(df) == 0):
+            return 0 #no thumbnails found
+        else:
+            return df
+        
+    
         

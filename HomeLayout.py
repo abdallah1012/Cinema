@@ -13,7 +13,7 @@ from ImageSlider import ImageSlider
 
 #Home layout that shows recommended and hot movies
 class HomeLayout(QWidget):
-    _WatchMovie_ = pyqtSignal()
+    _WatchMovie_ = pyqtSignal(str)
     def __init__(self,user:User):
         self.user = user
         super().__init__()
@@ -30,11 +30,11 @@ class HomeLayout(QWidget):
         
         
         
-        self.example_movie = QPushButton("Example movie")        
-        self.example_movie.clicked.connect(lambda:self._WatchMovie_.emit())
+#        self.example_movie = QPushButton("Example movie")        
+#        self.example_movie.clicked.connect(lambda:self._WatchMovie_.emit())
         self.stack = QStackedLayout()       
         self.movieLayout = None       
-        self.__home_grid.addWidget(self.example_movie,5,1)
+#        self.__home_grid.addWidget(self.example_movie,5,1)
         self.vbox = QVBoxLayout()
         
         self.vboxRecommended = QVBoxLayout()
@@ -53,19 +53,26 @@ class HomeLayout(QWidget):
         
         print(self.stack)
     
-        self.generateRecommended()
-        self.generateHot()
-        self.setLayout(self.vbox)
+        self.recommended_display.list_widget.itemPressed.connect(lambda: self.MovieIsClicked())
         
+        
+        self.generateRecommended()
+#        self.generateHot()
+        self.setLayout(self.vbox)
+    
+    
+    def MovieIsClicked(self):
+        self._WatchMovie_.emit(self.recommended_display.list_widget.selectedItems()[0].url)
+    
     #generates recommended movies for user (user specific)
     def generateRecommended(self):
-        self.images = self.controller.getRecommended()
-        self.recommended_display.setImages(self.images)
+        self.images, self.url = self.controller.getRecommended()
+        self.recommended_display.setImages(self.images, self.url)
     
     #generates "hot" movies for user (general)
-    def generateHot(self):
-        self.imageshot = self.controller.getHot()
-        self.hot_display.setImages(self.images)
+#    def generateHot(self):
+#        self.imageshot, self.url = self.controller.getHot()
+#        self.hot_display.setImages(self.images, self.url)
         
         #TODO: populate self.recommended_for_you list and add to GUI
         #TODO: populate self.whats_hot list and add to GUI

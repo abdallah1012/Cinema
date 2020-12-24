@@ -10,7 +10,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QTimer
 import math
 import base64
-
+from ClickableThumbnail import ClickableThumbnail
 #class that implements a widget capable of showing images with title and sliding them with animations right and left for showcasing
 class ImageSlider(QWidget):
 
@@ -100,18 +100,22 @@ class ImageSlider(QWidget):
         self.lingertime = 1
         self.lingertimeCounter = 0
         
+#        self.list_widget.itemPressed.connect(lambda: self.test())
+        
         self.show()
+        
 
-
+#    def test(self):
+#        print(self.list_widget.selectedItems()[0].url)
     
     #Takes list of images and adds them to the image container of this class
-    def setImages(self, images):
+    def setImages(self, images, urls):
         
         self.list_widget.clear()
         self.items = []
         
         for i in range(len(images)):
-                self.items.append(QListWidgetItem(str(i)))
+                self.items.append(ClickableThumbnail(urls[i]))
                 self.list_widget.addItem(self.items[i])
                 pm = QPixmap()
                 pm.loadFromData(base64.b64decode(images[i]))

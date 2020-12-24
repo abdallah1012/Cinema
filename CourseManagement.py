@@ -36,7 +36,7 @@ class CourseManagement:
         sqlstmt = "SELECT courseID FROM courses WHERE coursename = '"+str(coursename)+"' AND professorID = '"+str(user)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
-        print(sqlstmt)
+        #print(sqlstmt)
         if(len(df) > 0):
             return 1 
         else:
@@ -45,10 +45,10 @@ class CourseManagement:
     #adds course to database under user's ID
     #params: string CourseName, string Syllabus, int user
     #returns 1 on successfull execution and 0 if failed
-    def AddToCourses(self, CourseName, Sylabbus, user):
+    def AddToCourses(self, CourseName, Sylabbus, user, faculty, typeofCourse):
         
         #try later to encrypt password
-        sqlstmt = "INSERT INTO courses (courseName, professorID, syllabus) VALUES ('"+str(CourseName)+"', '"+str(user)+"', '"+str(Sylabbus)+"');"
+        sqlstmt = "INSERT INTO courses (courseName, professorID, syllabus, faculty, type) VALUES ('"+str(CourseName)+"', '"+str(user)+"', '"+str(Sylabbus)+"', '"+str(faculty)+"', '"+str(typeofCourse)+"');"
         
         try:
             self.database_connection.execute(sqlstmt)

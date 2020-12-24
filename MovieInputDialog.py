@@ -64,7 +64,24 @@ class MovieInputDialog(QWidget):
       
       self.errorText = QLabel("")
       
+      self.tag1_ind = QLabel("First Tag")
+      self.tag2_ind = QLabel("Second Tag")
+      self.tag3_ind = QLabel("Third Tag")
+      self.style_ind = QLabel("Style")
       
+      self.tag1 = QLineEdit()
+      self.tag2 = QLineEdit()
+      self.tag3 = QLineEdit()
+      self.style = QLineEdit()
+      
+      
+      
+     
+      
+      layout.addRow(self.tag1_ind, self.tag1)
+      layout.addRow(self.tag2_ind, self.tag2)
+      layout.addRow(self.tag3_ind, self.tag3)
+      layout.addRow(self.style_ind, self.style)
       layout.addRow(self.cancel, self.done)
       
       layout.addRow(self.errorText)
@@ -85,8 +102,7 @@ class MovieInputDialog(QWidget):
                 courseID = i[1]
                 break
         #self.movieproperties index 0 is the url path and 1 is the thumbnail path
-        result = self.controller.addMovie(self.le1.text(), courseID,  self.le2.text(), self.user.id, 
-                                               self.movieLabel.text(), self.thumbLabel.text())
+        result = self.controller.addMovie(self.le1.text(), courseID,  self.le2.text(), self.user.id, self.movieLabel.text(), self.thumbLabel.text(), self.tag1.text(), self.tag2.text(), self.tag3.text(), self.style.text())
         
         if(result == 1):
             self.loaddashlayout.emit(2)

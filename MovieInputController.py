@@ -21,7 +21,7 @@ class MovieInputController:
     #transforms first thumbnail to base64, then checks if movie is already uploaded by user, then tries uploading to youtube, if sucessfull then it uploads relevant data to database
     #params: string moviename, int courseID, string description, int userID, string url (path to movie), string thumbnail (path to thumbnail)
     #returns 0 for database errors, 1 if sucessfull, 2 if movie already exists, 3 if error with youtube api, 4 if movie can't be found
-    def addMovie(self, moviename, courseID, description, userID, url, thumbnail):
+    def addMovie(self, moviename, courseID, description, userID, url, thumbnail, tag1, tag2, tag3, style):
         
         try:
             with open(thumbnail, "rb") as image_file:
@@ -42,8 +42,8 @@ class MovieInputController:
             return 3 #youtube error
         
         if(exists == 0):         
-                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "https://youtu.be/" + videoid['id'], encoded_string)
-#                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "test", encoded_string)
+                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "https://youtu.be/" + videoid['id'], encoded_string, tag1, tag2, tag3, style)
+#                result = self.movie_manager.addMovie(moviename, courseID, description, userID, "test", encoded_string, tag1, tag2, tag3, style)
                 print(result)
                 if(result == 1):
                     return 1 #sucessfully added course to database
