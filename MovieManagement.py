@@ -77,5 +77,12 @@ class MovieManagement:
         else:
             return df
         
-    
-        
+
+    def getCourseMovies(self,C_ID):
+        sqlstmt = "SELECT moviename, thumbnail, url FROM movies WHERE moviecourseID = '"+str(C_ID)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        if(len(df) == 0):#no movies found for course
+            return []
+        else:
+            return df

@@ -13,7 +13,7 @@ from ProfileLayout import ProfileLayout
 from MovieLayout import MovieLayout
 from CourseInputDialog import CourseInputDialog
 from MovieInputDialog import MovieInputDialog
-
+from CourseMovieLayout import CourseMovieLayout
 #Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
     
@@ -58,6 +58,7 @@ class MainWidget(QMainWindow):
         self.new_course_layout = None
         self.movie_layout = None
         self.addmovie_layout = None
+        self.CourseMovies_layout = None
         
         self.stack = QStackedLayout()
         
@@ -123,12 +124,15 @@ class MainWidget(QMainWindow):
         elif(success == 2):
             self.dashboard_layout.message.setText("Successfully Submitted Movie")
             self.addmovie_layout = None
+        elif(success == 3):
+            pass
             
         self.setWindowTitle("Dashboard")
         if self.dashboard_layout == None:
             self.dashboard_layout = DashboardLayout(self.user)
             self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
-            self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)  
+            self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)
+            self.dashboard_layout.openCourse_request.connect(lambda x: self.LoadCourseMovies(x))
             self.stack.addWidget(self.dashboard_layout)
             
         self.stack.setCurrentWidget(self.dashboard_layout)
@@ -154,7 +158,16 @@ class MainWidget(QMainWindow):
             
         self.stack.setCurrentWidget(self.addmovie_layout)
     
-    
+    def LoadCourseMovies(self, courseID):
+        self.setWindowTitle("Course Movies")
+        if self.CourseMovies_layout!=None:
+            self.stack.removeWidget(self.CourseMovies_layout)
+            del self.CourseMovies_layout
+        self.CourseMovies_layout = CourseMovieLayout(self.user, courseID)
+        self.CourseMovies_layout.goback_request.connect(lambda success:self.LoadDashboardLayout(success))
+        self.stack.addWidget(self.CourseMovies_layout)
+            
+        self.stack.setCurrentWidget(self.CourseMovies_layout)
 
  
     
@@ -176,6 +189,7 @@ class MainWidget(QMainWindow):
     def silence(self):
         if(self.movie_layout != None):
             self.movie_layout.Stop()
+            
         
 
         

@@ -4,20 +4,23 @@ Created on Sat Nov 14 13:42:37 2020
 
 @author: ojaro
 """
-from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton, QLabel, QVBoxLayout, QInputDialog
+from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton, QLabel, QVBoxLayout, QInputDialog,QListWidget,QListView,QListWidgetItem
 from User import User
+from PyQt5.QtGui import QIcon, QPixmap
 from DashboardController import DashboardController
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QSize
 from CourseInputDialog import CourseInputDialog
 import re
+from ClickableThumbnail import ClickableThumbnail
 
 #layout that with course/movie upload and course enrollment and movie browsing interface
 #functionality of this layout depends on the user's entity which is the type of user passed by parameter
 class DashboardLayout(QWidget):  
     submitcourse_request = pyqtSignal()
     new_course_request = pyqtSignal()
-    
+    openCourse_request = pyqtSignal(int)
     new_movie_request = pyqtSignal()
+    
     submitmovie_request = pyqtSignal()
     def __init__(self,user:User):
         super().__init__()
@@ -33,7 +36,7 @@ class DashboardLayout(QWidget):
         self.name = ""
         self.syllabus = ""
         
-        self.exampleCourse = QPushButton("Example course")
+
         self.__dashboard_grid.addWidget(self.add_course,1,1)
        
        
@@ -41,33 +44,46 @@ class DashboardLayout(QWidget):
         
         #ADD MOVIE GUI
         
-        self.add_movie = QPushButton("Add Movie")
+        #self.add_movie = QPushButton("Add Movie")
         
        
-        self.add_movie.clicked.connect(lambda:self.new_movie_request.emit())
+        #self.add_movie.clicked.connect(lambda:self.new_movie_request.emit())
         
         
-        self.__dashboard_grid.addWidget(self.add_movie,2,1)
+        #
+        self.list_widget = QListWidget()
+        
+#        self.list_widget.setFlow(QListView.LeftToRight) 
+        self.list_widget.setIconSize(QSize(190, 190))
+        self.list_widget.hasAutoScroll()
+        
+        self.list_widget.setAutoFillBackground( False )
+        self.items_title = self.user.courses
+        self.items = []
+        for i in range(len(self.items_title)):
+                self.items.append(ClickableThumbnail(self.items_title[i][1]))
+                self.items[i].setText((self.items_title[i][0]))
+                self.list_widget.addItem(self.items[i])
+                
         
 
-        
-        
-        self.courses = [self.exampleCourse] #courses will typically be clickable labels
 
         self.controller = DashboardController(self.user)
 
         
-        self.__dashboard_grid.addWidget(self.exampleCourse,3,1)
+        self.__dashboard_grid.addWidget(self.list_widget,2,1)
         
         self.message = QLabel("")
-        self.__dashboard_grid.addWidget(self.message,4,1)
+        self.__dashboard_grid.addWidget(self.message,3,1)
         
         self.courseInput = None
         self.setLayout(self.__dashboard_grid)
         
-        if len(self.courses)!=0:
-            for course in self.courses:
-                course.clicked.connect(lambda:self.load_course_request.emit(course.text()))
+        self.list_widget.itemPressed.connect(lambda: self.CourseIsClicked())
+       
+#        if len(self.courses)!=0:
+#            for course in self.courses:
+#                course.clicked.connect(lambda:self.load_course_request.emit(course.text()))
         
         
         
@@ -90,6 +106,9 @@ class DashboardLayout(QWidget):
         self.result = self.controller.addMovie(seg[1], courseID,  self.syllabus, self.user.id, self.movieProperties[0], self.movieProperties[1])
         
        
+    def CourseIsClicked(self):
+#         self._WatchMovie_.emit(self.recommended_display.list_widget.selectedItems()[0].url)
+        self.openCourse_request.emit(self.list_widget.selectedItems()[0].url)
         
   
         
