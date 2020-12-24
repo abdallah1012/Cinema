@@ -55,3 +55,21 @@ class CourseManagement:
             return 1
         except:
             return 0
+    def getCourseinfo(self,C_ID):
+        sqlstmt="SELECT courseID, faculty, type FROM courses WHERE courseID='"+str(C_ID)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        #print(sqlstmt)
+        if(len(df) > 0):
+            return df
+        else:
+            return [] 
+    def getRecommendedCourses(self,typ):
+        sqlstmt="SELECT courseID FROM courses WHERE type ='"+str(typ)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        #print(sqlstmt)
+        if(len(df) > 0):
+            return df
+        else:
+            return [] 

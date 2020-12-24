@@ -15,9 +15,9 @@ import base64
 class HomeController:
     def __init__(self,user:User):
         self.user = user
-        self.r_engine = RecommendationEngine()
-        self.r_engine.WhatsHot()
-        self.r_engine.LoadRecommendations(self.user.id)
+        #self.r_engine = RecommendationEngine()
+        #self.r_engine.WhatsHot()
+        #self.r_engine.LoadRecommendations(self.user.id)
         self.movie_manager = MovieManagement() #manager used to communicate with movies table in database
     
     #loads the movie widget

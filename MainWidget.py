@@ -14,6 +14,7 @@ from MovieLayout import MovieLayout
 from CourseInputDialog import CourseInputDialog
 from MovieInputDialog import MovieInputDialog
 from CourseMovieLayout import CourseMovieLayout
+from RecommendationEngine import RecommendationEngine
 #Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
     
@@ -49,7 +50,7 @@ class MainWidget(QMainWindow):
     
         self.upperExternal.setLayout(self.upperLayout)
         
-        print(self.user.courses)
+       #print(self.user.courses)
        
         self.home_layout = None
         self.dashboard_layout = None
@@ -68,8 +69,8 @@ class MainWidget(QMainWindow):
         self.mainWidget.setLayout(self.grid)
         self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
-        
-        
+        self.Recommender=RecommendationEngine()
+        self.Recommender.LoadRecommendations(self.user)
         exit = QAction("&Exit", self)
         exit.triggered.connect(self.closeEvent)
         
