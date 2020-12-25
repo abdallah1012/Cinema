@@ -30,6 +30,8 @@ class ChangePasswordLayout(QWidget):
         self.confirm_button = QPushButton("Confirm")
         self.confirm_button.clicked.connect(lambda:self.ConfirmEvent())
         
+        self.change_result= QLabel("")
+        
         self.__password_grid.addWidget(self.previous_password,0,0)
         self.__password_grid.addWidget(self.previous_password_edit,0,1)
         self.__password_grid.addWidget(self.new_password,1,0)
@@ -46,4 +48,4 @@ class ChangePasswordLayout(QWidget):
         self.controller.goBack()
         
     def ConfirmEvent(self):
-        self.controller.changePassword(self.previous_password_edit.text(), self.new_password_edit.text())
+        self.change_result.setPlaceholderText(self.controller.changePassword(self.previous_password_edit.text(), self.new_password_edit.text()))
