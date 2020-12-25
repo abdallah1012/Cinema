@@ -8,13 +8,15 @@ import vlc
 import pafy 
 import threading 
 import time 
+from MovieController import MovieController
+
 
 #layout for presenting a movie with all navigation features
 class MovieLayout(QWidget):
 
     def __init__(self, url):
         super().__init__()
-        
+        self.controller = MovieController(url)
         self.url = url
         self.setWindowTitle("Movie Player")
 

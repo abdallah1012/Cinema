@@ -25,7 +25,7 @@ class MovieManagement:
     #returns 1 if successfull and 0 and if failed
     def addMovie(self, movieName, courseID, description , userID, url, thumbnail64, tag1, tag2, tag3, style):
 
-        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, tag1, tag2, tag3, style, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"','"+str(tag1)+"','"+str(tag2)+"','"+str(tag3)+"','"+str(style)+"', %s);"      
+        sqlstmt = "INSERT INTO movies (moviename, moviecourseID, professorID, description, url, tag1, tag2, tag3, style, views, thumbnail) VALUES ('"+str(movieName)+"', '"+str(courseID)+"', '"+str(userID)+"', '"+str(description)+"', '"+str(url)+"','"+str(tag1)+"','"+str(tag2)+"','"+str(tag3)+"','"+str(style)+"','"+str(0)+"', %s);"      
         
         try:
             self.database_connection.execute(sqlstmt, thumbnail64)
@@ -94,3 +94,12 @@ class MovieManagement:
             return []
         else:
             return df
+        
+
+    def incrementViewsByURL(self,url):
+            sqlstmt = "UPDATE movies SET views = views +1 WHERE url = '" +str(url) +"'"
+            try:
+                self.database_connection.execute(sqlstmt)
+                return 1
+            except:
+                return 0
