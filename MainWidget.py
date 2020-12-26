@@ -34,7 +34,7 @@ class MainWidget(QMainWindow):
         self.home_button.clicked.connect(lambda:self.LoadHomeLayout())
         
         self.profile_button = QPushButton("Profile")
-        self.profile_button.clicked.connect(lambda:self.LoadProfileLayout())
+        self.profile_button.clicked.connect(lambda success:self.LoadProfileLayout(success))
                 
         
         self.grid = QGridLayout()
@@ -71,8 +71,8 @@ class MainWidget(QMainWindow):
         self.mainWidget.setLayout(self.grid)
         self.setCentralWidget(self.mainWidget)
         self.LoadHomeLayout()
-        self.Recommender=RecommendationEngine()
-        self.Recommender.LoadRecommendations(self.user)
+#        self.Recommender=RecommendationEngine()
+#        self.Recommender.LoadRecommendations(self.user)
         exit = QAction("&Exit", self)
         exit.triggered.connect(self.closeEvent)
         
@@ -177,7 +177,7 @@ class MainWidget(QMainWindow):
     
     #ProfileLayout---------------------------------------------------------------------------------------------
     #sets profile layout as default layout
-    def LoadProfileLayout(self):
+    def LoadProfileLayout(self, success):
         self.setWindowTitle("Profile")
         if self.profile_layout != None:
             self.stack.removeWidget(self.profile_layout)
@@ -185,6 +185,11 @@ class MainWidget(QMainWindow):
             
         self.profile_layout = ProfileLayout(self.user)
         self.profile_layout.changePass_request.connect(lambda : self.LoadChangePassLayout())
+        
+        if(success == 1):
+            self.profile_layout.errorMessage.setText("Password Changed Successfully")
+        
+        
         self.stack.addWidget(self.profile_layout)
         self.stack.setCurrentWidget(self.profile_layout)
         self.silence()
@@ -193,10 +198,10 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Change Password")
         if self.changepass_layout == None:
             self.changepass_layout = ChangePasswordLayout(self.user)
-            self.changepass_layout.goback_request.connect(lambda :self.LoadProfileLayout())       
+            self.changepass_layout.goback_request.connect(lambda success:self.LoadProfileLayout(success))       
             self.stack.addWidget(self.changepass_layout)
             
-        self.stack.setCurrentWidget(self.course_layout)
+        self.stack.setCurrentWidget(self.changepass_layout)
 
     #-----------------------------------------------------------------------------------------------------------
     #stops movie from running in background (movie cleanup)

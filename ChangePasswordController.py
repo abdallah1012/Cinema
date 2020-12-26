@@ -19,14 +19,22 @@ class ChangePasswordController():
 #        profilelayout.show()
 #        return "success"
 #    
-#    def changePassword(self, old_password, new_password):
-#        #if old password is correct
-#        #   if new password passes the test
-#        profilelayout=ProfileLayout()
-#        profilelayout.show()
-#        return "success"
-        #   else new password does not meet requirements return "Passwords must be 8 chacarers long and include at least 1 Captial letter"
-        #else return "Old Password does not match"
+    def changePassword(self, old_password, new_password):
+        #if old password is correct
+        #   if new password passes the test
+        
+        try:
+            result, entity, userid = self.Manager.CheckForUserPass(self.user.username, old_password)
+            if(result == 1):
+                self.Manager.changePass(self.user.id, new_password)
+                return 1 #success
+            else:
+                return 2 #wrong password
+                
+        except:
+            return 0 #database failed
+        
+        
         
         
     

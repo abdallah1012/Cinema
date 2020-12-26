@@ -100,6 +100,13 @@ class UserManagement():
         except:
             return 0
     
-    
-    
+    def changePass(self, userID, newPass):
+        try:
+            sqlstmt = "UPDATE users SET password = '"+str(newPass)+"' WHERE userID = '"+str(userID)+"'"
+            pd.read_sql_query(sqlstmt, self.database_connection)
+            return 1
+        except:
+            return 0 #failed
+        
+        
     

@@ -6,14 +6,14 @@ Created on Fri Dec 25 14:05:53 2020
 @author: bbaajour
 """
 
-from PyQt5.QtWidgets import QLabel,QWidget,QPushButton, QGridLayout, QLineEdit
+from PyQt5.QtWidgets import QLabel,QWidget,QPushButton, QGridLayout, QLineEdit, QVBoxLayout
 from User import User
 from ChangePasswordController import ChangePasswordController
 from PyQt5.QtCore import pyqtSignal
 
 
 class ChangePasswordLayout(QWidget):
-    goback_request = pyqtSignal()
+    goback_request = pyqtSignal(int)
     
     def __init__(self,user:User):
         self.user = user
@@ -43,13 +43,28 @@ class ChangePasswordLayout(QWidget):
         self.__password_grid.addWidget(self.back_button,2,0)
         self.__password_grid.addWidget(self.confirm_button,2,1)
         
-        self.setLayout(self.__profile_grid)
+        
+        self.vbox = QVBoxLayout()
+        self.vbox.addLayout(self.__password_grid)
+        self.vbox.addWidget(self.change_result)
+        
+        
+        
+        self.setLayout(self.vbox)
         
         
         
         
     def BackEvent(self):
-        self.goback_request.emit()
+        self.goback_request.emit(0)
         
     def ConfirmEvent(self):
-        self.change_result.setPlaceholderText(self.controller.changePassword(self.previous_password_edit.text(), self.new_password_edit.text()))
+        result = self.controller.changePassword(self.previous_password_edit.text(), self.new_password_edit.text())
+        
+        if(result == 1):
+            self.goback_request.emit(1)
+#            self.change_result.setText("Success")
+        elif(result == 2):
+            self.change_result.setText("Wrong Old Password")
+        elif(result == 3):
+            self.change_result.setText("Database Error")

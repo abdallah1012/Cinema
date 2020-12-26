@@ -86,6 +86,10 @@ class ProfileLayout(QWidget):
         self.vbox.addLayout(self.__profile_grid)
         self.vbox.addWidget(self.change_password)
         
+        
+        self.errorMessage = QLabel()
+        self.vbox.addWidget(self.errorMessage)
+        
         self.setLayout(self.vbox)
         
 
