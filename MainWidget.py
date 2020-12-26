@@ -99,18 +99,18 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Home")
         if self.home_layout == None:
             self.home_layout = HomeLayout(self.user)
-            self.home_layout._WatchMovie_.connect(lambda url:self.LoadMovieLayout(url))
+            self.home_layout._WatchMovie_.connect(lambda url, M_ID:self.LoadMovieLayout(url, M_ID))
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
     
     #sets movielayout as default layout
-    def LoadMovieLayout(self, url):
+    def LoadMovieLayout(self, url, movieID):
         self.setWindowTitle("Movie")
         if self.movie_layout!=None:
             self.stack.removeWidget(self.movie_layout)
             del self.movie_layout
             
-        self.movie_layout = MovieLayout(url)
+        self.movie_layout = MovieLayout(url, movieID, self.user)
         self.stack.addWidget(self.movie_layout)
         self.stack.setCurrentWidget(self.movie_layout) 
  
@@ -134,7 +134,7 @@ class MainWidget(QMainWindow):
         if self.dashboard_layout == None:
             self.dashboard_layout = DashboardLayout(self.user)
             self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
-            self.dashboard_layout.new_movie_request.connect(self.LoadDashMovieLayout)
+            
             self.dashboard_layout.openCourse_request.connect(lambda x: self.LoadCourseMovies(x))
             self.stack.addWidget(self.dashboard_layout)
             
@@ -152,13 +152,15 @@ class MainWidget(QMainWindow):
         self.stack.setCurrentWidget(self.course_layout)
     
     #sets dash movie layout as default layout (upload movie)
-    def LoadDashMovieLayout(self):
+    def LoadDashMovieLayout(self, courseID):
         self.setWindowTitle("Add Movie")
-        if self.addmovie_layout == None:
-            self.addmovie_layout = MovieInputDialog(self.user)
-            self.addmovie_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))
-            self.stack.addWidget(self.addmovie_layout)
-            
+        if self.addmovie_layout!=None:
+            self.stack.removeWidget(self.addmovie_layout)
+            del self.addmovie_layout
+               
+        self.addmovie_layout = MovieInputDialog(self.user, courseID)
+        self.addmovie_layout.goback_request.connect(lambda C_ID:self.LoadCourseMovies(C_ID))
+        self.stack.addWidget(self.addmovie_layout)
         self.stack.setCurrentWidget(self.addmovie_layout)
     
     def LoadCourseMovies(self, courseID):
@@ -167,7 +169,9 @@ class MainWidget(QMainWindow):
             self.stack.removeWidget(self.CourseMovies_layout)
             del self.CourseMovies_layout
         self.CourseMovies_layout = CourseMovieLayout(self.user, courseID)
+        self.CourseMovies_layout.new_movie_request.connect(lambda C_ID: self.LoadDashMovieLayout(C_ID))
         self.CourseMovies_layout.goback_request.connect(lambda success:self.LoadDashboardLayout(success))
+        self.CourseMovies_layout._WatchMovie_.connect(lambda url, M_ID:self.LoadMovieLayout(url, M_ID))
         self.stack.addWidget(self.CourseMovies_layout)
             
         self.stack.setCurrentWidget(self.CourseMovies_layout)

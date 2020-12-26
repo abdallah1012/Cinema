@@ -40,14 +40,22 @@ class HomeController:
     #talks to manager to get list of recommended movies
     def getRecommended(self):
         byteImages = self.movie_manager.getThumbNailsURL()
-        url = []
-        images = []
-        for i in byteImages:
-            
-            images.append(i[0])
-            url.append(i[1])
-            
-        return images, url
+        if(isinstance(byteImages, int) == False):
+            url = []
+            images = []
+            movieIDs = []
+            titles = []
+            for i in byteImages:
+                movieIDs.append(i[2])
+                images.append(i[0])
+                url.append(i[1])
+                titles.append(i[3])
+        else:
+            images =[]
+            url = []
+            movieIDs = []
+            titles = []
+        return images, url, movieIDs, titles
     
     #talks to manager to get list of hot movies
     def getHot(self):

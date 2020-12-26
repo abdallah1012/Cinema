@@ -15,19 +15,19 @@ from PyQt5.QtCore import pyqtSignal
 #layout class for visual interface responsible for showing the user the appropriate items
 #to add a movie to the database and enter his input
 class MovieInputDialog(QWidget):
-   loaddashlayout = pyqtSignal(int)
+   goback_request = pyqtSignal(int)
    
-   def __init__(self, user:User, parent = None):
+   def __init__(self, user:User, courseID, parent = None):
       super(MovieInputDialog, self).__init__(parent)
 
       self.user = user
 
       layout = QFormLayout()
-      
-      self.btn = QPushButton("Choose Course from list")
-      self.btn.clicked.connect(self.getItem)	
-      self.le = QLabel()
-      layout.addRow(self.btn,self.le)
+      self.courseID = courseID
+#      self.btn = QPushButton("Choose Course from list")
+#      self.btn.clicked.connect(self.getItem)	
+#      self.le = QLabel()
+#      layout.addRow(self.btn,self.le)
       
       
       self.btn1 = QLabel("Movie Name")	
@@ -94,18 +94,17 @@ class MovieInputDialog(QWidget):
     #submits movie details to controller to handle adding it to the database and uses output to 
     #show appropriate error message
    def submitMovie(self):
-        courseName = self.le.text()
-        courseID = ""
-        print(courseName)
-        for i in self.user.courses:       
-            if (str(i[0]) == str(courseName)):
-                courseID = i[1]
-                break
+        courseID = self.courseID
+#        print(courseName)
+#        for i in self.user.courses:       
+#            if (str(i[0]) == str(courseName)):
+#                courseID = i[1]
+#                break
         #self.movieproperties index 0 is the url path and 1 is the thumbnail path
         result = self.controller.addMovie(self.le1.text(), courseID,  self.le2.text(), self.user.id, self.movieLabel.text(), self.thumbLabel.text(), self.tag1.text(), self.tag2.text(), self.tag3.text(), self.style.text())
         
         if(result == 1):
-            self.loaddashlayout.emit(2)
+            self.goback_request.emit(self.courseID)
         elif(result == 0):
             self.errorText.setText("Database Error")
         elif(result == 2):
@@ -119,19 +118,19 @@ class MovieInputDialog(QWidget):
         
    
    def goBack(self):
-       self.loaddashlayout.emit(0)
+       self.goback_request.emit(self.courseID)
       
       
     #gets courses that the professor gives, since movies are under courses
     #adds movies to class member "item"
-   def getItem(self):
-      item = []
-      for i in self.user.courses:
-          item.append(i[0])
-      item, ok = QInputDialog.getItem(self, "Select Course", "List of Courses You Give: ", item, 0, False)
-			
-      if ok and item:
-         self.le.setText(item)
+#   def getItem(self):
+#      item = []
+#      for i in self.user.courses:
+#          item.append(i[0])
+#      item, ok = QInputDialog.getItem(self, "Select Course", "List of Courses You Give: ", item, 0, False)
+#			
+#      if ok and item:
+#         self.le.setText(item)
 
     #asks user to locate thumbnail they want to use from their device and saves the path
    def getThumb(self):

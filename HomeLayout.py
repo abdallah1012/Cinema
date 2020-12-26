@@ -13,7 +13,7 @@ from ImageSlider import ImageSlider
 
 #Home layout that shows recommended and hot movies
 class HomeLayout(QWidget):
-    _WatchMovie_ = pyqtSignal(str)
+    _WatchMovie_ = pyqtSignal(str, int)
     def __init__(self,user:User):
         self.user = user
         super().__init__()
@@ -62,12 +62,13 @@ class HomeLayout(QWidget):
     
     
     def MovieIsClicked(self):
-        self._WatchMovie_.emit(self.recommended_display.list_widget.selectedItems()[0].url)
+        self._WatchMovie_.emit(self.recommended_display.list_widget.selectedItems()[0].url, self.recommended_display.list_widget.selectedItems()[0].movieID)
     
     #generates recommended movies for user (user specific)
     def generateRecommended(self):
-        self.images, self.url = self.controller.getRecommended()
-        self.recommended_display.setImages(self.images, self.url)
+        self.images, self.url, self.moviesID, self.titles = self.controller.getRecommended()
+        if(len(self.images) != 0):
+            self.recommended_display.setImages(self.images, self.url, self.moviesID, self.titles)
     
     #generates "hot" movies for user (general)
 #    def generateHot(self):

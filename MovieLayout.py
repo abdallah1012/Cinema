@@ -3,7 +3,7 @@ import os.path
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QSlider, QHBoxLayout, QPushButton, \
-    QVBoxLayout, QAction, QFileDialog, QApplication, QMessageBox
+    QVBoxLayout, QAction, QFileDialog, QApplication, QMessageBox, QPlainTextEdit, QLabel, QScrollArea, QTextEdit
 import vlc
 import pafy 
 import threading 
@@ -14,12 +14,13 @@ from MovieController import MovieController
 #layout for presenting a movie with all navigation features
 class MovieLayout(QWidget):
 
-    def __init__(self, url):
+    def __init__(self, url, movieID, user):
         super().__init__()
         self.controller = MovieController(url)
         self.url = url
+        self.user = user
         self.setWindowTitle("Movie Player")
-
+        self.movieID = movieID
         # creating a basic vlc instance
         self.instance = vlc.Instance()
         # creating an empty vlc media player
@@ -61,17 +62,43 @@ class MovieLayout(QWidget):
         self.hbuttonbox.addWidget(self.volumeslider)
         self.volumeslider.valueChanged.connect(self.setVolume)
 
+        
         self.vboxlayout = QVBoxLayout()
+      
         self.vboxlayout.addWidget(self.videoframe)
         self.vboxlayout.addWidget(self.positionslider)
         self.vboxlayout.addLayout(self.hbuttonbox)
 
-        self.setLayout(self.vboxlayout)
+    
+        self.comment = QPlainTextEdit()
+        
 
+        
+        self.comment.setPlaceholderText("Type Comment Here ...")
+        self.comment.setFixedHeight(50)
+        self.commentbox = QVBoxLayout()
+        
+        self.commentSubmit = QPushButton("Comment")
+        self.commentSubmit.clicked.connect(lambda: self.submitComment())
+        self.commentbox.addWidget(self.comment)
+        self.commentbox.addWidget(self.commentSubmit)
+        
+        self.commentSection = QLabel("Comments:\n")
+        self.commentSection.setFixedHeight(10)
+        self.commentbox.addWidget(self.commentSection)
+        self.commentSection_comments = QTextEdit("No Comments Yet")
+        self.commentSection_comments.setStyleSheet("QTextEdit {color:black;font-size:13px;font-family: \"Times New Roman\", Times, serif;background-color:transparent;border-style: none}")
+        self.commentSection_comments.setReadOnly(True)
+        self.commentSection_comments.setFixedHeight(50)
+        
+        self.commentbox.addWidget(self.commentSection_comments)
+        self.vboxlayout.addLayout(self.commentbox)
+        
+        
+        self.setLayout(self.vboxlayout)
         self.playbutton.clicked.connect(lambda: self.PlayPause())
         self.stopbutton.clicked.connect(lambda: self.Stop())
-        
-#        self.show()
+
         self.resize(640,480)
        
         self.timer = QTimer(self)
@@ -96,11 +123,24 @@ class MovieLayout(QWidget):
         elif sys.platform == "darwin": # for MacOS
             self.mediaplayer.set_nsobject(int(self.videoframe.winId()))
             
-        # self.OpenFile()
+        
+        self.LoadComments()
 
     
    
+    def submitComment(self):
+        if(self.comment.toPlainText() != ""):
+            result = self.controller.submitComment(self.movieID, self.comment.toPlainText(), self.user.username)
+            if(result == 1):
+                self.commentSection_comments.setPlainText(self.user.username + ": " + self.comment.toPlainText() + "\n" + self.commentSection_comments.toPlainText())
     
+    
+    def LoadComments(self):
+        comments = self.controller.getComments(self.movieID)
+        comment = ""
+        for i in comments:
+            comment += i[1] + ": " + i[0] + "\n"
+        self.commentSection_comments.setPlainText(comment)
  
     #Plays and pauses the movie, same button changes status from play to pause
     def PlayPause(self):
@@ -162,3 +202,16 @@ class MovieLayout(QWidget):
         self.positionslider.setValue(self.mediaplayer.get_position() * 1000)
 
 
+
+
+
+#Initiator
+def run():
+    app = QApplication(sys.argv)
+    welcome_widget = MovieLayout("https://www.youtube.com/watch?v=LeYsRMZFUq0&t=6s",1)
+    welcome_widget.show()
+    sys.exit(app.exec_())
+   
+	
+if __name__ == '__main__':
+   run()

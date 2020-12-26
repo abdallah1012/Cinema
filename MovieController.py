@@ -15,3 +15,9 @@ class MovieController:
     
     def incrementViews (self):
         self.manager.incrementViewsByURL(self.url)
+        
+    def submitComment(self, movieID, comment, user):
+        return self.manager.submitComment(movieID, comment, user)
+    
+    def getComments(self, movieID):
+        return self.manager.getComments(movieID)

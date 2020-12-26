@@ -44,13 +44,10 @@ class DashboardLayout(QWidget):
         
         #ADD MOVIE GUI
         
-        #self.add_movie = QPushButton("Add Movie")
-        
-       
-        #self.add_movie.clicked.connect(lambda:self.new_movie_request.emit())
+
         
         
-        #
+        
         self.list_widget = QListWidget()
         
 #        self.list_widget.setFlow(QListView.LeftToRight) 
@@ -60,10 +57,12 @@ class DashboardLayout(QWidget):
         self.list_widget.setAutoFillBackground( False )
         self.items_title = self.user.courses
         self.items = []
-        for i in range(len(self.items_title)):
-                self.items.append(ClickableThumbnail(self.items_title[i][1]))
-                self.items[i].setText((self.items_title[i][0]))
-                self.list_widget.addItem(self.items[i])
+        
+        if(isinstance(self.items_title, int) == False):
+            for i in range(len(self.items_title)):
+                    self.items.append(ClickableThumbnail(self.items_title[i][1], 0))
+                    self.items[i].setText((self.items_title[i][0]))
+                    self.list_widget.addItem(self.items[i])
                 
         
 

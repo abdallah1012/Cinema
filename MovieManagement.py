@@ -66,7 +66,7 @@ class MovieManagement:
         
     def getThumbNailsURL(self):
         
-        sqlstmt = "SELECT thumbnail, url FROM movies"
+        sqlstmt = "SELECT thumbnail, url, movieID, moviename FROM movies"
         
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
@@ -79,7 +79,7 @@ class MovieManagement:
         
 
     def getCourseMovies(self,C_ID):
-        sqlstmt = "SELECT moviename, thumbnail, url FROM movies WHERE moviecourseID = '"+str(C_ID)+"'"
+        sqlstmt = "SELECT moviename, thumbnail, url, movieID FROM movies WHERE moviecourseID = '"+str(C_ID)+"'"
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
         if(len(df) == 0):#no movies found for course
@@ -103,3 +103,29 @@ class MovieManagement:
                 return 1
             except:
                 return 0
+            
+    def submitComment(self, movieID, comment, user):
+        sqlstmt = "INSERT INTO comments (movieID, comment, username) VALUES ('"+str(movieID)+"', '"+str(comment)+"', '"+str(user)+"');"
+        try:
+            self.database_connection.execute(sqlstmt)
+            return 1
+        except:
+            return 0
+        
+
+        
+    def getComments(self, movieID):
+        
+        sqlstmt = "SELECT comment, username FROM comments WHERE movieID = '"+str(movieID)+"'"
+        
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        
+        if(len(df) > 0):
+            return df
+        else:
+            return []
+        
+        
+        
+        

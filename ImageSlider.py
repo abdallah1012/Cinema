@@ -109,14 +109,16 @@ class ImageSlider(QWidget):
 #        print(self.list_widget.selectedItems()[0].url)
     
     #Takes list of images and adds them to the image container of this class
-    def setImages(self, images, urls):
+    def setImages(self, images, urls, movieIDs, titles):
         
         self.list_widget.clear()
         self.items = []
         
         for i in range(len(images)):
-                self.items.append(ClickableThumbnail(urls[i]))
+                self.items.append(ClickableThumbnail(urls[i], movieIDs[i]))
+                self.items[i].setText(titles[i])
                 self.list_widget.addItem(self.items[i])
+                
                 pm = QPixmap()
                 pm.loadFromData(base64.b64decode(images[i]))
                 ic = QIcon()
