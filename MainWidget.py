@@ -15,6 +15,7 @@ from CourseInputDialog import CourseInputDialog
 from MovieInputDialog import MovieInputDialog
 from CourseMovieLayout import CourseMovieLayout
 from RecommendationEngine import RecommendationEngine
+from ChangePasswordLayout import ChangePasswordLayout
 #Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
     
@@ -60,6 +61,7 @@ class MainWidget(QMainWindow):
         self.movie_layout = None
         self.addmovie_layout = None
         self.CourseMovies_layout = None
+        self.changepass_layout = None
         
         self.stack = QStackedLayout()
         
@@ -177,14 +179,25 @@ class MainWidget(QMainWindow):
     #sets profile layout as default layout
     def LoadProfileLayout(self):
         self.setWindowTitle("Profile")
-        if self.profile_layout == None:
-            self.profile_layout = ProfileLayout(self.user)
-            self.stack.addWidget(self.profile_layout)
+        if self.profile_layout != None:
+            self.stack.removeWidget(self.profile_layout)
+            del self.profile_layout
+            
+        self.profile_layout = ProfileLayout(self.user)
+        self.profile_layout.changePass_request.connect(lambda : self.LoadChangePassLayout())
+        self.stack.addWidget(self.profile_layout)
         self.stack.setCurrentWidget(self.profile_layout)
         self.silence()
+        
+    def LoadChangePassLayout(self):
+        self.setWindowTitle("Change Password")
+        if self.changepass_layout == None:
+            self.changepass_layout = ChangePasswordLayout(self.user)
+            self.changepass_layout.goback_request.connect(lambda :self.LoadProfileLayout())       
+            self.stack.addWidget(self.changepass_layout)
+            
+        self.stack.setCurrentWidget(self.course_layout)
 
-
-    
     #-----------------------------------------------------------------------------------------------------------
     #stops movie from running in background (movie cleanup)
     def silence(self):

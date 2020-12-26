@@ -6,7 +6,7 @@ Created on Sun Nov 15 14:23:29 2020
 """
 import pandas as pd
 from sqlalchemy import create_engine
-
+import base64
 #This class is responsible for communicating with the database, mianly with the users table 
 #the users table at 12/17/2020 3:51PM contains (userID, username, firstname, lastname, password, entity)
 
@@ -56,10 +56,49 @@ class UserManagement():
             return 0
     
     
+    def getUserInfo(self, userID):
+        sqlstmt = "SELECT username, firstname, lastname, image FROM users WHERE userID = '"+str(userID)+"'"      
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        if(len(df) > 0):
+            return df
+        else:
+            return []
+        
+    
+    def AddToUsersWithImage(self, username, firstname, lastname, password, user, imagePath):
+        sqlstmt = "INSERT INTO users(username, firstname, lastname, password, entity, image) VALUES ('"+str(username)+"', '"+str(firstname)+"', '"+str(lastname)+"', '"+str(password)+"', '"+str(user)+"', %s);"
+        
+        try:
+            with open(imagePath, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read())
+                image_file.close()
+        except:
+            return 2 #cant read file
+        
+        try:
+            
+            self.database_connection.execute(sqlstmt, encoded_string)
+            return 1
+        except:
+            return 0
     
     
-    
-    
+    def giveUserImage(self, userID, imagePath):
+        sqlstmt = "UPDATE users SET image = %s WHERE userID = '"+str(userID)+"'"
+        try:
+            with open(imagePath, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read())
+                image_file.close()
+        except:
+            return 2 #cant read file
+        
+        try:
+            
+            self.database_connection.execute(sqlstmt, encoded_string)
+            return 1
+        except:
+            return 0
     
     
     

@@ -9,8 +9,12 @@ Created on Fri Dec 25 14:05:53 2020
 from PyQt5.QtWidgets import QLabel,QWidget,QPushButton, QGridLayout, QLineEdit
 from User import User
 from ChangePasswordController import ChangePasswordController
+from PyQt5.QtCore import pyqtSignal
+
 
 class ChangePasswordLayout(QWidget):
+    goback_request = pyqtSignal()
+    
     def __init__(self,user:User):
         self.user = user
         super().__init__()
@@ -21,8 +25,8 @@ class ChangePasswordLayout(QWidget):
         self.previous_password= QLabel("Previous Password")
         self.new_password= QLabel("New Password")
         
-        self.previous_password_edit= QLineEdit
-        self.new_password_edit= QLineEdit
+        self.previous_password_edit= QLineEdit()
+        self.new_password_edit= QLineEdit()
         
         self.back_button = QPushButton("Back")
         self.back_button.clicked.connect(lambda:self.BackEvent())
@@ -45,7 +49,7 @@ class ChangePasswordLayout(QWidget):
         
         
     def BackEvent(self):
-        self.controller.goBack()
+        self.goback_request.emit()
         
     def ConfirmEvent(self):
         self.change_result.setPlaceholderText(self.controller.changePassword(self.previous_password_edit.text(), self.new_password_edit.text()))

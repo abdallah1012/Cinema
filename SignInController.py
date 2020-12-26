@@ -17,7 +17,7 @@ class SignInController:
     def __init__(self):
         self.Manager = UserManagement.UserManagement() #manager for communication with the user table
         self.course_manager = CourseManagement() #manager for communication with the course table
-    
+        
     #Attempts signing in by checking for username password combo (aa,aa username password is an exception for dev purposes)
     #params: string username, string password
     #if successfull it returns "success" for the layout to interpret
@@ -29,8 +29,13 @@ class SignInController:
             except:
                 pass
             
-            user = Professor(0,courses)
+            userInfo = self.Manager.getUserInfo(0)
             
+            if(len(userInfo[0][3]) != 0):
+                user = Professor(0, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], userInfo[0][3])
+            else:
+                user = Professor(0, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], [])
+                
             main_window = MainWidget(user)
             return "success"
         if (username=="" or password==""):
@@ -43,12 +48,19 @@ class SignInController:
                     courses = self.course_manager.getCourses(userID)
                 except:
                     return ("Database down, use aa")
-            
-                if(entity == 'student'):
-                    user = Student(userID, courses)
-                elif(entity == 'professor'):
-                    user = Professor(userID, courses)
                 
+                userInfo = self.Manager.getUserInfo(userID)
+                
+                if(len(userInfo[0][3]) != 0):
+                    if(entity == 'student'):
+                        user = Student(userID, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], userInfo[0][3])
+                    elif(entity == 'professor'):
+                        user = Professor(userID, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], userInfo[0][3])
+                else:
+                    if(entity == 'student'):
+                        user = Student(userID, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], [])
+                    elif(entity == 'professor'):
+                        user = Professor(userID, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], [])
 
                 main_window = MainWidget(user)
                 return "success"
