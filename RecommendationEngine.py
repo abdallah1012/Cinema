@@ -18,7 +18,13 @@ class RecommendationEngine:
         self.moviemanager = MovieManagement()
     
     def WhatsHot(self):
-        pass
+        Moviess = self.moviemanager.getWhatHot()
+       
+        Moviess = [i[0] for i in Moviess]
+        
+        return Moviess
+            
+        
     #TODO:  Send query to MMS to retrieve list of "hottest" movies.
     #       Criteria can be highest number of views and highest ratings (TBD)
     
@@ -28,14 +34,17 @@ class RecommendationEngine:
         faculty = []
         typ=[]
         cids=[]
+        if(isinstance(Courses, int)==True):
+            Courses = []
         for i,j in Courses:
             
             temp=self.manager.getCourseinfo(str(j))
             Movies=self.moviemanager.getCourseMovieID(str(j))
             if(len(Movies)!=0):
-                tags.append(Movies[0][1])
-                tags.append(Movies[0][2])
-                tags.append(Movies[0][3])
+                for k in range(len(Movies)):
+                    tags.append(Movies[k][1])
+                    tags.append(Movies[k][2])
+                    tags.append(Movies[k][3])
           
             if(len(temp)!=0):
                 cids.append(temp[0][0])
@@ -61,17 +70,18 @@ class RecommendationEngine:
             for i in courseIDs:        
                recommend=self.moviemanager.getCourseMovieID(i)
                if(len(recommend)!=0):
-                   Rtags.append(recommend[0][1])
-                   Rtags.append(recommend[0][2])
-                   Rtags.append(recommend[0][3])
+                   
                    for k in range(len(recommend)):
-                       if((Rtags[k] in tags)==True):
-                           Movierecommend.append(recommend[0][0])
+                       if((recommend[k][1] in tags)==True or (recommend[k][2] in tags) == True or (recommend[k][3])==True ):
+                           Movierecommend.append(recommend[k][0])
                    if(len(Movierecommend)==0):
-                       Movierecommend=recommend
+                       Movierecommend=[ids for ids, tag1, tag2, tag3 in recommend]
+        
+            return Movierecommend
+                    
         else:
-            #reccommend randomly
-            pass
+            return self.WhatsHot()
+            
                     
         
     #TODO:  Send query to MMS to retrieve list of "Recommended" movies for currently signed in user

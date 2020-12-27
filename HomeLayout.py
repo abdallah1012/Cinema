@@ -63,7 +63,8 @@ class HomeLayout(QWidget):
         
         
         self.generateRecommended()
-#        self.generateHot()
+        
+        self.generateHot()
         self.setLayout(self.vbox)
     
     
@@ -77,9 +78,10 @@ class HomeLayout(QWidget):
             self.recommended_display.setImages(self.images, self.url, self.moviesID, self.titles)
     
     #generates "hot" movies for user (general)
-#    def generateHot(self):
-#        self.imageshot, self.url = self.controller.getHot()
-#        self.hot_display.setImages(self.images, self.url)
+    def generateHot(self):
+        self.imageshot_hot, self.url_hot, self.moviesID_hot, self.titles_hot = self.controller.getHot()
+        if(len(self.images) != 0):
+            self.hot_display.setImages(self.imageshot_hot, self.url_hot, self.moviesID_hot, self.titles_hot)
         
         #TODO: populate self.recommended_for_you list and add to GUI
         #TODO: populate self.whats_hot list and add to GUI
