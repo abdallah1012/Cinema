@@ -34,6 +34,8 @@ class RecommendationEngine:
         faculty = []
         typ=[]
         cids=[]
+        if(isinstance(Courses, int)==True):
+            Courses = []
         for i,j in Courses:
             
             temp=self.manager.getCourseinfo(str(j))

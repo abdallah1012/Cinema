@@ -76,9 +76,9 @@ class MovieManagement:
             return 0 #no thumbnails found
         else:
             return df
-    def getThumbNailsMovieID(self,userID):
+    def getThumbNailsMovieID(self,movieID):
         
-        sqlstmt = "SELECT thumbnail, url, movieID, moviename FROM movies WHERE movieID = '"+str(userID)+"'"
+        sqlstmt = "SELECT thumbnail, url, movieID, moviename FROM movies WHERE movieID = '"+str(movieID)+"'"
         
         df = pd.read_sql_query(sqlstmt, self.database_connection)
         df = df.values.tolist()
