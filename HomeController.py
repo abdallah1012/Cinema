@@ -9,6 +9,7 @@ from RecommendationEngine import RecommendationEngine
 from User import User
 from MovieLayout import MovieLayout
 from MovieManagement import MovieManagement
+
 import base64 
 
 #controller for the relevant layout to communicate with other layouts and computation models
@@ -19,7 +20,7 @@ class HomeController:
         #self.r_engine.WhatsHot()
         #self.r_engine.LoadRecommendations(self.user.id)
         self.movie_manager = MovieManagement() #manager used to communicate with movies table in database
-    
+        self.recommender = RecommendationEngine()
     #loads the movie widget
     def loadMovieWidget(self):
         self.movieLayout = MovieWidget()
@@ -39,7 +40,8 @@ class HomeController:
       
     #talks to manager to get list of recommended movies
     def getRecommended(self):
-        byteImages = self.movie_manager.getThumbNailsURL()
+        Movies=self.recommender.LoadRecommendations(self.user)
+        byteImages = self.movie_manager.getThumbNailsMovieID(self.user.id)
         if(isinstance(byteImages, int) == False):
             url = []
             images = []
@@ -59,7 +61,8 @@ class HomeController:
     
     #talks to manager to get list of hot movies
     def getHot(self):
-        byteImages = self.movie_manager.getThumbNails()
+        Movies= self.recommender.WhatsHot()
+        byteImages = self.movie_manager.getThumbNailsMovieID(self.user.id)
         
         images = []
         for i in byteImages:

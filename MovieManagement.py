@@ -76,6 +76,18 @@ class MovieManagement:
             return 0 #no thumbnails found
         else:
             return df
+    def getThumbNailsMovieID(self,userID):
+        
+        sqlstmt = "SELECT thumbnail, url, movieID, moviename FROM movies WHERE movieID = '"+str(userID)+"'"
+        
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        
+        
+        if(len(df) == 0):
+            return 0 #no thumbnails found
+        else:
+            return df
         
 
     def getCourseMovies(self,C_ID):
@@ -128,4 +140,12 @@ class MovieManagement:
         
         
         
+    def getWhatHot(self):
+        sqlstmt = "SELECT movieID AS movieID FROM movies ORDER BY views DESC LIMIT 5"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
         
+        if(len(df) > 0):
+            return df
+        else:
+            return []
