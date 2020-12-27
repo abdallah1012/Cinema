@@ -28,27 +28,31 @@ class MainWidget(QMainWindow):
         self.user = user
         self.setStyleSheet(open('main.css').read())
         self.dashboard_button = QPushButton("Dashboard")
+        self.dashboard_button.setFixedWidth(150)
         self.dashboard_button.clicked.connect(lambda success:self.LoadDashboardLayout(success))
+        self.dashboard_button.setObjectName("dashboard_button")
         
         self.home_button = QPushButton("Home")
+        self.home_button.setFixedWidth(150)
         self.home_button.clicked.connect(lambda:self.LoadHomeLayout())
+        self.home_button.setObjectName("home_button")
         
         self.profile_button = QPushButton("Profile")
+        self.profile_button.setFixedWidth(150)
         self.profile_button.clicked.connect(lambda success:self.LoadProfileLayout(success))
+        self.profile_button.setObjectName("profile_button")
                 
         
         self.grid = QGridLayout()
 
-    
+        #self.topbar = QFrame()
         self.upperLayout = QHBoxLayout()
         
         self.upperLayout.addWidget(self.dashboard_button)
         self.upperLayout.addWidget(self.home_button)
         self.upperLayout.addWidget(self.profile_button)
         
-        self.upperExternal = QFrame()
-        self.upperExternal.setStyleSheet(".QFrame{background-color: white; border: 2px solid black; border-radius: 10px;}");
-    
+        self.upperExternal = QFrame()    
         self.upperExternal.setLayout(self.upperLayout)
         
        #print(self.user.courses)

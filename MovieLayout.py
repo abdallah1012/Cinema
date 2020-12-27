@@ -46,11 +46,13 @@ class MovieLayout(QWidget):
         self.positionslider.sliderMoved.connect(self.setPosition)
 
         self.hbuttonbox = QHBoxLayout()
-        self.playbutton = QPushButton("Play")
+        self.playbutton = QPushButton()
+        self.playbutton.setObjectName("playbutton")
         self.hbuttonbox.addWidget(self.playbutton)
 
 
-        self.stopbutton = QPushButton("Stop")
+        self.stopbutton = QPushButton()
+        self.stopbutton.setObjectName("stopbutton")
         self.hbuttonbox.addWidget(self.stopbutton)
         self.stopbutton.clicked.connect(self.Stop)
 
@@ -75,19 +77,25 @@ class MovieLayout(QWidget):
 
         
         self.comment.setPlaceholderText("Type Comment Here ...")
+        self.comment.setObjectName("comment")
         self.comment.setFixedHeight(50)
         self.commentbox = QVBoxLayout()
         
         self.commentSubmit = QPushButton("Comment")
+        self.commentSubmit.setObjectName("commentSubmit")
+        self.commentSubmit.setFixedWidth(200)
         self.commentSubmit.clicked.connect(lambda: self.submitComment())
         self.commentbox.addWidget(self.comment)
         self.commentbox.addWidget(self.commentSubmit)
         
         self.commentSection = QLabel("Comments:\n")
-        self.commentSection.setFixedHeight(10)
+        #self.commentSection.setFixedHeight(50)
+        self.commentSection.setObjectName("commentSection")
+        self.commentSection.setFixedHeight(30)
         self.commentbox.addWidget(self.commentSection)
         self.commentSection_comments = QTextEdit("No Comments Yet")
-        self.commentSection_comments.setStyleSheet("QTextEdit {color:black;font-size:13px;font-family: \"Times New Roman\", Times, serif;background-color:transparent;border-style: none}")
+        self.commentSection_comments.setObjectName("commentSection_comments")
+        #self.commentSection_comments.setStyleSheet("QTextEdit {color:black;font-size:13px;font-family: \"Times New Roman\", Times, serif;background-color:transparent;border-style: none}")
         self.commentSection_comments.setReadOnly(True)
         self.commentSection_comments.setFixedHeight(50)
         
@@ -151,19 +159,19 @@ class MovieLayout(QWidget):
         if self.mediaplayer.is_playing():
             
             self.mediaplayer.pause()
-            self.playbutton.setText("Play")
+            #self.playbutton.setText("Play")
             self.isPaused = True
         else:
             
             self.mediaplayer.play()
-            self.playbutton.setText("Pause")
+            #self.playbutton.setText("Pause")
             self.timer.start()
             self.isPaused = False
 
     #stops the movie, unloads it, pressing this requires loading the movie again
     def Stop(self):
         self.mediaplayer.stop()
-        self.playbutton.setText("Play")
+        #self.playbutton.setText("Play")
 
     #Opens the movie from youtube and sets it in the appropriate layout item to be showcased
     #TODO: add and use param (string youtube_url) 
@@ -213,5 +221,5 @@ def run():
     sys.exit(app.exec_())
    
 	
-if __name__ == '__main__':
-   run()
+#if __name__ == '__main__':
+#   run()

@@ -20,7 +20,13 @@ class HomeLayout(QWidget):
         self.controller = HomeController(user)        
         self.__home_grid = QGridLayout()
         self.recommended_for_you_label = QLabel("Recommended for you")
+        self.recommended_for_you_label.setObjectName("recommended_for_you_label")
+        self.recommended_for_you_label.setFixedWidth(200)
         self.whats_hot_label = QLabel("What's hot")
+        self.whats_hot_label.setObjectName("whats_hot_label")
+        self.whats_hot_label.setFixedWidth(105)
+
+
         
         self.recommended_display = ImageSlider()
         self.hot_display = ImageSlider()

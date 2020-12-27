@@ -27,9 +27,13 @@ class ProfileLayout(QWidget):
         
         
         self.edit_button = QPushButton("Edit")
+        self.edit_button.setObjectName("edit_button")
+        self.edit_button.setFixedWidth(100)
         self.edit_button.clicked.connect(lambda:self.getFile())
         
         self.change_password = QPushButton("Change Password")
+        self.change_password.setObjectName("change_password")
+        self.change_password.setFixedWidth(200)
         self.change_password.clicked.connect(lambda:self.changePassword())
         
         self.username = QLabel("Username")

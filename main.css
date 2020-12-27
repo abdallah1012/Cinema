@@ -1,34 +1,135 @@
+QWidget{
+  background-color: rgb(47,49,54)  ;
+}
 
+.QFrame{
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 5px;
+  background-color: rgb(32,34,37);
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
 
-.QPushButton{
-   
-   
-   float: left;
-   
-   outline: none;
-  
-   
-   transition: 0.3s;
-   background-color: rgb(5, 34, 114); /* Green */
-  
+QFrame{
   color: white;
-  border-radius: 2px;
-  
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  
-  cursor: pointer;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
 
-    
-	border-left = 100%;
-	border-right = 100%;
-	border-top = 100%;
-	border-bottom = 100%;
- }
-.QPushButton:hover {
-	background-color: #4169e1;
+QFrame#whats_hot_label, QFrame#recommended_for_you_label{
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 5px;
+  color: white;
+  background-color: rgb(67,181,129);
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+.QLineEdit{
+  height: 40px; 
+  width: 300px;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: rgb(64,68,75);
+  color: rgb(185,187,190)  ;
+  border-radius: 5px;
+  border: 1px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+QPushButton{
+  height: 40px;
+  width: 300px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color:rgb(114,137,218);
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+QPushButton:hover {
+  background-color: rgb(103,123,196);
+}
+
+QPushButton#pic{
+  width: 50px;
+  height: 50px;
+  background-image: url("leftr.png");
+}
+
+QPushButton:hover#pic{
+  background-image: url("left_hoverr.png");
+}
+
+QPushButton#pic2{
+  width: 50px;
+  height: 50px;
+  background-image: url("rightr.png");
+}
+
+QPushButton:hover#pic2{
+  background-image: url("right_hoverr.png");
+}
+
+QPushButton#playbutton{
+  width: 50px;
+  height: 50px;
+  background-image: url("play_pauser.png");
+}
+
+QPushButton:hover#playbutton{
+  background-image: url("play_pause_hoverr.png");
+}
+
+QPushButton#stopbutton{
+  width: 50px;
+  height: 50px;
+  background-image: url("stopr.png");
+}
+
+QPushButton:hover#stopbutton{
+  background-image: url("stop_hoverr.png");
+}
+
+QPushButton#edit_button, QPushButton#change_password, QPushButton#add_course, QPushButton#commentSubmit{
+  align-self: center;
+  background-color: rgb(67,181,129);
+}
+
+QPushButton:hover#edit_button, QPushButton:hover#change_password, QPushButton:hover#add_course, QPushButton:hover#commentSubmit{
+  background-color: rgb(105,196,154);
+}
+
+QPlainTextEdit#comment{
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: rgb(64,68,75);
+  color: rgb(185,187,190)  ;
+  border-radius: 5px;
+  border: 1px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+QTextEdit#commentSection_comments{
+  background-color: rgb(54,57,63);
+  color: white;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+QLabel#commentSection{
+  margin-bottom: 0px;
+  color: rgb(114,137,218);
+  font-size: 25px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
 }
 	
 .QListWidget{

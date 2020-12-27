@@ -15,6 +15,7 @@ class WelcomeWidget(QWidget):
         super().__init__()
         self.sign_in_layout = SignInLayout()
         self.setLayout(self.sign_in_layout)
+        self.setStyleSheet(open('main.css').read())
         self.sign_in_layout.success_signal.connect(lambda:self.cleanUp())
         self.show()
 
