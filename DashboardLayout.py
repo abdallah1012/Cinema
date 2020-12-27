@@ -29,6 +29,8 @@ class DashboardLayout(QWidget):
         
         #ADD COURSE GUI
         self.add_course = QPushButton("Add Course") #enroll for student, create for professor
+        self.add_course.setObjectName("add_course")
+        self.add_course.setFixedWidth(200)
         self.add_course.clicked.connect(lambda:self.new_course_request.emit())
         
   

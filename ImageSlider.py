@@ -21,7 +21,35 @@ class ImageSlider(QWidget):
         self.setWindowTitle("Python ") 
         
         self.setGeometry(600,600,900,300)
-        
+
+        stylesheett= """
+            QPushbutton{
+            height: 50px;
+            width: 50px;
+            background-color: rgb(54,57,63);
+            background-image: url("left.png");
+            }
+
+            QPushbutton#pic:hover{
+            background-color: rgb(54,57,63);
+            background-image: url("left_hover.png");
+            }
+
+            QPushbutton#pic2{
+            height: 50px;
+            width: 50px;
+            background-color: rgb(54,57,63);
+            background-image: url("right.png");
+            }
+
+            QPushbutton#pic2:hover{
+            background-color: rgb(54,57,63);
+            background-image: url("right_hover.png");
+            }
+        """
+
+        self.setStyleSheet(stylesheett)
+
         self.hbox = QHBoxLayout()
         
         self.list_widget = QListWidget()
@@ -49,20 +77,21 @@ class ImageSlider(QWidget):
         self.list_widget.setAutoFillBackground( False )
         
         self.pic = QPushButton()
+        self.pic.setObjectName("pic")
         self.pic.clicked.connect(lambda:self.goleftSmooth())
-        self.pic.setGeometry(10, 10, 50, 50)
+        #self.pic.setGeometry(10, 10, 50, 50)
         #use full ABSOLUTE path to the image, not relative
-        self.pic.setIcon(QIcon("left.png"))
         
         self.hbox.addWidget(self.pic)
 
         self.hbox.addWidget(self.list_widget)
         
         self.pic2 = QPushButton()
+        self.pic2.setObjectName("pic2")
         self.pic2.clicked.connect(lambda:self.gorightSmooth())
-        self.pic2.setGeometry(10, 10, 50, 50)
+        #self.pic2.setGeometry(10, 10, 50, 50)
         #use full ABSOLUTE path to the image, not relative
-        self.pic2.setIcon(QIcon("right.png"))
+        #self.pic2.setIcon(QIcon("right.png"))
         
         self.hbox.addWidget(self.pic2)
         
