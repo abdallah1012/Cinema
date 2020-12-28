@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Nov 14 13:42:30 2020
-
-@author: ojaro
-"""
 
 from PyQt5.QtWidgets import QGridLayout,QWidget,QLabel, QPushButton, QSpacerItem, QFileDialog, QHBoxLayout, QVBoxLayout
 from PyQt5.QtGui import QPixmap

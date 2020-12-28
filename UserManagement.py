@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 15 14:23:29 2020
 
-@author: WarPeace101
-"""
 import pandas as pd
 from sqlalchemy import create_engine
 import base64

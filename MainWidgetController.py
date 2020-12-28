@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Dec 28 13:06:25 2020
 
-@author: WarPeace101
-"""
 import User
 from UserManagement import UserManagement
 from CourseManagement import CourseManagement

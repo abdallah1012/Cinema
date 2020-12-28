@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 26 18:57:11 2020
 
-@author: WarPeace101
-"""
 
 from CourseManagement import CourseManagement
 from MovieManagement import MovieManagement

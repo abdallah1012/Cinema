@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 11 12:54:40 2020
 
-@author: ojaro
-"""
 from User import User
 
 #Student class which keeps the attributes of a student throughout running time after signing in

@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 25 14:19:13 2020
 
-@author: bbaajour
-"""
 from User import User
 from UserManagement import UserManagement
 #from ProfileLayout import ProfileLayout

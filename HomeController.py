@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 18 09:46:53 2020
 
-@author: ojaro
-"""
 
 from RecommendationEngine import RecommendationEngine
 from User import User

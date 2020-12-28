@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 25 14:05:53 2020
 
-@author: bbaajour
-"""
 
 from PyQt5.QtWidgets import QLabel,QWidget,QPushButton, QGridLayout, QLineEdit, QVBoxLayout
 from User import User

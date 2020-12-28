@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Nov 14 12:10:37 2020
-
-@author: ojaro
-"""
 
 from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel
 from PyQt5.QtCore import pyqtSignal

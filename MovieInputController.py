@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 26 19:42:35 2020
 
-@author: WarPeace101
-"""
 
 from MovieManagement import MovieManagement
 from source import uploadToYoutube

@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 22 15:53:37 2020
 
-@author: ojaro
-"""
 
 import pickle
 import os

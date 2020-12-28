@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 18 13:15:30 2020
 
-@author: ojaro
-"""
 
 from NewCourseController import NewCourseController
 from PyQt5.QtWidgets import QWidget, QGridLayout,QLabel

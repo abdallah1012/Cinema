@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 11 10:24:46 2020
 
-@author: ojaro
-"""
 
 
 from PyQt5.QtWidgets import QWidget

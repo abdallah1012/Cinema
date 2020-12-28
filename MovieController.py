@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 25 16:44:05 2020
-
-@author: ojaro
-"""
 
 from MovieManagement import MovieManagement
 class MovieController:

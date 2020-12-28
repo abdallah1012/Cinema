@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Nov 24 18:50:27 2020
 
-@author: WarPeace101
-"""
 import sys
 from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, QStackedLayout, QRadioButton, \
 QFormLayout, QInputDialog, QFileDialog

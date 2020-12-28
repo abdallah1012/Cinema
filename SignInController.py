@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 11 12:54:51 2020
 
-@author: ojaro
-"""
 from MainWidget import MainWidget
 from Student import Student 
 from Professor import Professor

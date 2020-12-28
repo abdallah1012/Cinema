@@ -1,9 +1,5 @@
 ## -*- coding: utf-8 -*-
-#"""
-#Created on Sat Nov 28 22:22:11 2020
-#
-#@author: WarPeace101
-#"""
+
 from PyQt5.QtWidgets import QHBoxLayout, QListWidget, QWidget, QListWidgetItem, QPushButton, QListView, QAbstractItemView, QLabel
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon, QPixmap

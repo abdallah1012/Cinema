@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 22 15:54:58 2020
-
-@author: ojaro
-"""
 
 
 from Google import Create_Service
