@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, QStackedLayout, QRadioButton
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QVBoxLayout,QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, QStackedLayout, QRadioButton
 from PyQt5.QtCore import pyqtSignal
 from RegisterController import RegisterController
 
@@ -14,6 +14,8 @@ class RegisterLayout(QWidget):
     def __init__(self):
         super().__init__()
         
+        self.setStyleSheet(open('main.css').read())
+
         self.username_entry = QLineEdit()
         self.username_entry.setPlaceholderText("Username")
     
@@ -37,21 +39,27 @@ class RegisterLayout(QWidget):
         self.prf_rb = QRadioButton("Professor")
         
         self.error_message = QLabel("")
+
+        self.HBox = QHBoxLayout()
+        self.HBox.addWidget(self.std_rb)
+        self.HBox.addWidget(self.prf_rb)
+
+        self.role = QFrame()
+        self.role.setLayout(self.HBox)
         
-        self.grid = QGridLayout()
-        self.grid.addWidget(self.username_entry,0,0)
-        self.grid.addWidget(self.password,1,0)
-        self.grid.addWidget(self.firstName,2,0)
-        self.grid.addWidget(self.lastName,3,0)
-        self.grid.addWidget(self.std_rb,4,0)
-        self.grid.addWidget(self.prf_rb,4,1)
-        self.grid.addWidget(self.submit_button,5,0)
-        self.grid.addWidget(self.back_button,6,0)
-        self.grid.addWidget(self.error_message,7,0)
+        self.VBox = QVBoxLayout()
+        self.VBox.addWidget(self.username_entry)
+        self.VBox.addWidget(self.password)
+        self.VBox.addWidget(self.firstName)
+        self.VBox.addWidget(self.lastName)
+        self.VBox.addWidget(self.role)
+        self.VBox.addWidget(self.submit_button)
+        self.VBox.addWidget(self.back_button)
+        self.VBox.addWidget(self.error_message)
 
         self.controller = RegisterController()
         
-        self.setLayout(self.grid)
+        self.setLayout(self.VBox)
         
         self.show()
         

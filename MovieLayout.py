@@ -73,14 +73,11 @@ class MovieLayout(QWidget):
 
     
         self.comment = QPlainTextEdit()
-        
 
-        
         self.comment.setPlaceholderText("Type Comment Here ...")
         self.comment.setObjectName("comment")
         self.comment.setFixedHeight(50)
-        self.commentbox = QVBoxLayout()
-        
+        self.commentbox = QVBoxLayout()        
         self.commentSubmit = QPushButton("Comment")
         self.commentSubmit.setObjectName("commentSubmit")
         self.commentSubmit.setFixedWidth(200)
@@ -88,8 +85,8 @@ class MovieLayout(QWidget):
         self.commentbox.addWidget(self.comment)
         self.commentbox.addWidget(self.commentSubmit)
         
-        self.commentSection = QLabel("Comments:\n")
-        #self.commentSection.setFixedHeight(50)
+        self.commentSection = QLabel("Comments:")
+        self.commentSection.setFixedHeight(50)
         self.commentSection.setObjectName("commentSection")
         self.commentSection.setFixedHeight(30)
         self.commentbox.addWidget(self.commentSection)

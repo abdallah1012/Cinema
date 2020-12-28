@@ -2,6 +2,16 @@ QWidget{
   background-color: rgb(47,49,54)  ;
 }
 
+QRadioButton{
+  color: white;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .QFrame{
   margin-top: 0px;
   margin-left: 0px;
@@ -10,7 +20,7 @@ QWidget{
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 5px;
-  background-color: rgb(32,34,37);
+  background-color: rgb(47,49,54)  ;
   font-family: 'Whitney SSm A', 'Whitney SSm B';
 }
 
@@ -18,6 +28,11 @@ QFrame{
   color: white;
   font-family: 'Whitney SSm A', 'Whitney SSm B';
 }
+
+QFrame#upperExternal{
+  background-color: rgb(32,34,37);
+}
+
 
 QFrame#whats_hot_label, QFrame#recommended_for_you_label{
   border-radius: 5px;
@@ -97,12 +112,11 @@ QPushButton:hover#stopbutton{
   background-image: url("stop_hoverr.png");
 }
 
-QPushButton#edit_button, QPushButton#change_password, QPushButton#add_course, QPushButton#commentSubmit{
-  align-self: center;
+QPushButton#edit_button, QPushButton#Moviebtn , QPushButton#thumbbtn, QPushButton#change_password, QPushButton#add_course, QPushButton#commentSubmit, QPushButton#confirm_button , QPushButton#back_button, QPushButton#cancel, QPushButton#done, QPushButton#enroll_button , QPushButton#add_movie , QPushButton#back{
   background-color: rgb(67,181,129);
 }
 
-QPushButton:hover#edit_button, QPushButton:hover#change_password, QPushButton:hover#add_course, QPushButton:hover#commentSubmit{
+QPushButton:hover#edit_button, QPushButton:hover#Moviebtn , QPushButton:hover#thumbbtn, QPushButton:hover#change_password, QPushButton:hover#add_course, QPushButton:hover#commentSubmit, QPushButton:hover#confirm_button , QPushButton:hover#back_button, QPushButton:hover#cancel , QPushButton:hover#done, QPushButton:hover#enroll_button, QPushButton:hover#add_movie , QPushButton:hover#back{
   background-color: rgb(105,196,154);
 }
 
@@ -125,11 +139,70 @@ QTextEdit#commentSection_comments{
   font-size: 15px;
 }
 
-QLabel#commentSection{
+QLabel{
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+  color: white;
+  font-size: 20px;
+}
+
+QLabel#commentSection,QLabel#username,QLabel#firstName,QLabel#lastName{
   margin-bottom: 0px;
   color: rgb(114,137,218);
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+QComboBox{
+  height: 40px;
+  background-color: rgb(64,68,75);
+  border-radius: 5px;
+  border: 1px;
+  color: white;
+  font-size: 20px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+QComboBox:hover{
+  background-color: rgb(114,137,218);
+}
+
+QComboBox:on{
+  background-color: rgb(114,137,218);
+}
+
+QComboBox::down-arrow{
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+QComboBox::drop-down{
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+
+.QListView{
+  background-color: rgb(64,68,75);
+  border-radius: 5px;
+  border: 1px;
+  color: white;
+  font-size: 20px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+}
+
+.QListView::item{
+  color: white;
+  font-size: 20px;
+  font-family: 'Whitney SSm A', 'Whitney SSm B';
+  height: 50px;
+}
+
+.QListView::item:selected{
+  background-color: rgb(64,68,75);
+} 
+
+.QListView::item:hover{
+  background-color:rgb(114,137,218);
 }
 	
 .QListWidget{

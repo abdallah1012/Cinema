@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QGridLayout,QLabel,QWidget,QPushButton, QVBoxLayout, QMainWindow, QStackedLayout, QListWidget,QListWidgetItem
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QGridLayout,QLabel,QWidget,QPushButton, QVBoxLayout, QMainWindow, QStackedLayout, QListWidget,QListWidgetItem
 import User
 from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QIcon, QPixmap
@@ -47,20 +47,34 @@ class CourseMovieLayout(QWidget):
             self.setImages(self.thumbnails, self.urls, self.titles, self.movieIDs)    
         else:
             self.error.setText("Course Has No Movies")
-           
+
+
+        self.HBox1 = QHBoxLayout()
+        self.HBox2 = QHBoxLayout()
+        self.frame1 = QFrame()
+        self.frame2 = QFrame()
+        self.frame1.setLayout(self.HBox1)
+        self.frame2.setLayout(self.HBox2)
+
         self.back = QPushButton("Back")
+        self.back.setObjectName("back")
+        self.back.setFixedWidth(100)
         self.back.clicked.connect(lambda: self.BACK())
+        self.HBox1.addWidget(self.back)
         self.vbox = QVBoxLayout()
         
         self.vbox.addWidget(self.list_widget)
         
         self.vbox.addWidget(self.error)
-        self.vbox.addWidget(self.back)
+        self.vbox.addWidget(self.frame1)
        
         if(isinstance(self.user, Professor) == True):
             self.add_movie = QPushButton("Add Movie")
+            self.add_movie.setObjectName("add_movie")
+            self.add_movie.setFixedWidth(150)
             self.add_movie.clicked.connect(lambda:self.new_movie_request.emit(self.courseID))
-            self.vbox.addWidget(self.add_movie)
+            self.HBox2.addWidget(self.add_movie)
+            self.vbox.addWidget(self.frame2)
             
         self.setLayout(self.vbox)
         

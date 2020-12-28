@@ -28,7 +28,6 @@ class MovieInputDialog(QWidget):
       
       self.btn1 = QLabel("Movie Name")	
       self.le1 = QLineEdit()
-      self.le1.setFixedWidth(250)
       layout.addRow(self.btn1,self.le1)
       self.btn2 = QLabel("Description")
 
@@ -37,26 +36,26 @@ class MovieInputDialog(QWidget):
       self.thumbPath = ""
      
       self.le2 = QLineEdit()
-      self.le2.setFixedWidth(250)
-      self.le2.setFixedHeight(200)
       
       self.done = QPushButton("Done")
+      self.done.setObjectName("done")
       self.done.clicked.connect(lambda: self.submitMovie())
       
       self.cancel = QPushButton("Cancel")
+      self.cancel.setObjectName("cancel")
       self.cancel.clicked.connect(lambda: self.goBack())
       
       layout.addRow(self.btn2,self.le2)
-      
-      self.Moviebtn = QPushButton("Browse")
-      self.Moviebtn.clicked.connect(self.getMovie)
       self.movieLabel = QLabel("Choose your Movie")
-      layout.addRow(self.Moviebtn, self.movieLabel)
-      
-      self.thumbbtn = QPushButton("Browse")
-      self.thumbbtn.clicked.connect(self.getThumb)
+      self.Moviebtn = QPushButton("Browse")
+      self.Moviebtn.setObjectName("Moviebtn")
+      self.Moviebtn.clicked.connect(self.getMovie)
+      layout.addRow(self.movieLabel, self.Moviebtn)
       self.thumbLabel = QLabel("Choose your Thumbnail (Optional)")
-      layout.addRow(self.thumbbtn, self.thumbLabel)
+      self.thumbbtn = QPushButton("Browse")
+      self.thumbbtn.setObjectName("thumbbtn")
+      self.thumbbtn.clicked.connect(self.getThumb)
+      layout.addRow(self.thumbLabel, self.thumbbtn)
       
       self.errorText = QLabel("")
       

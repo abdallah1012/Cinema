@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QGridLayout,QWidget,QLabel, QPushButton, QSpacerItem, QFileDialog, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QFrame,QGridLayout,QWidget,QLabel, QPushButton, QSpacerItem, QFileDialog, QHBoxLayout, QVBoxLayout
 from PyQt5.QtGui import QPixmap
 from User import User
 from ProfileController import ProfileController
 import base64
 from PyQt5.QtCore import pyqtSignal 
 #Layout for the profile interface
+#TODO: show relevant details for the user
 class ProfileLayout(QWidget):
     changePass_request = pyqtSignal()
     changeImage_request = pyqtSignal(bytes)
@@ -18,21 +19,32 @@ class ProfileLayout(QWidget):
         self.user = user
         self.controller = ProfileController(self.user)
         
-        
-        
+        self.HBox1 = QHBoxLayout()
+        self.HBox2 = QHBoxLayout()
+        self.frame1 = QFrame()
+        self.frame2 = QFrame()
+        self.frame1.setLayout(self.HBox1)
+        self.frame2.setLayout(self.HBox2)
+
         self.edit_button = QPushButton("Edit")
         self.edit_button.setObjectName("edit_button")
         self.edit_button.setFixedWidth(100)
         self.edit_button.clicked.connect(lambda:self.getFile())
-        
+        self.HBox1.addWidget(self.edit_button)
+
         self.change_password = QPushButton("Change Password")
         self.change_password.setObjectName("change_password")
         self.change_password.setFixedWidth(200)
         self.change_password.clicked.connect(lambda:self.changePassword())
+        self.HBox2.addWidget(self.change_password)
+
         
-        self.username = QLabel("Username")
-        self.firstName = QLabel("First Name")
-        self.lastName = QLabel("Last Name")     
+        self.username = QLabel("Username:")
+        self.username.setObjectName("username")
+        self.firstName = QLabel("First Name:")
+        self.firstName.setObjectName("firstName")
+        self.lastName = QLabel("Last Name:")     
+        self.lastName.setObjectName("lastName")
         self.user_username = QLabel(self.user.username)   
         self.user_firstName = QLabel(self.user.first_name)     
         self.user_lastName = QLabel(self.user.last_name)
@@ -58,9 +70,9 @@ class ProfileLayout(QWidget):
         self.__profile_grid.addWidget(self.lastName,4,0)
         self.__profile_grid.addWidget(self.user_lastName,4,1)
       
-        self.vbox.addWidget(self.edit_button)
+        self.vbox.addWidget(self.frame1)
         self.vbox.addLayout(self.__profile_grid)
-        self.vbox.addWidget(self.change_password)
+        self.vbox.addWidget(self.frame2)
         
         
         self.errorMessage = QLabel()
@@ -70,13 +82,13 @@ class ProfileLayout(QWidget):
         
 
         
-    def getFile(self): #initiates a file selection dialogue. Only images files are accepted
+    def getFile(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image files (*.png *.jpg *.gif )")
         self.image_label.setPixmap(QPixmap(fname[0]))
         result, image = self.controller.editProfilePic(fname[0])
         self.changeImage_request.emit(image)
         
-    def changePassword(self): #sends a signal that activates an event for changing the user's password
+    def changePassword(self):
         self.changePass_request.emit()
 #        self.controller.changePassword()
         

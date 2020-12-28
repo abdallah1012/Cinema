@@ -2,7 +2,7 @@
 
 
 
-from PyQt5.QtWidgets import QPushButton,QLineEdit,QLabel, QWidget, QFormLayout, QInputDialog, QComboBox, QVBoxLayout
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QPushButton,QLineEdit,QLabel, QWidget, QFormLayout, QInputDialog, QComboBox, QVBoxLayout
 from User import User
 from PyQt5.QtCore import pyqtSignal
 from CourseInputController import CourseInputController
@@ -29,9 +29,15 @@ class CourseInputDialog(QWidget):
       
       self.setWindowTitle("Enroll in a Course")
       layout = QVBoxLayout()
+      self.Hbox = QHBoxLayout()
+      self.fram = QFrame()
       self.cb = QComboBox()
       self.cb_courses = QComboBox()
       self.enroll_button = QPushButton("Enroll In Course")
+      self.enroll_button.setObjectName("enroll_button")
+      self.enroll_button.setFixedWidth(200)
+      self.Hbox.addWidget(self.enroll_button)
+      self.fram.setLayout(self.Hbox)
       self.enroll_button.clicked.connect(lambda: self.enrollStudent())
       self.error_message = QLabel("")
                         
@@ -54,11 +60,11 @@ class CourseInputDialog(QWidget):
       self.cb_courses.currentIndexChanged.connect(self.selectionchangeCourses)
       layout.addWidget(self.cb)
       layout.addWidget(self.cb_courses)
-      layout.addWidget(self.enroll_button)
+      layout.addWidget(self.fram)
       layout.addWidget(self.error_message)
       
-      self.cb.setStyleSheet("QComboBox { background-color: white; }");
-      self.cb_courses.setStyleSheet("QComboBox { background-color: white; }");
+      #self.cb.setStyleSheet("QComboBox { background-color: white; }")
+      #self.cb_courses.setStyleSheet("QComboBox { background-color: white; }")
       self.setLayout(layout)
       
 
@@ -110,13 +116,14 @@ class CourseInputDialog(QWidget):
       self.btn2 = QLabel("Description")
   
       self.le2 = QLineEdit()
-      self.le2.setFixedWidth(300)
-      self.le2.setFixedHeight(300)
+      self.le2.setFixedHeight(150)
       
       self.done = QPushButton("Done")
+      self.done.setObjectName("done")
       self.done.clicked.connect(lambda:self.SubmitCourse())
       
       self.cancel = QPushButton("Cancel")
+      self.cancel.setObjectName("cancel")
       self.cancel.clicked.connect(lambda: self.goBack())
       
       self.layout.addRow(self.btn2,self.le2)

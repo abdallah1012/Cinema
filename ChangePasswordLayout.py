@@ -25,11 +25,12 @@ class ChangePasswordLayout(QWidget):
         self.new_password_edit= QLineEdit()
         
         self.back_button = QPushButton("Back")
+        self.back_button.setObjectName("back_button")
         self.back_button.clicked.connect(lambda:self.BackEvent())
         
         self.confirm_button = QPushButton("Confirm")
         self.confirm_button.clicked.connect(lambda:self.ConfirmEvent())
-        
+        self.confirm_button.setObjectName("confirm_button")
         self.change_result= QLabel("")
         
         self.__password_grid.addWidget(self.previous_password,0,0)

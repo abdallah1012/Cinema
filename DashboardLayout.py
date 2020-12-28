@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton, QLabel ,QListWidget
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QGridLayout,QWidget,QPushButton, QLabel ,QListWidget
 from User import User
 from DashboardController import DashboardController
 from PyQt5.QtCore import pyqtSignal, QSize
@@ -23,14 +23,18 @@ class DashboardLayout(QWidget):
         self.user = user
         
         #ADD COURSE GUI
+        self.HBox = QHBoxLayout()
+        self.frame = QFrame()
+        self.frame.setLayout(self.HBox)
         self.add_course = QPushButton("Add Course") #enroll for student, create for professor
         self.add_course.setObjectName("add_course")
         self.add_course.setFixedWidth(200)
         self.add_course.clicked.connect(lambda:self.new_course_request.emit())
+        self.HBox.addWidget(self.add_course)
        
         self.name = ""
         self.syllabus = ""
-        self.__dashboard_grid.addWidget(self.add_course,1,1)      
+        self.__dashboard_grid.addWidget(self.frame,1,1)      
         self.movieProperties = [] 
         
         #ADD MOVIE GUI

@@ -53,7 +53,8 @@ class MainWidget(QMainWindow):
         self.upperLayout.addWidget(self.home_button)
         self.upperLayout.addWidget(self.profile_button)
         
-        self.upperExternal = QFrame()    
+        self.upperExternal = QFrame()
+        self.upperExternal.setObjectName("upperExternal")    
         self.upperExternal.setLayout(self.upperLayout)
         
        #print(self.user.courses)
