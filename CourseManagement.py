@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 15 17:20:27 2020
 
-@author: ojaro
-"""
 import pandas as pd
 from sqlalchemy import create_engine
 
@@ -73,3 +69,49 @@ class CourseManagement:
             return df
         else:
             return [] 
+        
+    def getAllCourses(self):
+        sqlstmt = "SELECT courseID, faculty, courseName FROM courses"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        #print(sqlstmt)
+        if(len(df) > 0):
+            return df
+        else:
+            return [] 
+        
+    def getCoursePerFaculty(self, faculty):
+        sqlstmt = "SELECT courseID, courseName FROM courses WHERE faculty = '"+str(faculty)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        #print(sqlstmt)
+        if(len(df) > 0):
+            return df
+        else:
+            return [] 
+        
+        
+    def EnrollStudent(self, courseID, userID, courseName):
+        sqlstmt = "INSERT INTO enrollment (courseID, studentID, courseName) VALUES ('"+str(courseID)+"', '"+str(userID)+"', '"+str(courseName)+"');"
+        
+        try:
+            self.database_connection.execute(sqlstmt)
+            return 1
+        except:
+            return 0
+        
+    
+    def getCoursesStudent(self, userID):
+        sqlstmt = "SELECT courseName, courseID FROM enrollment WHERE studentID = '"+str(userID)+"'"
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        
+        if(len(df) > 0):
+            return df
+        else:
+            return 0
+        
+        
+        
+        
+        

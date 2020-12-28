@@ -34,13 +34,9 @@ class HomeLayout(QWidget):
         self.recommended_for_you = [] #list of recommended movies
         self.whats_hot = [] #list of popular movies
         
-        
-        
-#        self.example_movie = QPushButton("Example movie")        
-#        self.example_movie.clicked.connect(lambda:self._WatchMovie_.emit())
+
         self.stack = QStackedLayout()       
         self.movieLayout = None       
-#        self.__home_grid.addWidget(self.example_movie,5,1)
         self.vbox = QVBoxLayout()
         
         self.vboxRecommended = QVBoxLayout()
@@ -60,6 +56,7 @@ class HomeLayout(QWidget):
         print(self.stack)
     
         self.recommended_display.list_widget.itemPressed.connect(lambda: self.MovieIsClicked())
+        self.hot_display.list_widget.itemPressed.connect(lambda: self.MovieIsClickedHot())
         
         
         self.generateRecommended()
@@ -71,20 +68,23 @@ class HomeLayout(QWidget):
     def MovieIsClicked(self):
         self._WatchMovie_.emit(self.recommended_display.list_widget.selectedItems()[0].url, self.recommended_display.list_widget.selectedItems()[0].movieID)
     
+    def MovieIsClickedHot(self):
+        self._WatchMovie_.emit(self.hot_display.list_widget.selectedItems()[0].url, self.hot_display.list_widget.selectedItems()[0].movieID)
+    
     #generates recommended movies for user (user specific)
     def generateRecommended(self):
         self.images, self.url, self.moviesID, self.titles = self.controller.getRecommended()
+        
         if(len(self.images) != 0):
             self.recommended_display.setImages(self.images, self.url, self.moviesID, self.titles)
     
     #generates "hot" movies for user (general)
     def generateHot(self):
         self.imageshot_hot, self.url_hot, self.moviesID_hot, self.titles_hot = self.controller.getHot()
-        if(len(self.images) != 0):
+        print("images", self.titles_hot)
+        if(len(self.imageshot_hot) != 0):
             self.hot_display.setImages(self.imageshot_hot, self.url_hot, self.moviesID_hot, self.titles_hot)
-        
-        #TODO: populate self.recommended_for_you list and add to GUI
-        #TODO: populate self.whats_hot list and add to GUI
+
         
 
         

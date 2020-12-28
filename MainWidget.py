@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 11 13:02:46 2020
 
-@author: ojaro
-"""
 
 from PyQt5.QtWidgets import QWidget,QPushButton,QGridLayout,QStackedLayout, QHBoxLayout, QFrame, QMainWindow, QAction, QMessageBox
 from User import User
@@ -14,8 +10,10 @@ from MovieLayout import MovieLayout
 from CourseInputDialog import CourseInputDialog
 from MovieInputDialog import MovieInputDialog
 from CourseMovieLayout import CourseMovieLayout
-from RecommendationEngine import RecommendationEngine
 from ChangePasswordLayout import ChangePasswordLayout
+from Student import Student
+from Professor import Professor
+from MainWidgetController import MainWidgetController
 #Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
     
@@ -24,8 +22,11 @@ class MainWidget(QMainWindow):
         
         self.mainWidget = QWidget()
         
+        
+        
         self.setMinimumSize(500,500)
         self.user = user
+        self.controller = MainWidgetController(self.user)
         self.setStyleSheet(open('main.css').read())
         self.dashboard_button = QPushButton("Dashboard")
         self.dashboard_button.setFixedWidth(150)
@@ -106,6 +107,7 @@ class MainWidget(QMainWindow):
             self.home_layout._WatchMovie_.connect(lambda url, M_ID:self.LoadMovieLayout(url, M_ID))
             self.stack.addWidget(self.home_layout)
         self.stack.setCurrentWidget(self.home_layout)
+        self.silence()
     
     #sets movielayout as default layout
     def LoadMovieLayout(self, url, movieID):
@@ -125,6 +127,21 @@ class MainWidget(QMainWindow):
     #DashBoardLayout----------------------------------------------------------------------------------
     #sets dashboard layout as default layout
     def LoadDashboardLayout(self, success):
+        if self.dashboard_layout!=None:
+            self.stack.removeWidget(self.dashboard_layout)
+            del self.dashboard_layout
+       
+        self.setWindowTitle("Dashboard")
+        
+        self.dashboard_layout = DashboardLayout(self.user)
+        self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
+        
+        self.dashboard_layout.openCourse_request.connect(lambda x: self.LoadCourseMovies(x))
+        self.stack.addWidget(self.dashboard_layout)
+            
+        self.stack.setCurrentWidget(self.dashboard_layout)
+        self.silence()
+        
         if(success == 1):
             self.dashboard_layout.message.setText("Successfully Submitted Course")
             self.course_layout = None
@@ -133,26 +150,24 @@ class MainWidget(QMainWindow):
             self.addmovie_layout = None
         elif(success == 3):
             pass
-            
-        self.setWindowTitle("Dashboard")
-        if self.dashboard_layout == None:
-            self.dashboard_layout = DashboardLayout(self.user)
-            self.dashboard_layout.new_course_request.connect(self.LoadCourseLayout)
-            
-            self.dashboard_layout.openCourse_request.connect(lambda x: self.LoadCourseMovies(x))
-            self.stack.addWidget(self.dashboard_layout)
-            
-        self.stack.setCurrentWidget(self.dashboard_layout)
-        self.silence()
+        elif(success == 4):
+            self.dashboard_layout.message.setText("Successfully Enrolled in Course")
+            self.course_layout = None
     
     #sets course layout as default layout (upload courses)
     def LoadCourseLayout(self):
         self.setWindowTitle("Add Course")
-        if self.course_layout == None:
+        if self.course_layout == None and isinstance(self.user, Professor) == True:
+            self.course_layout = CourseInputDialog(self.user)
+            self.course_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success)) 
+            
+            self.stack.addWidget(self.course_layout)
+        elif self.course_layout == None and isinstance(self.user, Student) == True:
             self.course_layout = CourseInputDialog(self.user)
             self.course_layout.loaddashlayout.connect(lambda success:self.LoadDashboardLayout(success))       
             self.stack.addWidget(self.course_layout)
-            
+#        self.course_layout.refreshDash.connect(self.)
+        self.course_layout.refreshCourses_request.connect(self.RefreshProfile)
         self.stack.setCurrentWidget(self.course_layout)
     
     #sets dash movie layout as default layout (upload movie)
@@ -193,7 +208,7 @@ class MainWidget(QMainWindow):
             
         self.profile_layout = ProfileLayout(self.user)
         self.profile_layout.changePass_request.connect(lambda : self.LoadChangePassLayout())
-        
+        self.profile_layout.changeImage_request.connect(lambda image: self.ChangeImage(image))
         if(success == 1):
             self.profile_layout.errorMessage.setText("Password Changed Successfully")
         
@@ -206,7 +221,7 @@ class MainWidget(QMainWindow):
         self.setWindowTitle("Change Password")
         if self.changepass_layout == None:
             self.changepass_layout = ChangePasswordLayout(self.user)
-            self.changepass_layout.goback_request.connect(lambda success:self.LoadProfileLayout(success))       
+            self.changepass_layout.goback_request.connect(lambda success:self.LoadProfileLayout(success))    
             self.stack.addWidget(self.changepass_layout)
             
         self.stack.setCurrentWidget(self.changepass_layout)
@@ -217,6 +232,13 @@ class MainWidget(QMainWindow):
         if(self.movie_layout != None):
             self.movie_layout.Stop()
             
+    def RefreshProfile(self):
+        self.user.courses = self.controller.refresh()
+        
+        
+    def ChangeImage(self, image):
+        self.user.courses = image
+        
         
 
         

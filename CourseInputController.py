@@ -4,14 +4,14 @@ Created on Thu Nov 26 18:57:11 2020
 
 @author: WarPeace101
 """
-from User import User
-from CourseManagement import CourseManagement
 
+from CourseManagement import CourseManagement
+from MovieManagement import MovieManagement
 #controller for relevant layout to communicate with other layouts and computation models
 class CourseInputController:
     def __init__(self):
         self.course_manager = CourseManagement() #manager that allows communication with course table in database
-       
+        self.movie_manager = MovieManagement()
     
     #adds course to courses table in database
     #params: string coursename, string description, int userID
@@ -33,3 +33,14 @@ class CourseInputController:
                     return 0 #database error
         else:
             return 2 #course already exists with user
+        
+    def getAllCourses(self):
+        return self.course_manager.getAllCourses()
+    
+    def getCoursePerFaculty(self, faculty):
+        return self.course_manager.getCoursePerFaculty(faculty)
+    
+    
+    def EnrollStudent(self, courseId, userId, courseName):
+       
+        return self.course_manager.EnrollStudent(courseId, userId, courseName)

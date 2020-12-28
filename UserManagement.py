@@ -91,14 +91,14 @@ class UserManagement():
                 encoded_string = base64.b64encode(image_file.read())
                 image_file.close()
         except:
-            return 2 #cant read file
+            return 2, 2 #cant read file
         
         try:
             
             self.database_connection.execute(sqlstmt, encoded_string)
-            return 1
+            return 1, encoded_string
         except:
-            return 0
+            return 0, 0
     
     def changePass(self, userID, newPass):
         try:
@@ -108,5 +108,12 @@ class UserManagement():
         except:
             return 0 #failed
         
-        
+    def getSubUserInfo(self, userID):
+        sqlstmt = "SELECT image FROM users WHERE userID = '"+str(userID)+"'"      
+        df = pd.read_sql_query(sqlstmt, self.database_connection)
+        df = df.values.tolist()
+        if(len(df) > 0):
+            return df
+        else:
+            return []
     

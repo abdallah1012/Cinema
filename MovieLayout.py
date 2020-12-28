@@ -141,6 +141,7 @@ class MovieLayout(QWidget):
             result = self.controller.submitComment(self.movieID, self.comment.toPlainText(), self.user.username)
             if(result == 1):
                 self.commentSection_comments.setPlainText(self.user.username + ": " + self.comment.toPlainText() + "\n" + self.commentSection_comments.toPlainText())
+                self.comment.setPlainText("") 
     
     
     def LoadComments(self):

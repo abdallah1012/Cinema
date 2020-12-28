@@ -45,7 +45,10 @@ class SignInController:
             if(model_result == 1):
                 courses = []
                 try:
-                    courses = self.course_manager.getCourses(userID)
+                    if(entity == "professor"):
+                        courses = self.course_manager.getCourses(userID)
+                    elif(entity == "student"):
+                        courses = self.course_manager.getCoursesStudent(userID)
                 except:
                     return ("Database down, use aa")
                 

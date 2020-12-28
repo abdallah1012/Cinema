@@ -30,6 +30,7 @@ class RecommendationEngine:
     
     def LoadRecommendations(self,user: User):
         Courses=user.courses
+        
         tags=[]
         faculty = []
         typ=[]
@@ -57,18 +58,19 @@ class RecommendationEngine:
             typ=list(set(typ))
          
             courseIDs=[]
-            Rtags=[]
+            
             Movierecommend=[]
             for i in typ:
                 
                 tem = (self.manager.getRecommendedCourses(i))
-                
+                print("hree", tem)
                 for j in range(len(tem)):
                     if((tem[j][0] in cids)==False):
                         courseIDs.append(tem[j][0])
-      
+            
             for i in courseIDs:        
                recommend=self.moviemanager.getCourseMovieID(i)
+               
                if(len(recommend)!=0):
                    
                    for k in range(len(recommend)):
@@ -76,7 +78,9 @@ class RecommendationEngine:
                            Movierecommend.append(recommend[k][0])
                    if(len(Movierecommend)==0):
                        Movierecommend=[ids for ids, tag1, tag2, tag3 in recommend]
-        
+               else:
+                   return self.WhatsHot()
+            
             return Movierecommend
                     
         else:

@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Nov 14 13:42:37 2020
 
-@author: ojaro
-"""
-from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton, QLabel, QVBoxLayout, QInputDialog,QListWidget,QListView,QListWidgetItem
+from PyQt5.QtWidgets import QGridLayout,QWidget,QPushButton, QLabel ,QListWidget
 from User import User
-from PyQt5.QtGui import QIcon, QPixmap
 from DashboardController import DashboardController
 from PyQt5.QtCore import pyqtSignal, QSize
-from CourseInputDialog import CourseInputDialog
 import re
 from ClickableThumbnail import ClickableThumbnail
 
@@ -20,6 +14,7 @@ class DashboardLayout(QWidget):
     new_course_request = pyqtSignal()
     openCourse_request = pyqtSignal(int)
     new_movie_request = pyqtSignal()
+    
     
     submitmovie_request = pyqtSignal()
     def __init__(self,user:User):
@@ -32,24 +27,13 @@ class DashboardLayout(QWidget):
         self.add_course.setObjectName("add_course")
         self.add_course.setFixedWidth(200)
         self.add_course.clicked.connect(lambda:self.new_course_request.emit())
-        
-  
-        
+       
         self.name = ""
         self.syllabus = ""
-        
-
-        self.__dashboard_grid.addWidget(self.add_course,1,1)
-       
-       
+        self.__dashboard_grid.addWidget(self.add_course,1,1)      
         self.movieProperties = [] 
         
         #ADD MOVIE GUI
-        
-
-        
-        
-        
         self.list_widget = QListWidget()
         
 #        self.list_widget.setFlow(QListView.LeftToRight) 
@@ -66,8 +50,6 @@ class DashboardLayout(QWidget):
                     self.items[i].setText((self.items_title[i][0]))
                     self.list_widget.addItem(self.items[i])
                 
-        
-
 
         self.controller = DashboardController(self.user)
 
@@ -82,18 +64,13 @@ class DashboardLayout(QWidget):
         
         self.list_widget.itemPressed.connect(lambda: self.CourseIsClicked())
        
-#        if len(self.courses)!=0:
-#            for course in self.courses:
-#                course.clicked.connect(lambda:self.load_course_request.emit(course.text()))
-        
-        
-        
-    #contacts controller to submit course, currently is professor's course upload feature
+     
+    #contacts controller to submit course
     def submitcourse(self):
         self.result = self.controller.addCourse(self.name, self.syllabus, self.user.id)
         
 
-    #contacts controller to submit movie under name of of course, currently is for professor's movie upload feature
+    #contacts controller to submit movie under name of of course
     def submitmovie(self):
         seg = re.split(" / ", self.name) #seg[0] is the course name, seg[1] is the movie name
         courseID = ""
