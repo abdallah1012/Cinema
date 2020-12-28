@@ -7,7 +7,6 @@ from ProfileController import ProfileController
 import base64
 from PyQt5.QtCore import pyqtSignal 
 #Layout for the profile interface
-#TODO: show relevant details for the user
 class ProfileLayout(QWidget):
     changePass_request = pyqtSignal()
     changeImage_request = pyqtSignal(bytes)
@@ -71,13 +70,13 @@ class ProfileLayout(QWidget):
         
 
         
-    def getFile(self):
+    def getFile(self): #initiates a file selection dialogue. Only images files are accepted
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image files (*.png *.jpg *.gif )")
         self.image_label.setPixmap(QPixmap(fname[0]))
         result, image = self.controller.editProfilePic(fname[0])
         self.changeImage_request.emit(image)
         
-    def changePassword(self):
+    def changePassword(self): #sends a signal that activates an event for changing the user's password
         self.changePass_request.emit()
 #        self.controller.changePassword()
         
