@@ -16,3 +16,12 @@ class MovieController:
     
     def getComments(self, movieID):
         return self.manager.getComments(movieID)
+    
+    def LikeMovie(self, movieID, userID):
+        return self.manager.addLike(movieID, userID)
+    
+    def removieLike(self, movieID, userID):
+        return self.manager.deleteLike(movieID, userID)
+    
+    def getLikeStatus(self, movieID, userID):
+        return self.manager.getLikeStatus(movieID, userID)

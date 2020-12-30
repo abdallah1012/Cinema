@@ -71,9 +71,17 @@ class MovieLayout(QWidget):
         self.vboxlayout.addWidget(self.positionslider)
         self.vboxlayout.addLayout(self.hbuttonbox)
 
-    
+        
+        status = self.controller.getLikeStatus(self.movieID, self.user.id)
+        if(status == 0):
+            self.likeButton = QPushButton("Like")
+        else:
+            self.likeButton = QPushButton("DisLike")
+        
+        
+        self.likeButton.clicked.connect(lambda: self.LikeDislike())
         self.comment = QPlainTextEdit()
-
+        self.likehbox = QHBoxLayout()
         self.comment.setPlaceholderText("Type Comment Here ...")
         self.comment.setObjectName("comment")
         self.comment.setFixedHeight(50)
@@ -83,7 +91,9 @@ class MovieLayout(QWidget):
         self.commentSubmit.setFixedWidth(200)
         self.commentSubmit.clicked.connect(lambda: self.submitComment())
         self.commentbox.addWidget(self.comment)
-        self.commentbox.addWidget(self.commentSubmit)
+        self.likehbox.addWidget(self.commentSubmit)
+        self.likehbox.addWidget(self.likeButton)
+        self.commentbox.addLayout(self.likehbox)
         
         self.commentSection = QLabel("Comments:")
         self.commentSection.setFixedHeight(50)
@@ -133,6 +143,15 @@ class MovieLayout(QWidget):
 
     
    
+    def LikeDislike(self):
+        if(self.likeButton.text() == "DisLike"):
+            self.controller.removieLike(self.movieID, self.user.id)
+            self.likeButton.setText("Like")
+        elif(self.likeButton.text() == "Like"):
+            self.controller.LikeMovie(self.movieID, self.user.id)
+            self.likeButton.setText("DisLike")
+            
+    
     def submitComment(self):
         if(self.comment.toPlainText() != ""):
             result = self.controller.submitComment(self.movieID, self.comment.toPlainText(), self.user.username)
