@@ -1,7 +1,7 @@
 import sys
 import os.path
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtGui import QPalette, QColor, QIcon
 from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QSlider, QHBoxLayout, QPushButton, \
     QVBoxLayout, QAction, QFileDialog, QApplication, QMessageBox, QPlainTextEdit, QLabel, QScrollArea, QTextEdit
 import vlc
@@ -9,7 +9,7 @@ import pafy
 import threading 
 import time 
 from MovieController import MovieController
-
+from Professor import Professor
 
 #layout for presenting a movie with all navigation features
 class MovieLayout(QWidget):
@@ -49,7 +49,16 @@ class MovieLayout(QWidget):
         self.playbutton = QPushButton()
         self.playbutton.setObjectName("playbutton")
         self.hbuttonbox.addWidget(self.playbutton)
-
+        
+        
+        result = self.controller.isMovieForUser(self.movieID, self.user.id)
+        if(isinstance(self.user, Professor) == True and len(result) > 0):
+            self.numberofViews = result[0][1]
+            self.description = result[0][0]
+            self.numofLikes = result[0][2]
+            self.infoButton = QPushButton("Statistics")            
+            self.hbuttonbox.addWidget(self.infoButton)
+            self.infoButton.clicked.connect(lambda: self.openStats())
 
         self.stopbutton = QPushButton()
         self.stopbutton.setObjectName("stopbutton")
@@ -102,7 +111,6 @@ class MovieLayout(QWidget):
         self.commentbox.addWidget(self.commentSection)
         self.commentSection_comments = QTextEdit("No Comments Yet")
         self.commentSection_comments.setObjectName("commentSection_comments")
-        #self.commentSection_comments.setStyleSheet("QTextEdit {color:black;font-size:13px;font-family: \"Times New Roman\", Times, serif;background-color:transparent;border-style: none}")
         self.commentSection_comments.setReadOnly(True)
         self.commentSection_comments.setFixedHeight(50)
         
@@ -120,7 +128,7 @@ class MovieLayout(QWidget):
         self.timer.setInterval(500)
         self.timer.timeout.connect(self.updateUI)   
         
-        
+        self.stats = None
         
         self.loaded = False
         self.video = pafy.new(self.url) 
@@ -141,8 +149,19 @@ class MovieLayout(QWidget):
         
         self.LoadComments()
 
-    
-   
+    def openStats(self):
+        if(self.stats != None):
+            del self.stats
+        
+        result = self.controller.isMovieForUser(self.movieID, self.user.id)
+        if(isinstance(self.user, Professor) == True and len(result) > 0):
+            self.numberofViews = result[0][1]
+            self.description = result[0][0]
+            self.numofLikes = result[0][2]
+        
+        self.stats = self.controller.openStatsLayout(self.numberofViews, self.description, self.numofLikes)
+        self.stats.show()
+        
     def LikeDislike(self):
         if(self.likeButton.text() == "DisLike"):
             self.controller.removieLike(self.movieID, self.user.id)

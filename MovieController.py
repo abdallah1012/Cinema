@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from MovieManagement import MovieManagement
+from statisticsLayout import statisticsLayout
 class MovieController:
     def __init__(self,url):
         self.url = url
@@ -25,3 +26,10 @@ class MovieController:
     
     def getLikeStatus(self, movieID, userID):
         return self.manager.getLikeStatus(movieID, userID)
+    
+    def isMovieForUser(self, movieID, userID):
+        return self.manager.isMovieForUser(movieID, userID)
+    
+    def openStatsLayout(self, views, desc, likes):
+        stats = statisticsLayout(views, desc, likes)
+        return stats
