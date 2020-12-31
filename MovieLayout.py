@@ -1,13 +1,12 @@
 import sys
-import os.path
+
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPalette, QColor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QSlider, QHBoxLayout, QPushButton, \
-    QVBoxLayout, QAction, QFileDialog, QApplication, QMessageBox, QPlainTextEdit, QLabel, QScrollArea, QTextEdit
+from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtWidgets import QWidget, QFrame, QSlider, QHBoxLayout, QPushButton, \
+    QVBoxLayout, QApplication, QPlainTextEdit, QLabel, QTextEdit
 import vlc
 import pafy 
-import threading 
-import time 
+
 from MovieController import MovieController
 from Professor import Professor
 

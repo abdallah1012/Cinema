@@ -10,7 +10,9 @@ from WelcomeWidget import WelcomeWidget
 def run():
     app = QApplication(sys.argv)
     welcome_widget = WelcomeWidget()
+    print("showing")
     welcome_widget.show()
+    print("showed")
     sys.exit(app.exec_())
    
 	

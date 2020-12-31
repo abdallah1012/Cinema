@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import sys
-from PyQt5.QtWidgets import QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, QStackedLayout, QRadioButton, \
-QFormLayout, QInputDialog, QFileDialog
-from PyQt5.QtWidgets import QApplication
+
+from PyQt5.QtWidgets import QPushButton,QLineEdit,QLabel, QWidget, \
+QFormLayout, QFileDialog
+
 from User import User
 from MovieInputController import MovieInputController
 from PyQt5.QtCore import pyqtSignal

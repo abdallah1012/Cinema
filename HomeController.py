@@ -3,10 +3,10 @@
 
 from RecommendationEngine import RecommendationEngine
 from User import User
-from MovieLayout import MovieLayout
+
 from MovieManagement import MovieManagement
 
-import base64 
+ 
 
 #controller for the relevant layout to communicate with other layouts and computation models
 class HomeController:

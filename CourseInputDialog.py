@@ -2,7 +2,7 @@
 
 
 
-from PyQt5.QtWidgets import QFrame,QHBoxLayout,QPushButton,QLineEdit,QLabel, QWidget, QFormLayout, QInputDialog, QComboBox, QVBoxLayout
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QPushButton,QLineEdit,QLabel, QWidget, QFormLayout, QComboBox, QVBoxLayout
 from User import User
 from PyQt5.QtCore import pyqtSignal
 from CourseInputController import CourseInputController

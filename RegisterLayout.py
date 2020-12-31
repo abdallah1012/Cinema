@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from PyQt5.QtWidgets import QFrame,QHBoxLayout,QVBoxLayout,QGridLayout,QPushButton,QLineEdit,QLabel, QWidget, QStackedLayout, QRadioButton
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QVBoxLayout,QPushButton,QLineEdit,QLabel, QWidget, QRadioButton
 from PyQt5.QtCore import pyqtSignal
 from RegisterController import RegisterController
 

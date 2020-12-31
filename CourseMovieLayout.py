@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QFrame,QHBoxLayout,QGridLayout,QLabel,QWidget,QPushButton, QVBoxLayout, QMainWindow, QStackedLayout, QListWidget,QListWidgetItem
+from PyQt5.QtWidgets import QFrame,QHBoxLayout,QLabel,QWidget,QPushButton, QVBoxLayout, QListWidget
 import User
 from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QIcon, QPixmap
@@ -8,7 +8,7 @@ from ClickableThumbnail import ClickableThumbnail
 from MovieManagement import MovieManagement
 import base64 
 from CourseMovieController import CourseMovieController
-from Student import Student
+
 from Professor import Professor
 class CourseMovieLayout(QWidget):
     goback_request = pyqtSignal(int)
