@@ -11,6 +11,7 @@ from PyQt5.QtCore import pyqtSignal
 class ProfileLayout(QWidget):
     changePass_request = pyqtSignal()
     changeImage_request = pyqtSignal(bytes)
+    
     def __init__(self,user:User):
         super().__init__()
         self.title = 'User Profile'
@@ -84,9 +85,11 @@ class ProfileLayout(QWidget):
         
     def getFile(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image files (*.png *.jpg *.gif )")
-        self.image_label.setPixmap(QPixmap(fname[0]))
-        result, image = self.controller.editProfilePic(fname[0])
-        self.changeImage_request.emit(image)
+        if(fname[0] != ""):
+            self.image_label.setPixmap(QPixmap(fname[0]))
+            result, image = self.controller.editProfilePic(fname[0])
+            if(isinstance(image, bytes)== True):
+                self.changeImage_request.emit(image)
         
     def changePassword(self):
         self.changePass_request.emit()

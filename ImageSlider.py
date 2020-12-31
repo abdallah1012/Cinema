@@ -1,9 +1,9 @@
 ## -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QHBoxLayout, QListWidget, QWidget, QListWidgetItem, QPushButton, QListView, QAbstractItemView, QLabel
+from PyQt5.QtWidgets import QHBoxLayout, QListWidget, QWidget, QPushButton, QListView, QAbstractItemView
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt, QSize
 import math
 import base64
 from ClickableThumbnail import ClickableThumbnail
@@ -16,55 +16,39 @@ class ImageSlider(QWidget):
         # setting title 
         self.setWindowTitle("Python ") 
         
-        self.setGeometry(600,600,900,300)
+        self.setGeometry(1000,1000,2000,100)
 
         stylesheett= """
             QPushbutton{
             height: 50px;
             width: 50px;
             background-color: rgb(54,57,63);
-            background-image: url("left.png");
+            background-image: url("./Images/left.png");
             }
 
             QPushbutton#pic:hover{
             background-color: rgb(54,57,63);
-            background-image: url("left_hover.png");
+            background-image: url("./Images/left_hover.png");
             }
 
             QPushbutton#pic2{
             height: 50px;
             width: 50px;
             background-color: rgb(54,57,63);
-            background-image: url("right.png");
+            background-image: url("./Images/right.png");
             }
 
             QPushbutton#pic2:hover{
             background-color: rgb(54,57,63);
-            background-image: url("right_hover.png");
+            background-image: url("./Images/right_hover.png");
             }
         """
 
         self.setStyleSheet(stylesheett)
-
-        self.hbox = QHBoxLayout()
-        
+        self.hbox = QHBoxLayout() 
         self.list_widget = QListWidget()
-#        self.list_widget.setGeometry(50, 70, 300, 150) 
-        
-
-#        item1.setIcon(QIcon("key_icon.ico")) 
         self.items = []
-#        for i in range(20):
-#                self.items.append(QListWidgetItem(str(i)))
-#                self.list_widget.addItem(self.items[i])
-#                if(i%2 == 0):
-#                    self.items[i].setIcon(QIcon("thumbnail.jpg"))
-#                else:
-#                    self.items[i].setIcon(QIcon("1.jpg"))
-                    
-                
      
-        
         # setting flow 
         self.list_widget.setFlow(QListView.LeftToRight) 
         self.list_widget.setIconSize(QtCore.QSize(190, 190))
@@ -75,7 +59,7 @@ class ImageSlider(QWidget):
         self.pic = QPushButton()
         self.pic.setObjectName("pic")
         self.pic.clicked.connect(lambda:self.goleftSmooth())
-        #self.pic.setGeometry(10, 10, 50, 50)
+
         #use full ABSOLUTE path to the image, not relative
         
         self.hbox.addWidget(self.pic)
@@ -85,9 +69,7 @@ class ImageSlider(QWidget):
         self.pic2 = QPushButton()
         self.pic2.setObjectName("pic2")
         self.pic2.clicked.connect(lambda:self.gorightSmooth())
-        #self.pic2.setGeometry(10, 10, 50, 50)
-        #use full ABSOLUTE path to the image, not relative
-        #self.pic2.setIcon(QIcon("right.png"))
+
         
         self.hbox.addWidget(self.pic2)
         
@@ -119,34 +101,36 @@ class ImageSlider(QWidget):
         self.rightCounter = 0
         self.leftCounter = 0
         
-        self.incrementalStep = 2
+        self.incrementalStep = 1
         self.counterSize = 410
         
         self.lingertime = 1
         self.lingertimeCounter = 0
-        
-#        self.list_widget.itemPressed.connect(lambda: self.test())
-        
+               
         self.show()
         
 
-#    def test(self):
-#        print(self.list_widget.selectedItems()[0].url)
     
     #Takes list of images and adds them to the image container of this class
     def setImages(self, images, urls, movieIDs, titles):
         
         self.list_widget.clear()
         self.items = []
-        
+        self.list_widget.setViewMode(QListWidget.IconMode)
+#        self.list_widget.setResizeMode(QListWidget.Adjust);
+#        self.list_widget.setIconSize(QSize(150,150));
+#        self.list_widget.setAcceptDrops(True);
+#        self.list_widget.setDragEnabled(False);
         for i in range(len(images)):
                 self.items.append(ClickableThumbnail(urls[i], movieIDs[i]))
                 self.items[i].setText(titles[i])
+                
                 self.list_widget.addItem(self.items[i])
                 
                 pm = QPixmap()
                 pm.loadFromData(base64.b64decode(images[i]))
                 ic = QIcon()
+                pm = pm.scaled(QSize(220, 150), Qt.IgnoreAspectRatio);
                 ic.addPixmap(pm)
                 if(ic.isNull() == False):
                     self.items[i].setIcon(ic)

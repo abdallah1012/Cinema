@@ -238,8 +238,7 @@ class MainWidget(QMainWindow):
         
         
     def ChangeImage(self, image):
-        self.user.courses = image
-        
+        self.user.image = image
         
 
         

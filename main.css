@@ -75,41 +75,41 @@ QPushButton:hover {
 QPushButton#pic{
   width: 50px;
   height: 50px;
-  background-image: url("leftr.png");
+  background-image: url("./Images/leftr.png");
 }
 
 QPushButton:hover#pic{
-  background-image: url("left_hoverr.png");
+  background-image: url("./Images/left_hoverr.png");
 }
 
 QPushButton#pic2{
   width: 50px;
   height: 50px;
-  background-image: url("rightr.png");
+  background-image: url("./Images/rightr.png");
 }
 
 QPushButton:hover#pic2{
-  background-image: url("right_hoverr.png");
+  background-image: url("./Images/right_hoverr.png");
 }
 
 QPushButton#playbutton{
   width: 50px;
   height: 50px;
-  background-image: url("play_pauser.png");
+  background-image: url("./Images/play_pauser.png");
 }
 
 QPushButton:hover#playbutton{
-  background-image: url("play_pause_hoverr.png");
+  background-image: url("./Images/play_pause_hoverr.png");
 }
 
 QPushButton#stopbutton{
   width: 50px;
   height: 50px;
-  background-image: url("stopr.png");
+  background-image: url("./Images/stopr.png");
 }
 
 QPushButton:hover#stopbutton{
-  background-image: url("stop_hoverr.png");
+  background-image: url("./Images/stop_hoverr.png");
 }
 
 QPushButton#edit_button, QPushButton#Moviebtn , QPushButton#thumbbtn, QPushButton#change_password, QPushButton#add_course, QPushButton#commentSubmit, QPushButton#confirm_button , QPushButton#back_button, QPushButton#cancel, QPushButton#done, QPushButton#enroll_button , QPushButton#add_movie , QPushButton#back{
