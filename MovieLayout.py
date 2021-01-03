@@ -50,7 +50,14 @@ class MovieLayout(QWidget):
         self.hbuttonbox.addWidget(self.playbutton)
         
         
+
         result = self.controller.isMovieForUser(self.movieID, self.user.id)
+        self.stopbutton = QPushButton()
+        self.stopbutton.setObjectName("stopbutton")
+        self.hbuttonbox.addWidget(self.stopbutton)
+	
+
+
         if(isinstance(self.user, Professor) == True and len(result) > 0):
             self.numberofViews = result[0][1]
             self.description = result[0][0]
@@ -58,10 +65,7 @@ class MovieLayout(QWidget):
             self.infoButton = QPushButton("Statistics")            
             self.hbuttonbox.addWidget(self.infoButton)
             self.infoButton.clicked.connect(lambda: self.openStats())
-
-        self.stopbutton = QPushButton()
-        self.stopbutton.setObjectName("stopbutton")
-        self.hbuttonbox.addWidget(self.stopbutton)
+		
         self.stopbutton.clicked.connect(self.Stop)
 
         self.hbuttonbox.addStretch(1)

@@ -156,7 +156,7 @@ class MovieManagement:
                    
     def addLike(self, movieID, userID):
         sqlstmt = "INSERT INTO userlikes (movieID, userID) VALUES ('"+str(movieID)+"', '"+str(userID)+"');"
-        sqlstmt2 = "UPDATE movies SET likes = likes +1 WHERE movieID = '" +str(movieID) +"' and professorID = '"+str(userID)+"';"
+        sqlstmt2 = "UPDATE movies SET likes = likes +1 WHERE movieID = '" +str(movieID) +"';"
         try:
             self.database_connection.execute(sqlstmt)
             self.database_connection.execute(sqlstmt2)
@@ -166,7 +166,7 @@ class MovieManagement:
     
     def deleteLike(self, movieID, userID):
         sqlstmt = "DELETE FROM userlikes WHERE movieID = '"+str(movieID)+"' and userID = '"+str(userID)+"';"
-        sqlstmt2 = "UPDATE movies SET likes = likes -1 WHERE movieID = '" +str(movieID) +"' and professorID = '"+str(userID)+"';"
+        sqlstmt2 = "UPDATE movies SET likes = likes -1 WHERE movieID = '" +str(movieID) +"';"
         try:
             self.database_connection.execute(sqlstmt)
             self.database_connection.execute(sqlstmt2)

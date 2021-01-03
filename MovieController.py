@@ -5,7 +5,7 @@ from statisticsLayout import statisticsLayout
 class MovieController:
     def __init__(self,url):
         self.url = url
-        self.manager =MovieManagement()
+        self.manager = MovieManagement()
         self.incrementViews()
     
     
