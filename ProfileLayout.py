@@ -57,7 +57,7 @@ class ProfileLayout(QWidget):
             pm = QPixmap()
             pm.loadFromData(base64.b64decode(self.user.image))
             self.image_label.setPixmap(pm)
-            self.image_label.setScaledContents(True);
+            self.image_label.setScaledContents(True)
         
         self.spacer= QSpacerItem(20,5)
         
@@ -87,6 +87,7 @@ class ProfileLayout(QWidget):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image files (*.png *.jpg *.gif )")
         if(fname[0] != ""):
             self.image_label.setPixmap(QPixmap(fname[0]))
+            self.image_label.setScaledContents(True)
             result, image = self.controller.editProfilePic(fname[0])
             if(isinstance(image, bytes)== True):
                 self.changeImage_request.emit(image)

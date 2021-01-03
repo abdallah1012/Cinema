@@ -50,7 +50,8 @@ class SignInController:
                 
                 userInfo = self.Manager.getUserInfo(userID)
                 
-                if(len(userInfo[0][3]) != 0):
+				
+                if((userInfo[0][3]) != None):
                     if(entity == 'student'):
                         user = Student(userID, courses, userInfo[0][1], userInfo[0][2], userInfo[0][0], userInfo[0][3])
                     elif(entity == 'professor'):
