@@ -16,14 +16,25 @@ from Professor import Professor
 from MainWidgetController import MainWidgetController
 #Main widget/window used to show all layouts that represent the visual interface that the user will face throughout runtime
 class MainWidget(QMainWindow):
-    
+    __instance = None
+
+    @staticmethod
+    def getinstance():
+        if (MainWidget.__instance == None):
+            MainWidget()
+        return MainWidget.__instance
+		
     def __init__(self, user:User):
         super().__init__()
-        
+        if (MainWidget.__instance != None):
+            raise Exception ("Singleton")
+        else:
+            self.initUI(user)
+            MainWidget.__instance = self
+			
+				
+    def initUI(self, user:User):    
         self.mainWidget = QWidget()
-        
-        
-        
         self.setMinimumSize(500,500)
         self.user = user
         self.controller = MainWidgetController(self.user)
@@ -46,7 +57,6 @@ class MainWidget(QMainWindow):
         
         self.grid = QGridLayout()
 
-        #self.topbar = QFrame()
         self.upperLayout = QHBoxLayout()
         
         self.upperLayout.addWidget(self.dashboard_button)
